@@ -1,0 +1,31 @@
+name: Create/Update PR status check
+description: Sets status for a PR check
+
+inputs:
+  name:
+    description: Name of the PR check
+    required: true
+  state:
+    description: 'New state of the PR check || enum<<br/>`pending`,`success`,<br/>`error`,<br/>>'
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Set status check
+      uses: actions/github-script@v4
+      env:
+        STATUS_TARGET_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        STATUS_STATE: ${{ inputs.state }}
+        STATUS_CHECK_NAME: ${{ inputs.name }}
+      with:
+        script: |
+          const { owner, repo } = context.issue;
+          await github.repos.createCommitStatus({
+            owner,
+            repo,
+            sha: context.sha,
+            context: process.env.STATUS_CHECK_NAME,
+            state: process.env.STATUS_STATE,
+            target_url: process.env.STATUS_TARGET_URL
+          })

@@ -1,0 +1,40 @@
+name: Check Team Member Login
+description: Check if login belongs to the team
+inputs:
+  team:
+    required: true
+    description: "Team that we are checking against"
+  login:
+    required: true
+    description: "User's (contributor) login"
+  github-token:
+    required: true
+    description: "Token for authorization"
+
+outputs:
+  result:
+    description: "A boolean value to indicate whether user is a team member or not"
+    value: ${{ steps.check-team-member.outputs.result }}
+
+runs:
+  using: composite
+  steps:
+    - uses: octokit/request-action@v2.x
+      id: get-team-info
+      with:
+        route: GET /orgs/{org}/teams/{team_slug}/members
+        org: toptal
+        team_slug: ${{ inputs.team }}
+      env:
+        GITHUB_TOKEN: ${{ inputs.github-token }}
+
+    - uses: actions/github-script@v5
+      id: check-team-member
+      with:
+        github-token: ${{ inputs.github-token }}
+        script: |
+          const creator = "${{ inputs.login }}"
+          const members = ${{ steps.get-team-info.outputs.data }}
+          const found = members.find((member) => member.login === creator)
+
+          return !!found

@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist-package",
+    "target": "es2015",
+    "moduleResolution": "node",
+    "module": "commonjs",
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "sourceMap": false,
+    "allowJs": true,
+    "jsx": "preserve",
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": "."
+  }
+}

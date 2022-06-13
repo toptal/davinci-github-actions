@@ -1,0 +1,29 @@
+name: 'Report affected packages'
+description: 'Generate a diagram of affected monorepo packages as a job summary. Works with worksflows triggered by pull_request event.'
+
+runs:
+  using: 'composite'
+  steps:
+    - uses: actions/setup-node@v3.2.0
+      with:
+        node-version: 16
+
+    - uses: Ana06/get-changed-files@v2.1.0
+      id: files
+      with:
+        format: 'json'
+
+    - shell: bash
+      run: |
+        echo '${{ steps.files.outputs.all }}' >> changed_files.json
+
+    - name: Get workspace info
+      shell: bash
+      run: yarn --silent --no-default-rc workspaces info > info.json
+
+    - name: Run script to check Owners Approvals
+      run: node ${{ github.action_path }}/diagram.js >> $GITHUB_STEP_SUMMARY
+      shell: bash
+      env:
+        CHANGED_FILES_PATH: changed_files.json
+        INFO_PATH: info.json

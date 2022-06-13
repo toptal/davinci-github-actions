@@ -1,0 +1,8 @@
+name: Run unit tests check
+description: Conduct unit tests
+
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      run: yarn test:ci

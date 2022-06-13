@@ -1,0 +1,8 @@
+name: Run lint check
+description: Checks for lint issues
+
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      run: yarn lint

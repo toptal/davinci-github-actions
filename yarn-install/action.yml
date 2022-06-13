@@ -1,0 +1,56 @@
+name: Install dependencies
+description: Install and cache node modules with yarn
+inputs:
+  npm-token:
+    description: Access token type **Read-only**. Required for repository with private dependencies. If undefined, `env.NPM_TOKEN` is used
+    required: false
+  cache-version:
+    description: 'Cache version'
+    default: '0.0'
+    required: false
+outputs:
+  cache-hit:
+    description: 'Indicates an exact match was found for `node_modules` || boolean'
+    value: ${{ steps.node-modules-cache.outputs.cache-hit }}
+runs:
+  using: composite
+  steps:
+    - name: Set node version
+      id: set-node-version
+      shell: bash
+      run: echo "::set-output name=version::$(node -v)"
+
+    - name: Get yarn cache
+      id: yarn-cache
+      run: echo "::set-output name=dir::$(yarn cache dir)"
+      shell: bash
+
+    # This step is needed only because we want to update the cache when a new workspace
+    # package has been added and we want symlinks to be presented in ./node_modules folder
+    - name: Generate workspaces info
+      run: |
+        if grep -q "\"workspaces\":" package.json; then
+            yarn --no-default-rc workspaces --json info > tmp-workspaces.json
+        else
+            echo {} > tmp-worskpaces.json
+        fi
+      shell: bash
+
+    - name: Cache yarn and node_modules folder
+      uses: actions/cache@v3
+      id: node-modules-cache
+      with:
+        # Do not change the order of the values because if something goes wrong with the network or node_modules during
+        # the caching process, GitHub can still end up creating a valid cache entry.
+        # The cache from yarn is smaller and of higher priority for us
+        path: |
+          ${{ steps.yarn-cache.outputs.dir }}
+          **/node_modules
+        key: ${{ runner.os }}-node-${{ steps.set-node-version.outputs.version }}-yarn-node_modules-${{ hashFiles('**/yarn.lock', 'tmp-workspaces.json') }}-${{ inputs.cache-version }}
+
+    - name: yarn install
+      shell: bash
+      env:
+        NPM_TOKEN: ${{ inputs.npm-token || env.NPM_TOKEN }}
+      run: |
+        yarn install --frozen-lockfile --ignore-optional --non-interactive

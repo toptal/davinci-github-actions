@@ -1,0 +1,37 @@
+name: Print coverage report in a PR
+description: |
+  Merge all report files in `path` folder using `nyc merge`
+  Then prints coverage report as a comment in related PR
+
+inputs:
+  path:
+    description: Path to a folder with code coverage file(s)
+    required: false
+    default: code-coverage
+  reporter:
+    description: 'Istanbul reporter for coverage output - see https://istanbul.js.org/docs/advanced/alternative-reporters/'
+    required: false
+    default: text-summary
+  github-token:
+    description: GitHub token
+    required: false
+
+runs:
+  using: composite
+  steps:
+    - name: Merge coverage files
+      shell: bash
+      env:
+        FOLDER: ${{ inputs.path }}
+      run: |
+        mkdir merged-coverage
+        npx nyc merge "$FOLDER" merged-coverage/coverage.json
+
+    - name: Print Coverage
+      uses: tj-actions/coverage-reporter@v5.1
+      env:
+        REPORTER: ${{ inputs.reporter }}
+      with:
+        coverage-command: npx nyc report --reporter ${{ env.REPORTER }} --temp-dir merged-coverage
+        token: ${{ inputs.token || github.token }}
+

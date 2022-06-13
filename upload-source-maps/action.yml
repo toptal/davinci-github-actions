@@ -1,0 +1,38 @@
+name: Upload Source Maps to Sentry
+description: |
+  It creates a new Sentry release and uploads source maps
+  ****
+  envInputs:
+    SENTRY_AUTH_TOKEN: Sentry token. Is used to upload source files to Sentry
+
+inputs:
+  sentry-project:
+    required: true
+    description: The name of the Sentry project to upload source files to
+  working-directory:
+    required: false
+    description: Specifies the working directory where the command is run
+    default: '.'
+
+runs:
+  using: composite
+  steps:
+    - name: Upload source maps to Sentry
+      env:
+        SENTRY_ORG: toptal
+        SENTRY_PROJECT: ${{ inputs.sentry-project }}
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      run: |
+        if [[ -z "$SENTRY_AUTH_TOKEN" ]]
+        then
+          echo >&2 "You don't have SENTRY_AUTH_TOKEN set up in your GH Action."
+          exit 1
+        fi
+
+        if [[ $(yarn davinci help) == *"sentry-upload-source-maps"* ]]
+        then
+          yarn davinci engine sentry-upload-source-maps
+        else
+          echo "Your current davinci version is not supporting uploading source maps to Sentry. Please update davinci package version in your app."
+        fi

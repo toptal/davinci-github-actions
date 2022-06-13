@@ -1,0 +1,23 @@
+name: Create parallelization matrix
+description: >
+  Creates parallelization matrix.
+  By default creates 2 instances for SPA or 2 instances for each package in monorepo.
+
+inputs:
+  parallel-groups:
+    description: Defines how many instances to create in monolith. Or how many instances per package to create in monorepo || number
+    required: false
+    default: 2
+  parallel-matrix:
+    description: 'Overrides `parallel-groups`<br/>A recipe by which to create the output array<br/>For each `parallel-matrix[*].pkg` creates `parallel-matrix[*].parallel-groups` number of instances || Array<{<br/>`pkg`: string,<br/>`location`: string<br/>`parallel-groups`: number<br/>}>'
+    required: false
+
+outputs:
+  matrix:
+    description: 'Array to be used as a map value in `jobs.<job_id>.strategy.matrix`<br/>Each object represents one parallel instance<br/>`pkg` - current package name. In monolith app it is `default`<br/>`location` - current package location. In monolith app it is `.`<br/>`index` - current instance index<br/>`total` - number of total instances for current instance (package) || Array<{<br/>`pkg`: string,<br/>`location`: string,<br/>`index`: number,<br/>`total`: number,<br/>}>'
+  is-monorepo:
+    description: Information about current repository || boolean
+
+runs:
+  using: node16
+  main: dist/index.js
