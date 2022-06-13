@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Call notify jira about contribution
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           repository: toptal/davinci-github-actions
           ref: v2.0.4
