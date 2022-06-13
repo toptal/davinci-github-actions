@@ -1,0 +1,94 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - master
+
+env:
+  SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+  GITHUB_WORKFLOW_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2.3.4
+        with:
+          # This makes Actions fetch all Git history so that Changesets can generate changelogs with the correct commits
+          fetch-depth: 0
+          # This forces changesets to use git user, provided by GITHUB_TOKEN env var
+          persist-credentials: false
+
+      - name: Setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14.17'
+
+      - uses: ./yarn-install
+
+      - name: Create Release Pull Request or Publish to npm
+        id: changesets
+        uses: changesets/action@2a025e8ab1cfa4312c2868cb6aa3cd3b473b84bf
+        with:
+          publish: yarn release
+          commit: 'chore: version packages'
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOPTAL_BUILD_BOT_TOKEN }}
+
+      - name: Add no-jira label to "Version Package" PR
+        if: ${{ steps.changesets.outputs.published != 'true' }}
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            // Get list of all open PRs with
+            // head branch "changeset-release/master"
+            // (there should be max 1 PR with such condition)
+            const { data } = await github.rest.pulls.list({
+              owner: 'toptal',
+              repo: 'davinci-github-actions',
+              state: 'open',
+              head: 'toptal:changeset-release/master'
+            })
+
+            // add to all of them label "no-jira"
+            for await (let pr of data) {
+              github.rest.issues.addLabels({
+                owner: 'toptal',
+                repo: 'davinci-github-actions',
+                issue_number: pr.number,
+                labels: [
+                  'no-jira'
+                ]
+              })
+            }
+
+      - name: Send a Slack notification on failure
+        if: ${{ failure() }}
+        uses: slackapi/slack-github-action@v1.19.0
+        with:
+          channel-id: '-frontend-exp-team-notifications'
+          slack-message: ":x: <!here> Current master version of davinci-github-actions is <${{ env.GITHUB_WORKFLOW_URL }}|broken>."
+        env:
+          SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
+
+      - name: Send a Slack notification on success release
+        if: ${{ success() && steps.changesets.outputs.published == 'true' }}
+        uses: slackapi/slack-github-action@v1.19.0
+        with:
+          channel-id: '-frontend-exp-team-notifications'
+          slack-message: "Current master version of davinci-github-actions successfully released :green_heart:"
+        env:
+          SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
+
+      - name: Send a Slack notification on success PR merge
+        if: ${{ success() && steps.changesets.outputs.published != 'true'}}
+        uses: slackapi/slack-github-action@v1.19.0
+        with:
+          channel-id: '-frontend-exp-team-notifications'
+          slack-message: "A new PR was merged to davinci-github-actions :parrotspin:"
+        env:
+          SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}

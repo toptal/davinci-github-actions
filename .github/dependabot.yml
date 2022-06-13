@@ -1,0 +1,13 @@
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 4
+    pull-request-branch-name:
+      separator: "-"
+    labels:
+      - no-jira
+      - dependencies
+      - github-actions

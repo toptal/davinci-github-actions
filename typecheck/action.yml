@@ -1,0 +1,8 @@
+name: Run type check
+description: Check if Typescript issues exist
+
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      run: yarn typecheck

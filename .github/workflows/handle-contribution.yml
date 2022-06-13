@@ -1,0 +1,29 @@
+name: Handle contribution
+
+on:
+  pull_request:
+    types: [opened, reopened, ready_for_review]
+    branches:
+      - master
+
+jobs:
+  call-notify-jira-about-contribution:
+    if: ${{ github.event.pull_request.head.ref != 'changeset-release/master' }}
+    runs-on: ubuntu-latest
+    name: Call notify jira about contribution
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          repository: toptal/davinci-github-actions
+          ref: v2.0.4
+          token: ${{ secrets.TOPTAL_DEVBOT_TOKEN }}
+          path: ./.github/actions/
+
+      - uses: ./.github/actions/notify-jira-about-contribution
+        with:
+          team: frontend-experience-eng
+          repo: ${{ github.event.repository.name }}
+          pull-number: ${{ github.event.pull_request.number}}
+          jira-hook: ${{ secrets.JIRA_AUTOMATION_HOOK_FOR_NEW_CONTRIBUTION }}
+          github-token: ${{ secrets.TOPTAL_DEVBOT_TOKEN }}
+

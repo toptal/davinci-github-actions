@@ -1,0 +1,25 @@
+name: Get SHA for current workflow
+description: |
+  It properly selects a current commit hash depends on an event and returns it
+  the GH Action covers following GH events:
+  * push
+  * issue_comment
+  * workflow_dispatch with input version
+
+outputs:
+  result:
+    description: "A current commit sha, selected during GH Action"
+    value: ${{ steps.specify-sha.outputs.sha }}
+
+runs:
+  using: composite
+  steps:
+    - id: branch
+      if: github.event_name == 'issue_comment'
+      uses: xt0rted/pull-request-comment-branch@v1.3.0
+
+    - id: specify-sha
+      name: Specify SHA
+      shell: bash
+      run: |
+        echo "::set-output name=sha::${{ steps.branch.outputs.head_sha || github.event.inputs.version || github.sha }}"

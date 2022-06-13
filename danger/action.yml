@@ -1,0 +1,8 @@
+name: Run davinci danger check
+description: Checks if the PR title and and commit messages comply with Toptal's standards
+
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      run: yarn davinci ci danger

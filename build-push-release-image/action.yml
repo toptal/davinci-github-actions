@@ -1,0 +1,40 @@
+name: Build & Push Docker Release Image
+description: |
+  Builds release image of a project and pushes to cloud
+  ****
+  envInputs:
+    GITHUB_TOKEN: GitHub token. Is used to checkout `davinci` branch
+    GCR_ACCOUNT_KEY: Necessary token to push image to Google cloud
+
+inputs:
+  sha:
+    required: true
+    description: Commit hash that will be used as a tag for the Docker image
+  repository-name:
+    required: true
+    description: Name of repository. It's used to determine an image name
+  environment:
+    required: false
+    default: staging
+    description: Used to determine additional procedures while creating a Docker image || enum<<br/>`temploy`,<br/>`staging`,<br/>`production`,<br/>>
+
+runs:
+  using: composite
+  steps:
+    - uses: ./.github/actions/yarn-install
+
+    - name: Build
+      shell: bash
+      run: yarn build
+
+    - uses: ./.github/actions/build-push-image
+      with:
+        sha: ${{ inputs.sha }}
+        image-name: ${{ inputs.repository-name }}-release
+        environment: ${{ inputs.environment }}
+        docker-file: ./davinci/packages/ci/src/configs/docker/Dockerfile.gha-deploy
+        build-args: |
+          ENV_RUNTIME_ENTRYPOINT=./davinci/packages/ci/src/configs/docker/env-runtime.entrypoint.sh
+          DIST_FOLDER=./dist
+          NGINX_CONFIG=./davinci/packages/davinci/docker/nginx-vhost.conf
+          VERSION=${{ inputs.sha }}
