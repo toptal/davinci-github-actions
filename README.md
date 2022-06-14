@@ -12,9 +12,6 @@ This repo represents a library of reusable GH Actions you can use in your GH wor
 
 Actions in this repo were specially created to use in [davinci](https://github.com/toptal/davinci)-based applications.
 
-
-> **_NOTE:_**  This repo is private, therefore [it's not possible](https://docs.github.com/en/actions/learn-github-actions/finding-and-customizing-actions#overview) to directly use these GH Actions from GH Workflows.
-
 To start using GH Actions from this repo, a developer must checkout the repo via [actions/checkout](https://github.com/actions/checkout) GH Action.
 ## Example
 
