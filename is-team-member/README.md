@@ -33,7 +33,7 @@ Not specified
 ```yaml
   - uses: ./.github/actions/is-team-member
     with:
-      team: inputs.team
+      team: team
       login: login
       github-token: github-token
 ```

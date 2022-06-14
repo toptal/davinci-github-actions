@@ -62,10 +62,13 @@ runs:
     - name: Notify JIRA
       if: ${{ fromJson(steps.is-pr-eligible.outputs.result) == true && fromJson(steps.jira-issue-can-be-created.outputs.result) == true }}
       shell: bash
+      env:
+        JIRA_HOOK: ${{ inputs.jira-hook }}
+        REPO: ${{ inputs.repo }}
       run: |
         curl -X POST -H 'Content-type: application/json' \
-        --data '{"data": {"author":"${{fromJson(steps.get-pr.outputs.data).user.login}}", "author_url":"${{fromJson(steps.get-pr.outputs.data).user.html_url}}", "title":"${{fromJson(steps.get-pr.outputs.data).title}}", "number":"${{fromJson(steps.get-pr.outputs.data).number}}", "url":"${{fromJson(steps.get-pr.outputs.data).html_url}}", "repo":"${{inputs.repo}}"}}' \
-        ${{ inputs.jira-hook }}
+        --data '{"data": {"author":"${{fromJson(steps.get-pr.outputs.data).user.login}}", "author_url":"${{fromJson(steps.get-pr.outputs.data).user.html_url}}", "title":"${{fromJson(steps.get-pr.outputs.data).title}}", "number":"${{fromJson(steps.get-pr.outputs.data).number}}", "url":"${{fromJson(steps.get-pr.outputs.data).html_url}}", "repo":"$REPO"}}' \
+        $JIRA_HOOK
 
     - name: Greet author
       if: ${{ fromJson(steps.is-pr-eligible.outputs.result) == true && fromJson(steps.jira-issue-can-be-created.outputs.result) == true }}

@@ -29,5 +29,5 @@ Not specified
 ```yaml
   - uses: ./.github/actions/integration-tests
     with:
-      command: yarn test:e2e:ci
+      command: test:e2e:ci
 ```

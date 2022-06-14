@@ -21,5 +21,9 @@ runs:
     - id: specify-sha
       name: Specify SHA
       shell: bash
+      env:
+        HEAD_SHA: ${{ steps.branch.outputs.head_sha }}
+        VERSION: ${{ github.event.inputs.version }}
+        SHA: ${{ github.sha }}
       run: |
-        echo "::set-output name=sha::${{ steps.branch.outputs.head_sha || github.event.inputs.version || github.sha }}"
+        echo "::set-output name=sha::${HEAD_SHA:-${VERSION:-${SHA}}}"

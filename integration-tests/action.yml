@@ -5,14 +5,14 @@ inputs:
   command:
     description: Command to execute for integration tests
     required: false
-    default: yarn test:integration:ci
+    default: test:integration:ci
 
 runs:
   using: composite
   steps:
     - name: Cache Cypress folder
       id: cache
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: '~/.cache/Cypress'
         key: cypress-${{ hashFiles('**/yarn.lock') }}
@@ -31,7 +31,9 @@ runs:
 
     - name: Run Cypress tests
       shell: bash
-      run: ${{ inputs.command }}
+      env:
+        COMMAND: ${{ inputs.command }}
+      run: yarn $COMMAND
 
     - name: Store Cypress Screenshots Artifact
       uses: actions/upload-artifact@v2

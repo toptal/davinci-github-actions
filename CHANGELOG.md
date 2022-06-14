@@ -1,5 +1,59 @@
 # davinci-github-actions
 
+## 3.0.1
+
+### Patch Changes
+
+- [#74](https://github.com/toptal/davinci-github-actions/pull/74) [`6b6c5de`](https://github.com/toptal/davinci-github-actions/commit/6b6c5de5b44f8135d15459ca4bb20528da08b6ba) Thanks [@OndrejTuma](https://github.com/OndrejTuma)! - ---
+
+  integration-tests
+
+  - fixed `command` input when using complex command for yarn
+
+* [#73](https://github.com/toptal/davinci-github-actions/pull/73) [`bd8824d`](https://github.com/toptal/davinci-github-actions/commit/bd8824d4b2b1c19fe7cb51fbc45c198a550d5169) Thanks [@OndrejTuma](https://github.com/OndrejTuma)! - ---
+
+  ### report-coverage
+
+  - fixed issue with colliding `$PATH` env variable
+
+## 3.0.0
+
+### Major Changes
+
+- [#66](https://github.com/toptal/davinci-github-actions/pull/66) [`888130c`](https://github.com/toptal/davinci-github-actions/commit/888130ca9406f8be2472d420fad933b4cf490710) Thanks [@OndrejTuma](https://github.com/OndrejTuma)! - ---
+
+  Fix possible shell injections in all Davinci GitHub Actions
+
+  ### integration-tests
+
+  - input `command` takes npm script now. Before: `yarn test:integration:ci` -> After: `test:integration:ci`
+
+## 2.2.3
+
+### Patch Changes
+
+- [#69](https://github.com/toptal/davinci-github-actions/pull/69) [`41985f9`](https://github.com/toptal/davinci-github-actions/commit/41985f9972d565554607bf7cbd754fea4c95334b) Thanks [@ertrzyiks](https://github.com/ertrzyiks)! - fix failure to get affected packages on outdated branch
+
+## 2.2.2
+
+### Patch Changes
+
+- [#67](https://github.com/toptal/davinci-github-actions/pull/67) [`3d8172e`](https://github.com/toptal/davinci-github-actions/commit/3d8172e5e5a90cef06c3d85b375eebe880bbb679) Thanks [@ertrzyiks](https://github.com/ertrzyiks)! - fix report of affected packages in case of a cyclic dependencies
+
+## 2.2.1
+
+### Patch Changes
+
+- [#64](https://github.com/toptal/davinci-github-actions/pull/64) [`d27c4a6`](https://github.com/toptal/davinci-github-actions/commit/d27c4a6da8e284a8066f2b871556166baf4465fd) Thanks [@OndrejTuma](https://github.com/OndrejTuma)! - - updated external actions
+  - changed commit hashes to version in external actions
+  - fixed [issue with yarn-install](https://github.com/actions/cache/issues/811) by updating `actions/cache` to `v3`
+
+## 2.2.0
+
+### Minor Changes
+
+- [#60](https://github.com/toptal/davinci-github-actions/pull/60) [`aeb2389`](https://github.com/toptal/davinci-github-actions/commit/aeb23893fd38a72854d485b09ddbbbb6caa5bfad) Thanks [@ertrzyiks](https://github.com/ertrzyiks)! - add report-affected-packages action
+
 ## 2.1.1
 
 ### Patch Changes

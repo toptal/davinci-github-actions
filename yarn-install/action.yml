@@ -37,7 +37,7 @@ runs:
       shell: bash
 
     - name: Cache yarn and node_modules folder
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       id: node-modules-cache
       with:
         # Do not change the order of the values because if something goes wrong with the network or node_modules during

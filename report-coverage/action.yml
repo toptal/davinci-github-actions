@@ -21,13 +21,17 @@ runs:
   steps:
     - name: Merge coverage files
       shell: bash
+      env:
+        FOLDER: ${{ inputs.path }}
       run: |
         mkdir merged-coverage
-        npx nyc merge ${{ inputs.path }} merged-coverage/coverage.json
+        npx nyc merge "$FOLDER" merged-coverage/coverage.json
 
     - name: Print Coverage
-      uses: tj-actions/coverage-reporter@3eef0fe5e5d3881cc8faa2fb1365296edbf8af60
+      uses: tj-actions/coverage-reporter@v5.1
+      env:
+        REPORTER: ${{ inputs.reporter }}
       with:
-        coverage-command: npx nyc report --reporter ${{ inputs.reporter }} --temp-dir merged-coverage
+        coverage-command: npx nyc report --reporter ${{ env.REPORTER }} --temp-dir merged-coverage
         token: ${{ inputs.token || github.token }}
 
