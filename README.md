@@ -1,8 +1,7 @@
 
 # Reusable Github Actions
 
-A brief description of what this project does and who it's for
-
+Reusable Github Actions for davinci based applications
 
 ## Overview
 
