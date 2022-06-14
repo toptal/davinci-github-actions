@@ -14,7 +14,7 @@ Actions in this repo were specially created to use in [davinci](https://github.c
 
 ## Example
 
-This is a simple example of using GH Actions. Here, we checkout this repo and execute two GH Actions:
+This is a simple example of using GH Actions. Here, we execute two GH Actions:
 * yarn install
 * danger check
 
