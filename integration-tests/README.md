@@ -12,9 +12,9 @@ By default it executes `yarn test:integration:ci` command.
 
 The list of arguments, that are used in GH Action:
 
-| name      | type   | required | default                  | description                              |
-| --------- | ------ | -------- | ------------------------ | ---------------------------------------- |
-| `command` | string |          | yarn test:integration:ci | Command to execute for integration tests |
+| name      | type   | required | default             | description                              |
+| --------- | ------ | -------- | ------------------- | ---------------------------------------- |
+| `command` | string |          | test:integration:ci | Command to execute for integration tests |
 
 ### Outputs
 
