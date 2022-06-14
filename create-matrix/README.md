@@ -44,7 +44,7 @@ Not specified
 This will create 3 parallel instances in monolith or 3 parallel instances for each package in monorepo.
 
 ```yaml
-- uses: ./.github/actions/create-matrix
+- uses: toptal/davinci-github-actions/create-matrix@v3.0.1
   with:
     parallel-groups: 3
 ```
@@ -56,7 +56,7 @@ This option is suitable for monorepo, when you don't want to create parallel ins
 This will create 3 parallel instances for the whole monorepo:
 
 ```yaml
-- uses: ./.github/actions/create-matrix
+- uses: toptal/davinci-github-actions/create-matrix@v3.0.1
   with:
     parallel-matrix: |
       [
@@ -103,16 +103,9 @@ jobs:
       - name: Checkout project
         uses: actions/checkout@v2
 
-      - name: Checkout davinci GHAs
-        uses: actions/checkout@v2
-        with:
-          repository: toptal/davinci-github-actions
-          token: ${{ env.GITHUB_TOKEN }}
-          path: ./.github/actions/
-
       - name: Run Matrix
         id: set-matrix
-        uses: ./.github/actions/create-matrix
+        uses: toptal/davinci-github-actions/create-matrix@v3.0.1
         with:
           parallel-groups: ${{ env.PARALLEL_GROUPS }}
 

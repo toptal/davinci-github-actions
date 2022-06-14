@@ -30,7 +30,7 @@ Not specified
 ### Usage
 
 ```yaml
-  - uses: ./.github/actions/report-coverage
+  - uses: toptal/davinci-github-actions/report-coverage@v3.0.1
     with:
       path: code-coverage
       reporter: text-summary

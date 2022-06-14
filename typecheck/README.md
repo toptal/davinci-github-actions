@@ -21,5 +21,5 @@ Not specified
 ### Usage
 
 ```yaml
-  - uses: ./.github/actions/typecheck
+  - uses: toptal/davinci-github-actions/typecheck@v3.0.1
 ```

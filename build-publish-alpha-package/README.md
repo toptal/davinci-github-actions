@@ -32,7 +32,7 @@ Not specified
 ### Usage
 
 ```yaml
-  - uses: ./.github/actions/build-alpha-package
+  - uses: toptal/davinci-github-actions/build-alpha-package@v3.0.1
     with:
       npm-token: ${{ env.NPM_TOKEN }}
       branch: ${{ github.head_ref }}

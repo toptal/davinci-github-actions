@@ -31,7 +31,7 @@ This is a list of ENV Variables that are used in GH Action:
 ### Usage
 
 ```yaml
-  - uses: ./.github/actions/upload-source-maps
+  - uses: toptal/davinci-github-actions/upload-source-maps@v3.0.1
     with:
       repository-name: sentry-project
       working-directory: ./app

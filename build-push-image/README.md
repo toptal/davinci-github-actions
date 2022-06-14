@@ -37,7 +37,7 @@ This is a list of ENV Variables that are used in GH Action:
 ### Usage
 
 ```yaml
-  - uses: ./.github/actions/build-push-image
+  - uses: toptal/davinci-github-actions/build-push-image@v3.0.1
     with:
       sha: 7042976bc3db21012fe38602bb643618a95aa2d0
       image-name: my-image-name

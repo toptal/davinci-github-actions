@@ -12,7 +12,7 @@ This repo represents a library of reusable GH Actions you can use in your GH wor
 
 Actions in this repo were specially created to use in [davinci](https://github.com/toptal/davinci)-based applications.
 
-To start using GH Actions from this repo, a developer must checkout the repo via [actions/checkout](https://github.com/actions/checkout) GH Action.
+
 ## Example
 
 This is a simple example of using GH Actions. Here, we checkout this repo and execute two GH Actions:
@@ -26,16 +26,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout davinci GHAs
-        uses: actions/checkout@v2
-        with:
-            repository: toptal/davinci-github-actions
-            ref: v2
-            token: ${{ env.GITHUB_TOKEN }}
-            path: ./.github/actions/
+        uses: toptal/davinci-github-actions/yarn-install@v3.0.1
 
-      - uses: ./.github/actions/yarn-install
-
-      - uses: ./.github/actions/danger
+      - uses: toptal/davinci-github-actions/danger@v3.0.1
 ```
 
 ## Contribute
