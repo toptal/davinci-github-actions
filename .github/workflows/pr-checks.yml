@@ -12,7 +12,7 @@ concurrency:
 jobs:
   readme-existence:
     name: "README.md file existence check"
-    runs-on: [ 'org/toptal', 'os/linux', 'arch/x64', 'size/large' ]
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -32,7 +32,7 @@ jobs:
 
   unit-tests:
     name: Unit Tests
-    runs-on: [ 'org/toptal', 'os/linux', 'arch/x64', 'size/large' ]
+    runs-on: ubuntu-latest
     if: ${{ github.event.pull_request.head.ref != 'changeset-release/master' }}
     steps:
       - name: Checkout Repo
@@ -51,7 +51,7 @@ jobs:
 
   trufflehog-scan:
     name: Trufflehog Scan
-    runs-on: [ 'org/toptal', 'os/linux', 'arch/x64', 'size/large' ]
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
         with:
