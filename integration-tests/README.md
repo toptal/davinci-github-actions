@@ -12,9 +12,9 @@ By default it executes `yarn test:integration:ci` command.
 
 The list of arguments, that are used in GH Action:
 
-| name      | type   | required | default                  | description                              |
-| --------- | ------ | -------- | ------------------------ | ---------------------------------------- |
-| `command` | string |          | yarn test:integration:ci | Command to execute for integration tests |
+| name      | type   | required | default             | description                              |
+| --------- | ------ | -------- | ------------------- | ---------------------------------------- |
+| `command` | string |          | test:integration:ci | Command to execute for integration tests |
 
 ### Outputs
 
@@ -27,7 +27,7 @@ Not specified
 ### Usage
 
 ```yaml
-  - uses: ./.github/actions/integration-tests
+  - uses: toptal/davinci-github-actions/integration-tests@v3.0.1
     with:
       command: test:e2e:ci
 ```

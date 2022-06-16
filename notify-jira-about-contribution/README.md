@@ -29,7 +29,7 @@ Not specified
 ### Usage
 
 ```yaml
-  - uses: ./.github/actions/notify-jira-about-contribution
+  - uses: toptal/davinci-github-actions/notify-jira-about-contribution@v3.0.1
     with:
       team: frontend-experience-eng
       repo: repository_name

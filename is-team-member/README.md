@@ -31,7 +31,7 @@ Not specified
 ### Usage
 
 ```yaml
-  - uses: ./.github/actions/is-team-member
+  - uses: toptal/davinci-github-actions/is-team-member@v3.0.1
     with:
       team: team
       login: login
