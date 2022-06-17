@@ -36,7 +36,7 @@ jobs:
           publish: yarn release
           commit: 'chore: version packages'
         env:
-          GITHUB_TOKEN: ${{ secrets.TOPTAL_BUILD_BOT_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Add no-jira label to "Version Package" PR
         if: ${{ steps.changesets.outputs.published != 'true' }}
