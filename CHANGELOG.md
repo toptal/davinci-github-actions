@@ -1,5 +1,13 @@
 # davinci-github-actions
 
+## 3.0.2
+
+### Patch Changes
+
+- [#6](https://github.com/toptal/davinci-github-actions/pull/6) [`9870b85`](https://github.com/toptal/davinci-github-actions/commit/9870b856ff0492b1ad593d705ea8669795a47b99) Thanks [@dmaklygin](https://github.com/dmaklygin)! - Fix release GH Action
+
+* [#5](https://github.com/toptal/davinci-github-actions/pull/5) [`87d58ab`](https://github.com/toptal/davinci-github-actions/commit/87d58ab57878b454bf7d77bafd2d0ecff6331c7f) Thanks [@dmaklygin](https://github.com/dmaklygin)! - - Fix GH Action to Notify JIRA About External Contribution
+
 ## 3.0.1
 
 ### Patch Changes
