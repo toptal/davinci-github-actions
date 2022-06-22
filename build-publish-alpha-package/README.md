@@ -14,8 +14,8 @@ The list of arguments, that are used in GH Action:
 
 | name        | type   | required | default | description                                           |
 | ----------- | ------ | -------- | ------- | ----------------------------------------------------- |
-| `npm-token` | string | ✅        |         | Name of the branch that will be published             |
-| `branch`    | string | ✅        |         | NPM token used for publishing. Has to be type Publish |
+| `npm-token` | string | ✅        |         | NPM token used for publishing. Has to be type Publish |
+| `branch`    | string | ✅        |         | Name of the branch that will be published             |
 
 ### Outputs
 

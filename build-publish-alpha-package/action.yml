@@ -8,10 +8,10 @@ outputs:
 inputs:
   npm-token:
     required: true
-    description: 'Name of the branch that will be published || string'
+    description: 'NPM token used for publishing. Has to be type Publish || string'
   branch:
     required: true
-    description: 'NPM token used for publishing. Has to be type Publish || string'
+    description: 'Name of the branch that will be published || string'
 
 runs:
   using: composite
