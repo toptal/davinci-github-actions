@@ -1,5 +1,11 @@
 # davinci-github-actions
 
+## 3.0.3
+
+### Patch Changes
+
+- [#11](https://github.com/toptal/davinci-github-actions/pull/11) [`9a3f368`](https://github.com/toptal/davinci-github-actions/commit/9a3f368bd069aa1dbe5a0147782cfdd795b2f3a0) Thanks [@LashaJini](https://github.com/LashaJini)! - - Remove single quotes from PR title in the notify jira about contribution
+
 ## 3.0.2
 
 ### Patch Changes
