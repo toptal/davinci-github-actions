@@ -65,7 +65,7 @@ runs:
       env:
         JIRA_HOOK: ${{ inputs.jira-hook }}
         REPO: ${{ inputs.repo }}
-        TITLE: ${{ fromJson(steps.get-pr.outputs.data) }} | tr -d "'"
+        TITLE: ${{ fromJson(steps.get-pr.outputs.data).title }}
       run: |
         curl -X POST -H 'Content-type: application/json' \
         --data '{"data": {"author":"${{fromJson(steps.get-pr.outputs.data).user.login}}", "author_url":"${{fromJson(steps.get-pr.outputs.data).user.html_url}}", "title":"$TITLE", "number":"${{fromJson(steps.get-pr.outputs.data).number}}", "url":"${{fromJson(steps.get-pr.outputs.data).html_url}}", "repo":"$REPO"}}' \
