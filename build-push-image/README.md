@@ -19,7 +19,7 @@ The list of arguments, that are used in GH Action:
 | `environment`    | enum<<br/>`temploy`,<br/>`staging`,<br/>`production`,<br/>> |          | staging                                             | Determines additional procedures while creating a Docker image.                            |
 | `build-args`     | string                                                      | ✅        |                                                     | Multiline string to describe build arguments that will be used during dockerization        |
 | `docker-file`    | string                                                      |          | ./davinci/packages/ci/src/configs/docker/Dockerfile | pathname to Docker file                                                                    |
-| `davinci-branch` | string                                                      |          |                                                     | Custom davinci branch                                                                      |
+| `davinci-branch` | string                                                      |          | master                                              | Custom davinci branch                                                                      |
 
 ### Outputs
 
