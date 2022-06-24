@@ -1,5 +1,15 @@
 # davinci-github-actions
 
+## 3.0.4
+
+### Patch Changes
+
+- [#13](https://github.com/toptal/davinci-github-actions/pull/13) [`c8f5528`](https://github.com/toptal/davinci-github-actions/commit/c8f5528ecf1fbf8bdffabe81044e24af007b777d) Thanks [@LashaJini](https://github.com/LashaJini)! - ---
+
+  ### notify-jira-about-contribution
+
+  - escape title parameter for JIRA ticket
+
 ## 3.0.3
 
 ### Patch Changes
