@@ -1,5 +1,13 @@
 # davinci-github-actions
 
+## 3.1.1
+
+### Patch Changes
+
+- [#19](https://github.com/toptal/davinci-github-actions/pull/19) [`30d0e4a`](https://github.com/toptal/davinci-github-actions/commit/30d0e4a498b173d46a5e6fd54db41c590b8b9b1a) Thanks [@LashaJini](https://github.com/LashaJini)! - ### notify-jira-about-contribution
+
+  - Access TITLE and REPO from env
+
 ## 3.1.0
 
 ### Minor Changes
