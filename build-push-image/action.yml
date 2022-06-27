@@ -27,7 +27,7 @@ inputs:
   davinci-branch:
     description: 'Custom davinci branch'
     required: false
-    default: ''
+    default: 'master'
 
 runs:
   using: composite
