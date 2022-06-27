@@ -12,13 +12,14 @@ This GH Action builds a Docker image and pushes to google cloud.
 
 The list of arguments, that are used in GH Action:
 
-| name          | type                                                        | required | default                                             | description                                                                                |
-| ------------- | ----------------------------------------------------------- | -------- | --------------------------------------------------- | ------------------------------------------------------------------------------------------ |
-| `sha`         | string                                                      | ✅        |                                                     | Commit hash that will be used as a tag for the Docker image                                |
-| `image-name`  | string                                                      | ✅        |                                                     | Name of the Docker image. Might be used in the next steps (for ex.: deploy a Docker image) |
-| `environment` | enum<<br/>`temploy`,<br/>`staging`,<br/>`production`,<br/>> |          | staging                                             | Determines additional procedures while creating a Docker image.                            |
-| `build-args`  | string                                                      | ✅        |                                                     | Multiline string to describe build arguments that will be used during dockerization        |
-| `docker-file` | string                                                      |          | ./davinci/packages/ci/src/configs/docker/Dockerfile | pathname to Docker file                                                                    |
+| name             | type                                                        | required | default                                             | description                                                                                |
+| ---------------- | ----------------------------------------------------------- | -------- | --------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| `sha`            | string                                                      | ✅        |                                                     | Commit hash that will be used as a tag for the Docker image                                |
+| `image-name`     | string                                                      | ✅        |                                                     | Name of the Docker image. Might be used in the next steps (for ex.: deploy a Docker image) |
+| `environment`    | enum<<br/>`temploy`,<br/>`staging`,<br/>`production`,<br/>> |          | staging                                             | Determines additional procedures while creating a Docker image.                            |
+| `build-args`     | string                                                      | ✅        |                                                     | Multiline string to describe build arguments that will be used during dockerization        |
+| `docker-file`    | string                                                      |          | ./davinci/packages/ci/src/configs/docker/Dockerfile | pathname to Docker file                                                                    |
+| `davinci-branch` | string                                                      |          |                                                     | Custom davinci branch                                                                      |
 
 ### Outputs
 
