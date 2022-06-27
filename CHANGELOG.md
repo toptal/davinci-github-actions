@@ -1,5 +1,11 @@
 # davinci-github-actions
 
+## 3.1.0
+
+### Minor Changes
+
+- [#16](https://github.com/toptal/davinci-github-actions/pull/16) [`7e50715`](https://github.com/toptal/davinci-github-actions/commit/7e50715383d0086fb93d01e2222c1e518c60dadf) Thanks [@dmaklygin](https://github.com/dmaklygin)! - - Add ability to specify a custom davinci branch in build-push-image GH Action
+
 ## 3.0.4
 
 ### Patch Changes
