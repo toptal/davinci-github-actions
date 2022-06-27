@@ -24,6 +24,10 @@ inputs:
     description: 'pathname to Docker file'
     required: false
     default: ./davinci/packages/ci/src/configs/docker/Dockerfile
+  davinci-branch:
+    description: 'Custom davinci branch'
+    required: false
+    default: ''
 
 runs:
   using: composite
@@ -34,6 +38,7 @@ runs:
         repository: toptal/davinci
         token: ${{ env.GITHUB_TOKEN }}
         path: davinci
+        ref: ${{ inputs.davinci-branch }}
 
     - name: Setup node
       uses: actions/setup-node@v3.2.0
