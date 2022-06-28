@@ -1,0 +1,47 @@
+name: Deploy Storybook to a particular environment
+description: |
+  Builds and Deploys an Application's storybook to a particular environment
+  ****
+  envInputs:
+    GITHUB_TOKEN: GitHub token. Is used to checkout `davinci` branch
+    GCR_ACCOUNT_KEY: Necessary token to push image to Google cloud\
+    JENKINS_DEPLOY_TOKEN: Jenkins deployment token
+
+inputs:
+  sha:
+    required: true
+    description: 'Commit hash that will be used as a tag for the Docker image'
+  davinci-branch:
+    description: Custom davinci branch
+    required: false
+    default: master
+
+runs:
+  using: composite
+  steps:
+    - uses: toptal/davinci-github-actions/yarn-install@v3.0.2
+
+    - uses: toptal/davinci-github-actions/build-push-storybook-image@fx-2903-create-partial-gh-action-for-storybook-temploy
+      name: Build & Push Docker image
+      with:
+        sha: ${{ inputs.sha }}
+        davinci-branch: ${{ inputs.davinci-branch }}
+
+    - name: Specify repository name
+      id: get-repo
+      shell: bash
+      run: echo ::set-output name=repository_name::$(echo "$GITHUB_REPOSITORY" | awk -F / '{print $2}' | sed -e "s/:refs//")
+
+    - name: Trigger temploy job
+      uses: toptal/jenkins-job-trigger-action@1.0.0
+      with:
+        jenkins_url: https://jenkins.toptal.net
+        jenkins_user: toptal-devbot
+        jenkins_token: ${{ env.JENKINS_DEPLOY_TOKEN }}
+        job_name: '${{ steps.get-repo.outputs.repository_name }}/job/${{ steps.get-repo.outputs.repository_name }}-storybook-staging-deployment'
+        job_params: |
+          {
+            "TAG": "${{ inputs.sha }}",
+            "HELM_BRANCH": "feat/reusable-storybook"
+          }
+        job_timeout: '1200'
