@@ -1,5 +1,15 @@
 # davinci-github-actions
 
+## 3.2.0
+
+### Minor Changes
+
+- [#17](https://github.com/toptal/davinci-github-actions/pull/17) [`66df5ce`](https://github.com/toptal/davinci-github-actions/commit/66df5ce3a9177a1e20f5782c848c68a975186b67) Thanks [@OndrejTuma](https://github.com/OndrejTuma)! - ---
+
+  ### build-push-storybook-image
+
+  - new action for build & push storybook image to the cloud
+
 ## 3.1.1
 
 ### Patch Changes
