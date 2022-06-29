@@ -1,0 +1,119 @@
+name: Deploy Storybook to a particular environment
+description: |
+  Builds and Deploys an application's Storybook to a particular environment
+  ****
+  envInputs:
+    GITHUB_TOKEN: GitHub token. Is used to checkout `davinci` branch
+    GCR_ACCOUNT_KEY: Necessary token to push image to Google cloud\
+    JENKINS_DEPLOY_TOKEN: Jenkins deployment token. Keep in mind that tokens for `temploy` and `staging` differ
+
+inputs:
+  sha:
+    description: Commit hash that will be used as a tag for the Docker image
+    required: true
+  environment:
+    description: Environment to deploy Storybook to || enum<<br/>`temploy`,<br/>`staging`,<br/>>'
+    required: true
+  env-file:
+    description: "`.env` file name from which to read variables. Required for temploy deployment only"
+    required: false
+    default: .env.temploy
+  davinci-branch:
+    description: Custom davinci branch
+    required: false
+    default: master
+  dist-folder:
+    description: Path to folder where Storybook is built
+    required: false
+    default: ./storybook-static
+  build-command:
+    description: Command to build Storybook with
+    required: false
+    default: storybook:build
+
+runs:
+  using: composite
+  steps:
+    - name: Install Dependencies
+      uses: toptal/davinci-github-actions/yarn-install@v3.2.0
+
+    - name: Build Storybook
+      shell: bash
+      env:
+        BUILD_COMMAND: ${{ inputs.build-command }}
+      run: yarn "$BUILD_COMMAND"
+
+    - name: Specify Repository and Release Name
+      id: repo
+      shell: bash
+      run: |
+        echo ::set-output name=repository_name::${{ github.event.repository.name }}
+        echo ::set-output name=release_name::${{ github.event.repository.name }}-storybook-pr-${{ github.event.number || github.event.issue.number }}
+
+    - name: Build and Push Storybook Image
+      uses: toptal/davinci-github-actions/build-push-image@v3.2.0
+      with:
+        sha: ${{ inputs.sha }}
+        image-name: ${{ steps.repo.outputs.repository_name }}-storybook-release
+        build-args: |
+          DIST_FOLDER=${{ inputs.dist-folder }}
+          NGINX_CONFIG=./davinci/packages/davinci/docker/nginx-vhost.conf
+          ENV_RUNTIME_ENTRYPOINT=./davinci/packages/ci/src/configs/docker/env-runtime.entrypoint.sh
+          VERSION=${{ inputs.sha }}
+        docker-file: ./davinci/packages/ci/src/configs/docker/Dockerfile.gha-deploy
+        davinci-branch: ${{ inputs.davinci-branch }}
+
+    - name: Trigger Deploy to Staging
+      if: ${{ inputs.environment == 'staging' }}
+      uses: toptal/jenkins-job-trigger-action@1.0.0
+      env:
+        REPOSITORY_NAME: ${{ steps.repo.outputs.repository_name }}
+      with:
+        jenkins_url: https://jenkins.toptal.net
+        jenkins_user: toptal-devbot
+        jenkins_token: ${{ env.JENKINS_DEPLOY_TOKEN }}
+        job_name: ${{ env.REPOSITORY_NAME }}/job/${{ env.REPOSITORY_NAME }}-storybook-staging-deployment
+        job_params: |
+          {
+            "TAG": "${{ inputs.sha }}"
+          }
+        job_timeout: 1200
+
+    - uses: toptal/davinci-github-actions/extract-env-variables@v3.2.0
+      if: ${{ inputs.environment == 'temploy' }}
+      id: env-variables
+      with:
+        github-token: ${{ env.GITHUB_TOKEN }}
+        filename: ${{ inputs.env-file }}
+
+    - name: Trigger Deploy to Temploy
+      if: ${{ inputs.environment == 'temploy' }}
+      uses: toptal/jenkins-job-trigger-action@1.0.0
+      env:
+        REPOSITORY_NAME: ${{ steps.repo.outputs.repository_name }}
+        RELEASE: ${{ steps.repo.outputs.release_name }}
+      with:
+        jenkins_url: https://jenkins-build.toptal.net/
+        jenkins_user: toptal-jenkins
+        jenkins_token: ${{ env.JENKINS_DEPLOY_TOKEN }}
+        job_name: ${{ env.REPOSITORY_NAME }}/job/${{ env.REPOSITORY_NAME }}-storybook-temploy-helm-run
+        job_params: |
+          {
+            "REPOSITORY_NAME": "${{ env.REPOSITORY_NAME }}-storybook",
+            "RELEASE": "${{ env.RELEASE }}",
+            "TAG": "${{ inputs.sha }}",
+            "ENV": "${{ steps.env-variables.outputs.variables }}"
+          }
+        job_timeout: 1200
+
+    - name: Post Temploy Link
+      if: ${{ inputs.environment == 'temploy' }}
+      uses: actions/github-script@v3.0.0
+      env:
+        RELEASE: ${{ steps.repo.outputs.release_name }}
+      with:
+        github-token: ${{ env.GITHUB_TOKEN }}
+        script: |
+          const { issue: { number: issue_number }, repo: { owner, repo }  } = context
+          const body = 'Storybook temploy is available at https://${{ env.RELEASE }}.toptal.rocks :tada:'
+          github.issues.createComment({ issue_number, owner, repo, body })
