@@ -10,7 +10,8 @@
     "release": "changeset tag",
     "lint": "davinci syntax lint code .",
     "test": "davinci qa unit --runInBand",
-    "test:ci": "LANG=en_US davinci qa unit --ci --testTimeout=10000 --silent"
+    "test:ci": "LANG=en_US davinci qa unit --ci --testTimeout=10000 --silent",
+    "prepare": "husky install"
   },
   "devDependencies": {
     "@actions/core": "^1.6.0",
@@ -34,11 +35,5 @@
     "typescript": "^4.6.4",
     "unified": "^10.1.2",
     "@vercel/ncc": "^0.34.0"
-  },
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
-      "davinci syntax lint code",
-      "prettier --write"
-    ]
   }
 }

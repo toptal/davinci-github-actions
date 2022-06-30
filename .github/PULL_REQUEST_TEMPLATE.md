@@ -7,8 +7,3 @@ Describe the changes and motivations for the pull request, unless evident from t
 ### How to test
 
 - FIXME: Add the steps describing how to verify your changes
-
-### Review
-
-- [ ] Ensure that new GH Action have a README.md file
-- [ ] Ensure that `yarn documentation:generate` was executed
