@@ -1,5 +1,19 @@
 # davinci-github-actions
 
+## 4.0.0
+
+### Major Changes
+
+- [`8f48713`](https://github.com/toptal/davinci-github-actions/commit/8f48713fac89c8f016468054539652822ccacd6b) Thanks [@OndrejTuma](https://github.com/OndrejTuma)! - ---
+
+  ### build-push-storybook-image
+
+  - remove this action in favor of deploy-storybook
+
+  ### deploy-storybook
+
+  - add new action that handles the whole process of deploying storybook to temploy/staging
+
 ## 3.2.0
 
 ### Minor Changes
