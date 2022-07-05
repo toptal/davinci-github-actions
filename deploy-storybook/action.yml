@@ -115,5 +115,6 @@ runs:
         github-token: ${{ env.GITHUB_TOKEN }}
         script: |
           const { issue: { number: issue_number }, repo: { owner, repo }  } = context
-          const body = 'Storybook temploy is available at https://${{ env.RELEASE }}.toptal.rocks :tada:'
+          const name = ['${{ env.RELEASE }}', '${{ env.REPOSITORY_NAME }}-storybook'].join('-').substring(0, 45)
+          const body = 'Storybook temploy is available at https://${{ name }}.toptal.rocks :tada:'
           github.issues.createComment({ issue_number, owner, repo, body })
