@@ -1,5 +1,11 @@
 # davinci-github-actions
 
+## 4.1.0
+
+### Minor Changes
+
+- [#27](https://github.com/toptal/davinci-github-actions/pull/27) [`fcd8282`](https://github.com/toptal/davinci-github-actions/commit/fcd8282f448f121260d0ff760551b2a007863c50) Thanks [@dmaklygin](https://github.com/dmaklygin)! - - Rename release name for storybook temploy
+
 ## 4.0.0
 
 ### Major Changes
