@@ -41,7 +41,7 @@ runs:
 
     - name: Define if PR is eligible - PR authored by external contributor and is not draft
       env:
-        IS_NOT_DEPENDABOT_BOT: ${{ github.actor != 'dependabot[bot]' }}
+        IS_NOT_DEPENDABOT_BOT: ${{ fromJson(steps.get-pr.outputs.data).user.login != 'dependabot[bot]' }}
       id: is-pr-eligible
       shell: bash
       run: |
