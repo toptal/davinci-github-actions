@@ -1,5 +1,15 @@
 # davinci-github-actions
 
+## 4.1.1
+
+### Patch Changes
+
+- [#31](https://github.com/toptal/davinci-github-actions/pull/31) [`fe27dbb`](https://github.com/toptal/davinci-github-actions/commit/fe27dbbaf3ba9d32ebd8b24462a573352811882c) Thanks [@OndrejTuma](https://github.com/OndrejTuma)! - ---
+
+  ### notify-jira-about-contribution
+
+  - use single source of truth for PR owner
+
 ## 4.1.0
 
 ### Minor Changes
