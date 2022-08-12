@@ -1,5 +1,13 @@
 # davinci-github-actions
 
+## 4.2.0
+
+### Minor Changes
+
+- [#40](https://github.com/toptal/davinci-github-actions/pull/40) [`cb13095`](https://github.com/toptal/davinci-github-actions/commit/cb13095a3decd5165ac2c07605efe23f59c2630b) Thanks [@denieler](https://github.com/denieler)! - ---
+
+  - Add `path` parameter to specify the directory where to run `yarn install` command
+
 ## 4.1.1
 
 ### Patch Changes
