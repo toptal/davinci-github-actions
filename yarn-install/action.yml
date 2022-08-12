@@ -9,7 +9,7 @@ inputs:
     default: '0.0'
     required: false
   path:
-    description: Relative path under $GITHUB_WORKSPACE where about to run yarn install
+    description: Relative path under $GITHUB_WORKSPACE where to run `yarn install` command
     default: .
     required: false
 outputs:
