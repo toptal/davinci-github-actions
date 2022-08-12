@@ -8,6 +8,10 @@ inputs:
     description: 'Cache version'
     default: '0.0'
     required: false
+  path:
+    description: Relative path under $GITHUB_WORKSPACE where to run `yarn install` command
+    default: .
+    required: false
 outputs:
   cache-hit:
     description: 'Indicates an exact match was found for `node_modules` || boolean'
@@ -28,6 +32,7 @@ runs:
     # This step is needed only because we want to update the cache when a new workspace
     # package has been added and we want symlinks to be presented in ./node_modules folder
     - name: Generate workspaces info
+      working-directory: ${{ inputs.path }}
       run: |
         if grep -q "\"workspaces\":" package.json; then
             yarn --no-default-rc workspaces --json info > tmp-workspaces.json
@@ -50,6 +55,7 @@ runs:
 
     - name: yarn install
       shell: bash
+      working-directory: ${{ inputs.path }}
       env:
         NPM_TOKEN: ${{ inputs.npm-token || env.NPM_TOKEN }}
       run: |
