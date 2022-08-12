@@ -4,4 +4,4 @@
 
 ---
 
-- Add `path` parameter to specify the directory to run yarn
+- Add `path` parameter to specify the directory where to run `yarn install` command
