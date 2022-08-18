@@ -1,5 +1,23 @@
 # davinci-github-actions
 
+## 4.2.1
+
+### Patch Changes
+
+- [#43](https://github.com/toptal/davinci-github-actions/pull/43) [`e2cf340`](https://github.com/toptal/davinci-github-actions/commit/e2cf34082b064af7cdad7f67088e94007d4ce400) Thanks [@denieler](https://github.com/denieler)! - ---
+
+  ### danger
+
+  - Use davinci in "package by package" way. Requires to install `@toptal/davinci-ci` in your project.
+
+  ### build-publish-alpha-package
+
+  - Use davinci in "package by package" way. Requires to install `@toptal/davinci-engine` in your project.
+
+  ### upload-source-maps
+
+  - Use davinci in "package by package" way. Requires to install `@toptal/davinci-engine` in your project.
+
 ## 4.2.0
 
 ### Minor Changes
