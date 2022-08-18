@@ -4,7 +4,11 @@ Checks if the PR title and and commit messages comply with Toptal's standards
 
 ### Description
 
-Checks for inconsistencies in git commits and PR title. Runs command `yarn davinci ci danger` that
+Checks for inconsistencies in git commits and PR title.
+
+Uses `yarn davinci-ci danger` command for the check.
+
+*Note:* `@toptal/davinci-ci` package should be installed in the project.
 
 ### Inputs
 

@@ -24,8 +24,7 @@ jobs:
     name: Check:Danger
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout davinci GHAs
-        uses: toptal/davinci-github-actions/yarn-install@v3.0.1
+      - uses: toptal/davinci-github-actions/yarn-install@v3.0.1
 
       - uses: toptal/davinci-github-actions/danger@v3.0.1
 ```
