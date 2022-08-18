@@ -5,4 +5,4 @@ runs:
   using: composite
   steps:
     - shell: bash
-      run: yarn davinci ci danger
+      run: yarn davinci-ci danger

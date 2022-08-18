@@ -30,9 +30,9 @@ runs:
           exit 1
         fi
 
-        if [[ $(yarn davinci help) == *"sentry-upload-source-maps"* ]]
+        if [[ $(yarn davinci-engine help) == *"sentry-upload-source-maps"* ]]
         then
-          yarn davinci engine sentry-upload-source-maps
+          yarn davinci-engine sentry-upload-source-maps
         else
-          echo "Your current davinci version is not supporting uploading source maps to Sentry. Please update davinci package version in your app."
+          echo "Your current @toptal/davinci-engine version does not support uploading source maps to Sentry. Please update @toptal/davinci-engine package version in your app."
         fi

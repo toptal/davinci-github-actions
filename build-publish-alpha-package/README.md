@@ -6,7 +6,9 @@ Builds project and pushes a new alpha release to NPM
 
 Builds project from specific branch and publishes a new alpha package to NPM.
 
-It uses `yarn build:package` command to build the package.
+Uses `yarn build:package` command to build the package.
+
+*Note:* `@toptal/davinci-engine` package should be installed in the project.
 
 ### Inputs
 

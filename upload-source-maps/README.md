@@ -6,6 +6,8 @@ It creates a new Sentry release and uploads source maps
 
 This GH Action creates a new Sentry release and uploads source maps.
 
+*Note:* `@toptal/davinci-engine` package should be installed in the project.
+
 ### Inputs
 
 The list of arguments, that are used in GH Action:
