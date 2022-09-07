@@ -1,6 +1,6 @@
 ## Report affected packages
 
-Generate a diagram of affected monorepo packages as a job summary. Works with worksflows triggered by pull\_request event.
+Generate a diagram of affected monorepo packages as a job summary. Works with workflows triggered by pull\_request event.
 
 ### Description
 
@@ -22,5 +22,5 @@ Not specified
 
 ```yaml
   - name: Generate the affected packages report
-    uses: toptal/davinci-github-actions/report-affected-packages
+    uses: toptal/davinci-github-actions/report-affected-packages@v4.2.1
 ```

@@ -1,5 +1,5 @@
 name: 'Report affected packages'
-description: 'Generate a diagram of affected monorepo packages as a job summary. Works with worksflows triggered by pull_request event.'
+description: 'Generate a diagram of affected monorepo packages as a job summary. Works with workflows triggered by pull_request event.'
 
 runs:
   using: 'composite'
