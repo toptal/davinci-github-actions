@@ -5,4 +5,4 @@
 ---
 ### yarn-install
 
-- allow yarn-install commands to be optionally added.
+- remove --ignore-optional flag from the yarn install command.
