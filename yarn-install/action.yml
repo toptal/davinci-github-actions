@@ -12,6 +12,10 @@ inputs:
     description: Relative path under $GITHUB_WORKSPACE where to run `yarn install` command
     default: .
     required: false
+  install-options:
+    description: Additional options to use when running the `yarn install` command
+    default: '--frozen-lockfile --ignore-optional --non-interactive'
+    required: false
 outputs:
   cache-hit:
     description: 'Indicates an exact match was found for `node_modules` || boolean'
@@ -59,4 +63,4 @@ runs:
       env:
         NPM_TOKEN: ${{ inputs.npm-token || env.NPM_TOKEN }}
       run: |
-        yarn install --frozen-lockfile --ignore-optional --non-interactive
+        yarn install ${{ inputs.install-options }}
