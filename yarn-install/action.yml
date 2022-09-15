@@ -59,4 +59,4 @@ runs:
       env:
         NPM_TOKEN: ${{ inputs.npm-token || env.NPM_TOKEN }}
       run: |
-        yarn install --frozen-lockfile --ignore-optional --non-interactive
+        yarn install --frozen-lockfile --non-interactive
