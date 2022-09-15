@@ -1,5 +1,15 @@
 # davinci-github-actions
 
+## 4.2.2
+
+### Patch Changes
+
+- [#50](https://github.com/toptal/davinci-github-actions/pull/50) [`125085d`](https://github.com/toptal/davinci-github-actions/commit/125085dc566b10e7ec75b50bcff72d55e14560c5) Thanks [@rafael-anachoreta](https://github.com/rafael-anachoreta)! - ---
+
+  ### yarn-install
+
+  - remove --ignore-optional flag from the yarn install command.
+
 ## 4.2.1
 
 ### Patch Changes
