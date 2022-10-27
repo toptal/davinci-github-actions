@@ -2,7 +2,7 @@ module.exports = {
   options: {
     tsPreCompilationDeps: true,
     tsConfig: {
-      fileName: 'tsconfig.depcruiser.json',
+      fileName: 'tsconfig.dependency-cruiser.json',
     },
     doNotFollow: 'node_modules',
     exclude: {

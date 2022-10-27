@@ -19,6 +19,14 @@ runs:
         NPM_TOKEN: ${{ inputs.npm-token || env.NPM_TOKEN }}
       run: yarn add --dev dependency-cruiser -W
 
+    - name: Add tsconfig to include all available files
+      shell: bash
+      run: |
+        echo "{
+          \"extends\": \"./tsconfig.json\",
+          \"include\": [\"**/*\"]
+        }" > tsconfig.dependency-cruiser.json
+
     - name: Generate the dependency cruiser report
       shell: bash
       env:
