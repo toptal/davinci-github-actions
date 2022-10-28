@@ -1,4 +1,4 @@
-name: 'Depdendency cruiser metrics report'
+name: 'Dependency cruiser metrics report'
 description: 'Generates a report for the project of dependency cruiser metrics'
 
 inputs:
@@ -8,6 +8,10 @@ inputs:
   report-output-path:
     description: Path to the metrics report json file
     default: dependency-cruiser-results.json
+    required: false
+  tsconfig-path:
+    description: Path to the custom tsconifg.json file
+    default: ./tsconfig.json
     required: false
 
 runs:
@@ -23,7 +27,7 @@ runs:
       shell: bash
       run: |
         echo "{
-          \"extends\": \"./tsconfig.json\",
+          \"extends\": \"${{ inputs.tsconfig-path }}\",
           \"include\": [\"**/*\"]
         }" > tsconfig.dependency-cruiser.json
 
