@@ -22,7 +22,12 @@ Not specified
 
 ### ENV Variables
 
-Not specified
+All ENV Variables, defined in a GH Workflow are also passed to a GH Action. It means, the might be reused as is.
+This is a list of ENV Variables that are used in GH Action:
+
+| name        | description                                   |
+| ----------- | --------------------------------------------- |
+| `NPM_TOKEN` | Read-only npm token to install node\_modules. |
 
 ### Usage
 
