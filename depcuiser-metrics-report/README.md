@@ -14,7 +14,7 @@ The list of arguments, that are used in GH Action:
 | -------------------- | ------ | -------- | ------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
 | `npm-token`          | string |          |                                 | Access token type **Read-only**. Required for repository with private dependencies. If undefined, `env.NPM_TOKEN` is used |
 | `report-output-path` | string |          | dependency-cruiser-results.json | Path to the metrics report json file                                                                                      |
-| `tsconfig-path`      | string |          | ./tsconfig.json                 | Path to the custom tsconifg.json file                                                                                     |
+| `tsconfig-path`      | string |          | ./tsconfig.json                 | Path to the custom tsconfig.json file                                                                                     |
 
 ### Outputs
 

@@ -10,7 +10,7 @@ inputs:
     default: dependency-cruiser-results.json
     required: false
   tsconfig-path:
-    description: Path to the custom tsconifg.json file
+    description: Path to the custom tsconfig.json file
     default: ./tsconfig.json
     required: false
 
@@ -25,9 +25,11 @@ runs:
 
     - name: Add tsconfig to include all available files
       shell: bash
+      env:
+        TS_CONFIG: ${{ inputs.tsconfig-path }}
       run: |
         echo "{
-          \"extends\": \"${{ inputs.tsconfig-path }}\",
+          \"extends\": \"${{ env.TS_CONFIG }}\",
           \"include\": [\"**/*\"]
         }" > tsconfig.dependency-cruiser.json
 
