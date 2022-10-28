@@ -1,5 +1,9 @@
 name: 'Dependency cruiser metrics report'
-description: 'Generates a report for the project of dependency cruiser metrics'
+description: |
+  Generates a report for the project of dependency cruiser metrics
+  ****
+  envInputs:
+    NPM_TOKEN: Read-only npm token to install node_modules.
 
 inputs:
   npm-token:
