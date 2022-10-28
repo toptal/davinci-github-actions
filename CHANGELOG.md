@@ -1,5 +1,15 @@
 # davinci-github-actions
 
+## 4.3.0
+
+### Minor Changes
+
+- [#59](https://github.com/toptal/davinci-github-actions/pull/59) [`1f15f01`](https://github.com/toptal/davinci-github-actions/commit/1f15f014bd87a9debb4a1ef8b05f473682e51c65) Thanks [@denieler](https://github.com/denieler)! - ---
+
+  ### depcuiser-metrics-report
+
+  - add an action to report dependency cruiser metrics
+
 ## 4.2.2
 
 ### Patch Changes
