@@ -32,4 +32,4 @@ runs:
       env:
         DEPCRUISER_CONFIG_PATH: ${{ github.action_path }}/dependency-cruiser-metrics-config.js
         REPORT_OUTPUT_PATH: ${{ inputs.report-output-path }}
-      run: yarn dependency-cruiser --config ${{ env.DEPCRUISER_CONFIG_PATH }} --metrics --output-to ${{ REPORT_OUTPUT_PATH }} --output-type json .
+      run: yarn dependency-cruiser --config ${{ env.DEPCRUISER_CONFIG_PATH }} --metrics --output-to ${{ env.REPORT_OUTPUT_PATH }} --output-type json .
