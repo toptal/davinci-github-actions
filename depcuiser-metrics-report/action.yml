@@ -1,0 +1,41 @@
+name: 'Dependency cruiser metrics report'
+description: 'Generates a report for the project of dependency cruiser metrics'
+
+inputs:
+  npm-token:
+    description: Access token type **Read-only**. Required for repository with private dependencies. If undefined, `env.NPM_TOKEN` is used
+    required: false
+  report-output-path:
+    description: Path to the metrics report json file
+    default: dependency-cruiser-results.json
+    required: false
+  tsconfig-path:
+    description: Path to the custom tsconfig.json file
+    default: ./tsconfig.json
+    required: false
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Install dependency cruiser
+      shell: bash
+      env:
+        NPM_TOKEN: ${{ inputs.npm-token || env.NPM_TOKEN }}
+      run: yarn add --dev dependency-cruiser -W
+
+    - name: Add tsconfig to include all available files
+      shell: bash
+      env:
+        TS_CONFIG: ${{ inputs.tsconfig-path }}
+      run: |
+        echo "{
+          \"extends\": \"${{ env.TS_CONFIG }}\",
+          \"include\": [\"**/*\"]
+        }" > tsconfig.dependency-cruiser.json
+
+    - name: Generate the dependency cruiser report
+      shell: bash
+      env:
+        DEPCRUISER_CONFIG_PATH: ${{ github.action_path }}/dependency-cruiser-metrics-config.js
+        REPORT_OUTPUT_PATH: ${{ inputs.report-output-path }}
+      run: yarn dependency-cruiser --config ${{ env.DEPCRUISER_CONFIG_PATH }} --metrics --output-to ${{ env.REPORT_OUTPUT_PATH }} --output-type json .
