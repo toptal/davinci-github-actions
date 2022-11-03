@@ -1,6 +1,6 @@
 ## Check untracked GQL types
 
-Check if some GQL types are not generated
+Check if some GQL types were not generated
 
 ### Description
 
