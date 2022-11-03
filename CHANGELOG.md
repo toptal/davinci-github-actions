@@ -1,5 +1,15 @@
 # davinci-github-actions
 
+## 4.4.1
+
+### Patch Changes
+
+- [#64](https://github.com/toptal/davinci-github-actions/pull/64) [`21cfee8`](https://github.com/toptal/davinci-github-actions/commit/21cfee8a7e89ccd168f3478efb3395b1e6d31c21) Thanks [@dulishkovych](https://github.com/dulishkovych)! - ---
+
+  ### no-untracked-generated-types
+
+  - fix usage of path-pattern
+
 ## 4.4.0
 
 ### Minor Changes
