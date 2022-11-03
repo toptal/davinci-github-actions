@@ -1,0 +1,31 @@
+name: Check untracked GQL types
+description: Check if some GQL types were not generated
+
+inputs:
+  path-pattern:
+    description: 'git `pathspec` pattern to match GQL types files'
+    required: false
+    default: '*.gql.ts'
+  generate-types-command:
+    description: 'Command to generate GQL types'
+    required: false
+    default: yarn generate:types
+
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      run: ${{ inputs.generate-types-command }}
+
+    - name: Check for untracked files
+      shell: bash
+      run: |
+        UNTRACKED_CHANGES_COUNT=0
+        git status -s -u ${{ inputs.davinci-branch }} ':(exclude)untracked_changes.txt' > untracked_changes.txt
+        UNTRACKED_CHANGES_COUNT=`wc -l untracked_changes.txt | cut -c1`
+        if [ $UNTRACKED_CHANGES_COUNT -gt 0 ]; then
+          echo "Files with untracked changes found:"
+          cat untracked_changes.txt
+          echo "::error::Generated types are not in sync, please run ${{ inputs.generate-types-command }} and commit the result"
+          exit 1
+        fi

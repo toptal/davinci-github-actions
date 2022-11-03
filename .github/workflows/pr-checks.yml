@@ -11,7 +11,7 @@ concurrency:
 
 jobs:
   readme-existence:
-    name: "README.md file existence check"
+    name: 'README.md file existence check'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
