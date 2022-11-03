@@ -1,5 +1,15 @@
 # davinci-github-actions
 
+## 4.4.0
+
+### Minor Changes
+
+- [#58](https://github.com/toptal/davinci-github-actions/pull/58) [`465d6f8`](https://github.com/toptal/davinci-github-actions/commit/465d6f82a422a16ad4f0a2c01b3bcefa925d6500) Thanks [@dulishkovych](https://github.com/dulishkovych)! - ---
+
+  ### no-untracked-generated-types
+
+  - add new action that will help with catching ungenerated GQL types
+
 ## 4.3.0
 
 ### Minor Changes
