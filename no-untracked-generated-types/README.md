@@ -26,5 +26,5 @@ Not specified
 ### Usage
 
 ```yaml
-  - uses: toptal/davinci-github-actions/no-untracked-generated-types@v3.0.1
+  - uses: toptal/davinci-github-actions/no-untracked-generated-types@v4.4.0
 ```
