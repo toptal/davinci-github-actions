@@ -1,5 +1,5 @@
 name: Check untracked GQL types
-description: Check if some GQL types are not generated
+description: Check if some GQL types were not generated
 
 inputs:
   path-pattern:
