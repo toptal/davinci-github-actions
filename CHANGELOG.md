@@ -1,5 +1,15 @@
 # davinci-github-actions
 
+## 4.4.2
+
+### Patch Changes
+
+- [#70](https://github.com/toptal/davinci-github-actions/pull/70) [`9f6bfd7`](https://github.com/toptal/davinci-github-actions/commit/9f6bfd70d4aec9f436c51d99f15bc24207fde6cb) Thanks [@jcobarreto](https://github.com/jcobarreto)! - ---
+
+  ### build-push-image
+
+  - add GAR as new tag for docker image
+
 ## 4.4.1
 
 ### Patch Changes
