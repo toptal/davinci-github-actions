@@ -11,14 +11,11 @@ runs:
     - name: Auth Google cloud toolchain
       uses: google-github-actions/auth@v1.0.0
       with:
-        credentials_json: ${{ secrets.GCR_GQLGW_SCHEMAS_BUCKET_ACCOUNT }}
+        credentials_json: ${{ env.GCR_GQLGW_SCHEMAS_BUCKET_ACCOUNT }}
         create_credentials_file: true
 
     - name: Setup Google cloud toolchain
       uses: google-github-actions/setup-gcloud@v0.6.0
-
-    - name: Fetch gql schemas
-      run: yarn fetch:graphql-schemas
 
     - name: Check types cache
       uses: actions/cache@v3
@@ -31,4 +28,6 @@ runs:
 
     - name: Generate types
       if: ${{ steps.storybook-gql-types-cache.outputs.cache-hit != 'true' }}
-      run: yarn ${{ inputs.generate-types-command }}
+      env:
+        COMMAND: ${{ inputs.generate-types-command }}
+      run: yarn $COMMAND

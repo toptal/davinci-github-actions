@@ -44,6 +44,9 @@ inputs:
   generate-types-command:
     description: Command to generate gql types
     default: false
+  event-number:
+    description: Event number of the original pr
+    default: false
 
 runs:
   using: composite
@@ -51,14 +54,14 @@ runs:
     - name: Set up node
       uses: actions/setup-node@v3
       with:
-        node-version: 14
+        node-version: 16
 
     - name: Install Dependencies
       if: ${{ inputs.use-prebuilt-package == 'false' && inputs.use-prebuilt-image == 'false' }}
       uses: toptal/davinci-github-actions/yarn-install@v4.4.2
 
     - name: Generate Types
-      if: ${{ inputs.generate-types-command !='false' }}
+      if: ${{ inputs.generate-types-command != false }}
       uses: toptal/davinci-github-actions/generate-gql-types@v3.0.1
       with:
         generate-types-command: ${{ inputs.generate-types-command }}
