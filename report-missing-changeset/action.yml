@@ -1,0 +1,94 @@
+name: Report Missing Changeset
+description: |
+  Tool for monorepos that use changesets for release. 
+  It compares packages described in changesets with packages that have been changed and 
+  issues a warning comment if there is a missing dependency.
+  Requires checked out repository with `fetch-depth: 0`
+
+inputs:
+  github-token:
+    required: true
+    description: Token for authorization
+  base-branch:
+    required: false
+    description: Base branch of the repository
+    default: master
+
+runs:
+  using: composite
+  steps:
+    - name: Set up git to work with changeset
+      env:
+        BASE_BRANCH: ${{ inputs.base-branch }}
+      shell: bash
+      run: |
+        # Necessary for branch comparison: https://github.com/changesets/changesets/issues/517
+        git fetch origin $BASE_BRANCH
+
+    - name: Get changeset status
+      id: changeset-info
+      uses: toptal/davinci-github-actions/get-changeset-info@v4.5.0
+      with:
+        base-ref: origin/${{ inputs.base-branch }}
+        
+    - name: Report missing changeset
+      uses: actions/github-script@v3
+      with:
+        github-token: ${{ inputs.github-token }}
+        script: |
+          const { issue: { number: issue_number }, repo: { owner, repo }  } = context
+
+          const releasePackages = ${{ steps.changeset-info.outputs.release-packages }}
+          const changedPackages = ${{ steps.changeset-info.outputs.changed-packages }}
+          const missingPackages = ${{ steps.changeset-info.outputs.missing-packages }}
+
+          console.log('Release packages:', releasePackages)
+          console.log('Changed packages:', changedPackages)
+          console.log('Missing packages:', missingPackages)
+
+          // If there are no changesets or changed packages, we don't need to report anything
+          if (releasePackages.length === 0 || changedPackages.length === 0) {
+            return
+          }
+
+          const commentPrefix = ':warning: Following packages are missing changesets. Please check if they don\'t require one.'
+
+          const comments = await github.issues.listComments({
+            owner,
+            repo,
+            issue_number,
+          })
+
+          // Find existing comment
+          const comment = comments.data.find(({ body }) => body.startsWith(commentPrefix))
+
+          // If there are no missing packages, we can delete the comment
+          if (missingPackages.length === 0) {
+            if (comment) {
+              await github.issues.deleteComment({
+                owner,
+                repo,
+                comment_id: comment.id,
+              })
+            }
+
+            return
+          }
+
+          const body = `${commentPrefix}\n\n\`\`\`\n${missingPackages.join('\n')}\n\`\`\``
+
+          if (comment) {
+            await github.issues.updateComment({
+              owner,
+              repo,
+              comment_id: comment.id,
+              body,
+            })
+          } else {
+            await github.issues.createComment({
+              owner,
+              repo,
+              issue_number,
+              body,
+            })
+          }
