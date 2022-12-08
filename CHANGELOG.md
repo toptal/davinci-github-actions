@@ -1,5 +1,30 @@
 # davinci-github-actions
 
+## 4.4.3
+
+### Patch Changes
+
+- [#76](https://github.com/toptal/davinci-github-actions/pull/76) [`41d5aed`](https://github.com/toptal/davinci-github-actions/commit/41d5aedfabd8b2c02969cb444e48636923dfaff2) Thanks [@LashaJini](https://github.com/LashaJini)! - ---
+
+  ### build-publish-alpha-package
+
+  - bump `toptal/davinci-github-actions/yarn-install` from `3.0.1` to `4.4.2`
+
+  ### build-push-release-image
+
+  - bump `toptal/davinci-github-actions/yarn-install` from `3.0.1` to `4.4.2`
+  - bump `toptal/davinci-github-actions/build-push-image` from `3.0.1` to `4.4.2`
+
+  ### deploy-storybook
+
+  - bump `toptal/davinci-github-actions/yarn-install` from `3.2.0` to `4.4.2`
+  - bump `toptal/davinci-github-actions/build-push-image` from `3.2.0` to `4.4.2`
+  - bump `toptal/davinci-github-actions/extract-env-variables` from `3.2.0` to `4.4.2`
+
+  ### build-publish-alpha-package
+
+  - bump `toptal/davinci-github-actions/is-team-member` from `3.0.2` to `4.4.2`
+
 ## 4.4.2
 
 ### Patch Changes
