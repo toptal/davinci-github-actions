@@ -27,7 +27,7 @@ Not specified
 ### Usage
 
 ```yaml
-  - uses: toptal/davinci-github-actions/integration-tests@v3.0.1
+  - uses: toptal/davinci-github-actions/integration-tests@v4.4.2
     with:
       command: test:e2e:ci
 ```

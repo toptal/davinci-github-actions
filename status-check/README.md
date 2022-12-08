@@ -28,7 +28,7 @@ Not specified
 ### Usage
 
 ```yaml
-  - uses: toptal/davinci-github-actions/status-check@v3.0.1
+  - uses: toptal/davinci-github-actions/status-check@v4.4.2
     with:
       name: Alpha package release
       state: success

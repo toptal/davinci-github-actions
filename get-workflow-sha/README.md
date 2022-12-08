@@ -36,5 +36,5 @@ Not specified
 ### Usage
 
 ```yaml
-  - uses: toptal/davinci-github-actions/get-workflow-sha@v3.0.1
+  - uses: toptal/davinci-github-actions/get-workflow-sha@v4.4.2
 ```

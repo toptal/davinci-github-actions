@@ -35,7 +35,7 @@ runs:
   using: composite
   steps:
     - name: Install Dependencies
-      uses: toptal/davinci-github-actions/yarn-install@v3.2.0
+      uses: toptal/davinci-github-actions/yarn-install@v4.4.2
 
     - name: Build Storybook
       shell: bash
@@ -51,7 +51,7 @@ runs:
         echo ::set-output name=release_name::${{ github.event.repository.name }}-pr-${{ github.event.number || github.event.issue.number }}-storybook
 
     - name: Build and Push Storybook Image
-      uses: toptal/davinci-github-actions/build-push-image@v3.2.0
+      uses: toptal/davinci-github-actions/build-push-image@v4.4.2
       with:
         sha: ${{ inputs.sha }}
         image-name: ${{ steps.repo.outputs.repository_name }}-storybook-release
@@ -79,7 +79,7 @@ runs:
           }
         job_timeout: 1200
 
-    - uses: toptal/davinci-github-actions/extract-env-variables@v3.2.0
+    - uses: toptal/davinci-github-actions/extract-env-variables@v4.4.2
       if: ${{ inputs.environment == 'temploy' }}
       id: env-variables
       with:
