@@ -21,5 +21,5 @@ Not specified
 ### Usage
 
 ```yaml
-  - uses: toptal/davinci-github-actions/lint@v3.0.1
+  - uses: toptal/davinci-github-actions/lint@v4.4.2
 ```

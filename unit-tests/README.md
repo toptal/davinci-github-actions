@@ -21,5 +21,5 @@ Not specified
 ### Usage
 
 ```yaml
-  - uses: toptal/davinci-github-actions/unit-tests@v3.0.1
+  - uses: toptal/davinci-github-actions/unit-tests@v4.4.2
 ```

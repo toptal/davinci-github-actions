@@ -33,14 +33,14 @@ This is a list of ENV Variables that are used in GH Action:
 
 ```yaml
   - name: Generate the dependency cruiser metrics report
-    uses: toptal/davinci-github-actions/depcuiser-metrics-report@v4.2.2
+    uses: toptal/davinci-github-actions/depcuiser-metrics-report@v4.4.2
 ```
 
 or with inputs:
 
 ```yaml
   - name: Generate the dependency cruiser metrics report
-    uses: toptal/davinci-github-actions/depcuiser-metrics-report@v4.2.2
+    uses: toptal/davinci-github-actions/depcuiser-metrics-report@v4.4.2
     with:
       npm-token: ${{ env.NPM_TOKEN }}
       report-output-path: dependency-cruiser-results.json

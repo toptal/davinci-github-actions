@@ -25,5 +25,5 @@ Not specified
 ### Usage
 
 ```yaml
-  - uses: toptal/davinci-github-actions/danger@v3.0.1
+  - uses: toptal/davinci-github-actions/danger@v4.4.2
 ```

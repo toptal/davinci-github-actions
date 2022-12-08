@@ -28,7 +28,7 @@ runs:
       with:
         node-version: '14.17'
 
-    - uses: toptal/davinci-github-actions/yarn-install@v3.0.1
+    - uses: toptal/davinci-github-actions/yarn-install@v4.4.2
 
     - name: Build package
       shell: bash

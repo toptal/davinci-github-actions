@@ -32,7 +32,7 @@ Not specified
 ### Usage
 
 ```yaml
-  - uses: toptal/davinci-github-actions/extract-env-variables@v3.0.1
+  - uses: toptal/davinci-github-actions/extract-env-variables@v4.4.2
     with:
       filename: .env.temploy
       github-token: ${{ secrets.TOPTAL_DEVBOT_TOKEN }}

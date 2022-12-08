@@ -37,7 +37,7 @@ This is a list of ENV Variables that are used in GH Action:
 ### Usage
 
 ```yaml
-  - uses: toptal/davinci-github-actions/deploy-storybook@v4.0.0
+  - uses: toptal/davinci-github-actions/deploy-storybook@v4.4.2
     env:
       GITHUB_TOKEN: ${{ secrets.TOPTAL_DEVBOT_TOKEN }}
       GCR_ACCOUNT_KEY: ${{ secrets.GCR_ACCOUNT_KEY }}

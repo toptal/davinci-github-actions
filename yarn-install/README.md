@@ -31,7 +31,7 @@ Not specified
 ### Usage
 
 ```yaml
-  - uses: toptal/davinci-github-actions/yarn-install@v3.0.1
+  - uses: toptal/davinci-github-actions/yarn-install@v4.4.2
     with:
       npm-token: ${{ env.NPM_TOKEN }}
       cache-version: "1.0"

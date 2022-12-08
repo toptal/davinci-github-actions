@@ -22,5 +22,5 @@ Not specified
 
 ```yaml
   - name: Generate the affected packages report
-    uses: toptal/davinci-github-actions/report-affected-packages@v4.2.1
+    uses: toptal/davinci-github-actions/report-affected-packages@v4.4.2
 ```
