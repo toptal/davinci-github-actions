@@ -32,6 +32,7 @@ runs:
 
     - name: Generate types
       if: ${{ steps.storybook-gql-types-cache.outputs.cache-hit != 'true' }}
+      shell: bash
       env:
         COMMAND: ${{ inputs.generate-types-command }}
       run: yarn $COMMAND
