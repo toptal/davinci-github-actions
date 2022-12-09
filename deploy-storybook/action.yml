@@ -82,6 +82,8 @@ runs:
       shell: bash
       env:
         BUILD_COMMAND: ${{ inputs.build-command }}
+        NODE_OPTIONS: "--max_old_space_size=8192"
+      run: yarn "$BUILD_COMMAND"
 
     - name: Specify Repository, Jenkins folder and Release Name
       id: repo
