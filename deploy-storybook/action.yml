@@ -46,7 +46,7 @@ inputs:
     description: Command to generate gql types
     required: false
     default: false
-  event-number:
+  pr-number:
     description: Event number of the original pr
     required: false
     default: false
@@ -61,7 +61,7 @@ runs:
     - name: Set up node
       uses: actions/setup-node@v3
       with:
-        node-version: 16
+        node-version: 14
 
     - name: Install Dependencies
       if: ${{ inputs.use-prebuilt-package == 'false' && inputs.use-prebuilt-image == 'false' }}
@@ -82,7 +82,6 @@ runs:
       shell: bash
       env:
         BUILD_COMMAND: ${{ inputs.build-command }}
-        NODE_OPTIONS: "--max_old_space_size=8192"
       run: yarn "$BUILD_COMMAND"
 
     - name: Specify Repository, Jenkins folder and Release Name
