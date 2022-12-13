@@ -5,18 +5,21 @@
   "author": "Toptal",
   "license": "MIT",
   "scripts": {
-    "build:matrix": "ncc build create-matrix/index.js -o create-matrix/dist",
     "documentation:generate": "ncc run _scripts/documentation/generate.ts -C",
     "release": "changeset tag",
     "lint": "davinci-syntax lint code .",
     "test": "davinci-qa unit --runInBand",
     "test:ci": "LANG=en_US davinci-qa unit --ci --testTimeout=10000 --silent",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "build:matrix": "ncc build create-matrix/index.js -o create-matrix/dist",
+    "build:get-changeset-info": "ncc build get-changeset-info/index.js -o get-changeset-info/dist"
   },
   "devDependencies": {
     "@actions/core": "^1.9.1",
     "@changesets/changelog-github": "^0.4.2",
     "@changesets/cli": "^2.22.0",
+    "@changesets/get-release-plan": "^3.0.15",
+    "@changesets/git": "^1.5.0",
     "@toptal/browserslist-config": "^1.2.0",
     "@toptal/davinci-qa": "^12.1.0",
     "@toptal/davinci-syntax": "^16.2.0",
