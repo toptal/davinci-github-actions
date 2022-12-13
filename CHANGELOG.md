@@ -1,5 +1,18 @@
 # davinci-github-actions
 
+## 4.5.0
+
+### Minor Changes
+
+- [#79](https://github.com/toptal/davinci-github-actions/pull/79) [`56d8e49`](https://github.com/toptal/davinci-github-actions/commit/56d8e49724bbce55eaf82968d8f733ffe64a7b6e) Thanks [@OndrejTuma](https://github.com/OndrejTuma)! - ---
+
+  ### get-changeset-info
+
+  - new action to return changeset information for monorepo. Returns:
+    - changed packages compared to base ref
+    - release packages defined in changeset files
+    - missing packages that have been changed but are not part of release
+
 ## 4.4.3
 
 ### Patch Changes
