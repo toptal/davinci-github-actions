@@ -12,10 +12,12 @@
     "test:ci": "LANG=en_US davinci-qa unit --ci --testTimeout=10000 --silent",
     "prepare": "husky install",
     "build:matrix": "ncc build create-matrix/index.js -o create-matrix/dist",
-    "build:get-changeset-info": "ncc build get-changeset-info/index.js -o get-changeset-info/dist"
+    "build:get-changeset-info": "ncc build get-changeset-info/index.js -o get-changeset-info/dist",
+    "build:report-missing-changeset": "ncc build report-missing-changeset/index.js -o report-missing-changeset/dist"
   },
   "devDependencies": {
     "@actions/core": "^1.9.1",
+    "@actions/github": "^5.1.1",
     "@changesets/changelog-github": "^0.4.2",
     "@changesets/cli": "^2.22.0",
     "@changesets/get-release-plan": "^3.0.15",
