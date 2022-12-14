@@ -11,7 +11,7 @@ module.exports = {
     'yarn build:get-changeset-info',
     'git add get-changeset-info/dist',
   ],
-  'report-missing-changeset/index.js': () => [
+  'report-missing-changeset/**/*.js': () => [
     'yarn build:report-missing-changeset',
     'git add report-missing-changeset/dist',
   ],

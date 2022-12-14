@@ -33,7 +33,7 @@ Not specified
       fetch-depth: 0
 
   - name: Report missing changeset
-    uses: toptal/davinci-github-actions/report-missing-changeset@4.5.0
+    uses: toptal/davinci-github-actions/report-missing-changeset@4.6.0
     with:
       github-token: ${{ env.TOPTAL_DEVBOT_TOKEN }}
 ```
