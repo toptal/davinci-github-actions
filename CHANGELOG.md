@@ -1,5 +1,15 @@
 # davinci-github-actions
 
+## 4.6.0
+
+### Minor Changes
+
+- [#78](https://github.com/toptal/davinci-github-actions/pull/78) [`708e807`](https://github.com/toptal/davinci-github-actions/commit/708e80791b283d66468e4c5e2cfed1e25a8df1b7) Thanks [@OndrejTuma](https://github.com/OndrejTuma)! - ---
+
+  ### report-missing-changeset
+
+  - add new action for monorepo that report changed packages which are not in changeset
+
 ## 4.5.0
 
 ### Minor Changes
