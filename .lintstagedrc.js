@@ -7,7 +7,11 @@ module.exports = {
     paths.length > 0
       ? ['yarn documentation:generate', `git add */README.md`]
       : [],
-  'get-changeset-info/index.js': () => [
+  'create-matrix/**/*.js': () => [
+    'yarn build:create-matrix',
+    'git add create-matrix/dist',
+  ],
+  'get-changeset-info/**/*.js': () => [
     'yarn build:get-changeset-info',
     'git add get-changeset-info/dist',
   ],
