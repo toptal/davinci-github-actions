@@ -21,12 +21,12 @@ runs:
   steps:
     - name: Set node version
       id: set-node-version
+      run: echo version=$(node -v) >> $GITHUB_OUTPUT
       shell: bash
-      run: echo "::set-output name=version::$(node -v)"
 
     - name: Get yarn cache
       id: yarn-cache
-      run: echo "::set-output name=dir::$(yarn cache dir)"
+      run: echo dir=$(yarn cache dir) >> $GITHUB_OUTPUT
       shell: bash
 
     # This step is needed only because we want to update the cache when a new workspace
