@@ -87,6 +87,8 @@ runs:
     - name: Specify Repository, Jenkins folder and Release Name
       id: repo
       shell: bash
+      env:
+        RELEASE_SUFFIX: ${{ inputs.environment == 'temploy' }} && 'storybook-temploy' || 'storybook'
       run: |
         folder_name=$FOLDER_NAME
 
@@ -171,4 +173,4 @@ runs:
           const { issue: { number: issue_number }, repo: { owner, repo }  } = context
           const name = ['${{ env.RELEASE }}', '${{ steps.repo.outputs.repository_name }}-storybook'].join('-').substring(0, 45)
           const body = `Storybook temploy is available at https://${name}.toptal.rocks :tada:`
-          github.issues.createComment({ issue_number, owner, repo, body })
+          github.issues.createComment({ issue_number || inputs.pr-number, owner, repo, body })
