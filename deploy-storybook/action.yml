@@ -88,7 +88,7 @@ runs:
       id: repo
       shell: bash
       env:
-        RELEASE_SUFFIX: ${{ inputs.environment == 'temploy' }} && 'storybook-temploy' || 'storybook'
+        RELEASE_SUFFIX: ${{ inputs.environment == 'temploy' && 'storybook-temploy' || 'storybook' }}
       run: |
         folder_name=$FOLDER_NAME
 
