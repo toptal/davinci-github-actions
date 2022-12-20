@@ -4,7 +4,7 @@ description: |
   ****
   envInputs:
     GITHUB_TOKEN: GitHub token. Is used to checkout `davinci` branch
-    GCR_ACCOUNT_KEY: Necessary token to push image to Google cloud\
+    GCR_ACCOUNT_KEY: Necessary token to push image to Google cloud
     JENKINS_DEPLOY_TOKEN: Jenkins deployment token. Keep in mind that tokens for `temploy` and `staging` differ
 
 inputs:
@@ -30,28 +30,52 @@ inputs:
     description: Command to build Storybook with
     required: false
     default: storybook:build
+  use-prebuilt-package:
+    description: If a prebuilt Storybook package should be used
+    required: false
+    default: 'false'
+  use-prebuilt-image:
+    description: If a prebuilt Storybook Docker image should be used
+    required: false
+    default: 'false'
+  jenkins-folder-name:
+    description: Jenkins folder where the deployment jobs are located
+    required: false
 
 runs:
   using: composite
   steps:
     - name: Install Dependencies
+      if: ${{ inputs.use-prebuilt-package == 'false' && inputs.use-prebuilt-image == 'false' }}
       uses: toptal/davinci-github-actions/yarn-install@v4.4.2
 
     - name: Build Storybook
+      if: ${{ inputs.use-prebuilt-package == 'false' && inputs.use-prebuilt-image == 'false' }}
+      run: yarn "$BUILD_COMMAND"
       shell: bash
       env:
         BUILD_COMMAND: ${{ inputs.build-command }}
-      run: yarn "$BUILD_COMMAND"
 
-    - name: Specify Repository and Release Name
+    - name: Specify Repository, Jenkins folder and Release Name
       id: repo
       shell: bash
       run: |
-        echo ::set-output name=repository_name::${{ github.event.repository.name }}
-        echo ::set-output name=release_name::${{ github.event.repository.name }}-pr-${{ github.event.number || github.event.issue.number }}-storybook
+        folder_name=$FOLDER_NAME
+
+        if [[ "$folder_name" == '' ]]; then
+          echo folder_name=${{ github.event.repository.name }} >> $GITHUB_OUTPUT
+        else
+          echo folder_name=$FOLDER_NAME >> $GITHUB_OUTPUT
+        fi
+
+        echo repository_name=${{ github.event.repository.name }} >> $GITHUB_OUTPUT
+        echo release_name=${{ github.event.repository.name }}-pr-${{ github.event.number || github.event.issue.number }}-storybook >> $GITHUB_OUTPUT
+      env:
+        FOLDER_NAME: ${{ inputs.jenkins-folder-name }}
 
     - name: Build and Push Storybook Image
       uses: toptal/davinci-github-actions/build-push-image@v4.4.2
+      if: ${{ inputs.use-prebuilt-image == 'false' }}
       with:
         sha: ${{ inputs.sha }}
         image-name: ${{ steps.repo.outputs.repository_name }}-storybook-release
@@ -67,12 +91,13 @@ runs:
       if: ${{ inputs.environment == 'staging' }}
       uses: toptal/jenkins-job-trigger-action@1.0.0
       env:
+        JENKINS_FOLDER_NAME: ${{ steps.repo.outputs.folder_name }}
         REPOSITORY_NAME: ${{ steps.repo.outputs.repository_name }}
       with:
         jenkins_url: https://jenkins.toptal.net
         jenkins_user: toptal-devbot
         jenkins_token: ${{ env.JENKINS_DEPLOY_TOKEN }}
-        job_name: ${{ env.REPOSITORY_NAME }}/job/${{ env.REPOSITORY_NAME }}-storybook-staging-deployment
+        job_name: ${{ env.JENKINS_FOLDER_NAME }}/job/${{ env.REPOSITORY_NAME }}-storybook-staging-deployment
         job_params: |
           {
             "TAG": "${{ inputs.sha }}"
@@ -90,13 +115,14 @@ runs:
       if: ${{ inputs.environment == 'temploy' }}
       uses: toptal/jenkins-job-trigger-action@1.0.0
       env:
+        JENKINS_FOLDER_NAME: ${{ steps.repo.outputs.folder_name }}
         REPOSITORY_NAME: ${{ steps.repo.outputs.repository_name }}
         RELEASE: ${{ steps.repo.outputs.release_name }}
       with:
         jenkins_url: https://jenkins-build.toptal.net/
         jenkins_user: toptal-jenkins
         jenkins_token: ${{ env.JENKINS_DEPLOY_TOKEN }}
-        job_name: ${{ env.REPOSITORY_NAME }}/job/${{ env.REPOSITORY_NAME }}-storybook-temploy-helm-run
+        job_name: ${{ env.JENKINS_FOLDER_NAME }}/job/${{ env.REPOSITORY_NAME }}-storybook-temploy-helm-run
         job_params: |
           {
             "REPOSITORY_NAME": "${{ env.REPOSITORY_NAME }}-storybook",
