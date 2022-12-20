@@ -1,5 +1,21 @@
 # davinci-github-actions
 
+## 4.7.0
+
+### Minor Changes
+
+- [#87](https://github.com/toptal/davinci-github-actions/pull/87) [`d362a6d`](https://github.com/toptal/davinci-github-actions/commit/d362a6df1b2be506101d9e978b4ebdc3f3e37de1) Thanks [@stefanteixeira](https://github.com/stefanteixeira)! - ---
+
+  ### deploy-storybook
+
+  - adjust action to support usage on frontier-pub
+  - add `use-prebuilt-package`, `use-prebuilt-image` and `jenkins-folder-name` inputs
+  - fix `set-output` warnings
+
+  ### yarn-install
+
+  - fix `set-output` warnings
+
 ## 4.6.0
 
 ### Minor Changes
