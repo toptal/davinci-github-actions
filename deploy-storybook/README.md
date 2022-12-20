@@ -31,12 +31,13 @@ Not specified
 All ENV Variables, defined in a GH Workflow are also passed to a GH Action. It means, the might be reused as is.
 This is a list of ENV Variables that are used in GH Action:
 
-| name                   | description                                                                           |
-| ---------------------- | ------------------------------------------------------------------------------------- |
-| `GITHUB_TOKEN`         | GitHub token. Is used to checkout `davinci` branch                                    |
-| `GCR_ACCOUNT_KEY`      | Necessary token to push image to Google cloud\\                                       |
-| `JENKINS_DEPLOY_TOKEN` | Jenkins deployment token. Keep in mind that tokens for `temploy` and `staging` differ |
-| `NPM_TOKEN`            | Necessary token to install private dependencies                                       |
+| name                               | description                                                                           |
+| ---------------------------------- | ------------------------------------------------------------------------------------- |
+| `GITHUB_TOKEN`                     | GitHub token. Is used to checkout `davinci` branch                                    |
+| `GCR_ACCOUNT_KEY`                  | Necessary token to push image to Google cloud\\                                       |
+| `GCR_GQLGW_SCHEMAS_BUCKET_ACCOUNT` | Necessary token to pull GQL schema from Google Cloud                                  |
+| `JENKINS_DEPLOY_TOKEN`             | Jenkins deployment token. Keep in mind that tokens for `temploy` and `staging` differ |
+| `NPM_TOKEN`                        | Necessary token to install private dependencies                                       |
 
 ### Usage
 

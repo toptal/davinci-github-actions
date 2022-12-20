@@ -22,3 +22,12 @@ Not specified
 Not specified
 
 ### Usage
+
+```yaml
+  - uses: toptal/davinci-github-actions/generate-gql-types@CPT-420-temploy-storybook-staff-portal
+    env:
+      GCR_ACCOUNT_KEY: ${{ secrets.GCR_ACCOUNT_KEY }}
+    with:
+      generate-types-command: generate:types
+      gcr-gqlgw-schemas-bucket-account: ${{ secrets.GCR_GQLGW_SCHEMAS_BUCKET_ACCOUNT }}
+```
