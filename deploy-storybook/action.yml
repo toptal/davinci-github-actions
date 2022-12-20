@@ -167,11 +167,12 @@ runs:
       uses: actions/github-script@v3.0.0
       env:
         RELEASE: ${{ steps.repo.outputs.release_name }}
+        PR_NUMBER: ${{ inputs.pr-number }}
       with:
         github-token: ${{ env.GITHUB_TOKEN }}
         script: |
           const { issue: { number: issue_number }, repo: { owner, repo }  } = context
           const name = ['${{ env.RELEASE }}', '${{ steps.repo.outputs.repository_name }}-storybook'].join('-').substring(0, 45)
           const body = `Storybook temploy is available at https://${name}.toptal.rocks :tada:`
-          const issuenumber = issue_number || ${{ inputs.pr-number }}
-          github.issues.createComment({ issuenumber, owner, repo, body })
+          const number = issue_number || ${{ env.PR_NUMBER }}
+          github.issues.createComment({ issue_number: number, owner, repo, body })
