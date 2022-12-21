@@ -73,7 +73,6 @@ runs:
 
     - name: Build Storybook
       if: ${{ inputs.use-prebuilt-package == 'false' && inputs.use-prebuilt-image == 'false' }}
-      run: yarn "$BUILD_COMMAND"
       shell: bash
       env:
         BUILD_COMMAND: ${{ inputs.build-command }}
@@ -83,6 +82,7 @@ runs:
       id: repo
       shell: bash
       env:
+        FOLDER_NAME: ${{ inputs.jenkins-folder-name }}
         EVENT_NUMBER: ${{ github.event.number || github.event.issue.number || inputs.pr-number }}
         ENVIRONMENT: ${{ inputs.environment }}
       run: |
@@ -97,9 +97,7 @@ runs:
         echo "repository_name=${{ github.event.repository.name }}" >> $GITHUB_OUTPUT
         echo "release_name=${{ github.event.repository.name }}-pr-${{ env.EVENT_NUMBER }}-${{ env.ENVIRONMENT }}" >> $GITHUB_OUTPUT
         echo "pr_number=${{ inputs.pr-number }}" >> $GITHUB_OUTPUT
-      env:
-        FOLDER_NAME: ${{ inputs.jenkins-folder-name }}
-
+        
     - name: Build and Push Storybook Image
       uses: toptal/davinci-github-actions/build-push-image@v4.4.2
       if: ${{ inputs.use-prebuilt-image == 'false' }}
