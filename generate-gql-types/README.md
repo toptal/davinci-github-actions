@@ -24,7 +24,7 @@ Not specified
 ### Usage
 
 ```yaml
-  - uses: toptal/davinci-github-actions/generate-gql-types@CPT-420-temploy-storybook-staff-portal
+  - uses: toptal/davinci-github-actions/generate-gql-types@4.7.0
     env:
       GCR_ACCOUNT_KEY: ${{ secrets.GCR_ACCOUNT_KEY }}
       GCR_GQL_SCHEMAS_BUCKET_TOKEN: ${{ secrets.GCR_GQLGW_SCHEMAS_BUCKET_ACCOUNT }}
