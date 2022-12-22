@@ -5,7 +5,7 @@ description: |
   envInputs:
     GITHUB_TOKEN: GitHub token. Is used to checkout `davinci` branch
     GCR_ACCOUNT_KEY: Necessary token to push image to Google cloud
-    GCR_GQLGW_SCHEMAS_BUCKET_ACCOUNT: Necessary token to pull GQL schema from Google Cloud
+    GCR_GQL_SCHEMAS_BUCKET_ACCOUNT: Necessary token to pull GQL schema from Google Cloud
     JENKINS_DEPLOY_TOKEN: Jenkins deployment token. Keep in mind that tokens for `temploy` and `staging` differ
     NPM_TOKEN:  Necessary token to install private dependencies 
 
@@ -48,7 +48,7 @@ inputs:
     required: false
     default: false
   pr-number:
-    description: Event number of the original pr
+    description: Event number of the original pr, in case event number or issue number is not present. .
     required: false
     default: false
 
@@ -65,11 +65,11 @@ runs:
       uses: toptal/davinci-github-actions/yarn-install@v4.4.2
 
     - name: Generate Types
-      if: ${{ inputs.generate-types-command != false && env.GCR_GQLGW_SCHEMAS_BUCKET_ACCOUNT != false }}
+      if: ${{ inputs.generate-types-command != false && env.GCR_GQL_SCHEMAS_BUCKET_ACCOUNT != false }}
       uses: toptal/davinci-github-actions/generate-gql-types@CPT-420-temploy-storybook-staff-portal
       with:
         generate-types-command: ${{ inputs.generate-types-command }}
-        gcr-gqlgw-schemas-bucket-account: ${{ env.GCR_GQLGW_SCHEMAS_BUCKET_ACCOUNT }}
+        gcr-gql-schemas-bucket-account: ${{ env.GCR_GQL_SCHEMAS_BUCKET_ACCOUNT }}
 
     - name: Build Storybook
       if: ${{ inputs.use-prebuilt-package == 'false' && inputs.use-prebuilt-image == 'false' }}
@@ -84,7 +84,6 @@ runs:
       env:
         FOLDER_NAME: ${{ inputs.jenkins-folder-name }}
         EVENT_NUMBER: ${{ github.event.number || github.event.issue.number || inputs.pr-number }}
-        ENVIRONMENT: ${{ inputs.environment }}
       run: |
         folder_name=$FOLDER_NAME
 
@@ -95,7 +94,7 @@ runs:
         fi
 
         echo "repository_name=${{ github.event.repository.name }}" >> $GITHUB_OUTPUT
-        echo "release_name=${{ github.event.repository.name }}-pr-${{ env.EVENT_NUMBER }}-${{ env.ENVIRONMENT }}" >> $GITHUB_OUTPUT
+        echo "release_name=${{ github.event.repository.name }}-pr-$EVENT_NUMBER-storybook" >> $GITHUB_OUTPUT
         echo "pr_number=${{ inputs.pr-number }}" >> $GITHUB_OUTPUT
         
     - name: Build and Push Storybook Image
@@ -103,7 +102,7 @@ runs:
       if: ${{ inputs.use-prebuilt-image == 'false' }}
       with:
         sha: ${{ inputs.sha }}
-        image-name: storybook-release
+        image-name: ${{ steps.repo.outputs.repository_name }}-storybook-release
         build-args: |
           DIST_FOLDER=${{ inputs.dist-folder }}
           NGINX_CONFIG=./davinci/packages/davinci/docker/nginx-vhost.conf
@@ -150,7 +149,7 @@ runs:
         job_name: ${{ env.JENKINS_FOLDER_NAME }}/job/${{ env.REPOSITORY_NAME }}-storybook-temploy-helm-run
         job_params: |
           {
-            "REPOSITORY_NAME": "storybook",
+            "REPOSITORY_NAME": "${{ env.REPOSITORY_NAME }}-storybook",
             "RELEASE": "${{ env.RELEASE }}",
             "TAG": "${{ inputs.sha }}",
             "ENV": "${{ steps.env-variables.outputs.variables }}"
@@ -167,7 +166,7 @@ runs:
         github-token: ${{ env.GITHUB_TOKEN }}
         script: |
           const { issue: { number: issue_number }, repo: { owner, repo }  } = context
-          const name = ['${{ env.RELEASE }}', 'storybook'].join('-').substring(0, 45)
+          const name = ['${{ env.RELEASE }}', '${{ steps.repo.outputs.repository_name }}-storybook'].join('-').substring(0, 45)
           const body = `Storybook temploy is available at https://${name}.toptal.rocks :tada:`
           const number = issue_number || ${{ env.PR_NUMBER }}
           github.issues.createComment({ issue_number: number, owner, repo, body })
