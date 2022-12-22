@@ -8,10 +8,10 @@ Generate graphql types before application build
 
 The list of arguments, that are used in GH Action:
 
-| name                             | type   | required | default        | description                                          |
-| -------------------------------- | ------ | -------- | -------------- | ---------------------------------------------------- |
-| `generate-types-command`         | string |          | generate:types | Command to generate gql types                        |
-| `gcr-gql-schemas-bucket-account` | string | ✅        |                | Necessary token to pull gql schema from google cloud |
+| name                           | type   | required | default        | description                                          |
+| ------------------------------ | ------ | -------- | -------------- | ---------------------------------------------------- |
+| `generate-types-command`       | string |          | generate:types | Command to generate gql types                        |
+| `gcr-gql-schemas-bucket-token` | string | ✅        |                | Necessary token to pull gql schema from google cloud |
 
 ### Outputs
 
@@ -27,6 +27,7 @@ Not specified
   - uses: toptal/davinci-github-actions/generate-gql-types@CPT-420-temploy-storybook-staff-portal
     env:
       GCR_ACCOUNT_KEY: ${{ secrets.GCR_ACCOUNT_KEY }}
+      GCR_GQL_SCHEMAS_BUCKET_TOKEN: ${{ secrets.GCR_GQLGW_SCHEMAS_BUCKET_ACCOUNT }}
     with:
       generate-types-command: generate:types
       gcr-gql-schemas-bucket-account: ${{ secrets.GCR_GQL_SCHEMAS_BUCKET_ACCOUNT }}

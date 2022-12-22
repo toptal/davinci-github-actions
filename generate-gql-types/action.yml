@@ -5,7 +5,7 @@ inputs:
   generate-types-command:
     description: Command to generate gql types
     default: generate:types
-  gcr-gql-schemas-bucket-account: 
+  gcr-gql-schemas-bucket-token: 
     description: Necessary token to pull gql schema from google cloud
     required: true
 
@@ -15,7 +15,7 @@ runs:
     - name: Auth Google cloud toolchain
       uses: google-github-actions/auth@v1.0.0
       with:
-        credentials_json: ${{ inputs.gcr-gql-schemas-bucket-account }}
+        credentials_json: ${{ inputs.gcr-gql-schemas-bucket-token }}
         create_credentials_file: true
 
     - name: Setup Google cloud toolchain

@@ -5,7 +5,7 @@ description: |
   envInputs:
     GITHUB_TOKEN: GitHub token. Is used to checkout `davinci` branch
     GCR_ACCOUNT_KEY: Necessary token to push image to Google cloud
-    GCR_GQL_SCHEMAS_BUCKET_ACCOUNT: Necessary token to pull GQL schema from Google Cloud
+    GCR_GQL_SCHEMAS_BUCKET_TOKEN: Necessary token to pull GQL schema from Google Cloud
     JENKINS_DEPLOY_TOKEN: Jenkins deployment token. Keep in mind that tokens for `temploy` and `staging` differ
     NPM_TOKEN:  Necessary token to install private dependencies 
 
@@ -46,7 +46,7 @@ inputs:
   generate-types-command:
     description: Command to generate gql types
     required: false
-    default: false
+    default: 'false'
   pr-number:
     description: Event number of the original pr, in case event number or issue number is not present. .
     required: false
@@ -65,11 +65,11 @@ runs:
       uses: toptal/davinci-github-actions/yarn-install@v4.4.2
 
     - name: Generate Types
-      if: ${{ inputs.generate-types-command != false && env.GCR_GQL_SCHEMAS_BUCKET_ACCOUNT != false }}
+      if: ${{ inputs.generate-types-command != 'false' }}
       uses: toptal/davinci-github-actions/generate-gql-types@CPT-420-temploy-storybook-staff-portal
       with:
         generate-types-command: ${{ inputs.generate-types-command }}
-        gcr-gql-schemas-bucket-account: ${{ env.GCR_GQL_SCHEMAS_BUCKET_ACCOUNT }}
+        gcr-gql-schemas-bucket-token: ${{ env.GCR_GQL_SCHEMAS_BUCKET_TOKEN }}
 
     - name: Build Storybook
       if: ${{ inputs.use-prebuilt-package == 'false' && inputs.use-prebuilt-image == 'false' }}
