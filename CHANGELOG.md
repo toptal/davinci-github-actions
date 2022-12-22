@@ -1,5 +1,20 @@
 # davinci-github-actions
 
+## 4.8.0
+
+### Minor Changes
+
+- [#75](https://github.com/toptal/davinci-github-actions/pull/75) [`366faed`](https://github.com/toptal/davinci-github-actions/commit/366faed04fb3e8e2c6afd2ff26cf995232576357) Thanks [@rasitozcan](https://github.com/rasitozcan)! - ---
+
+  ### deploy-storybook
+
+  - add `set up node` step
+  - optional `pr-number` input to be used when `event.number` or `event.issue.number` is not present.
+
+  ### generate-gql-types
+
+  - create new action to generate GQL types
+
 ## 4.7.0
 
 ### Minor Changes
