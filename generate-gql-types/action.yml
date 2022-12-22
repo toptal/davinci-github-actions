@@ -1,0 +1,38 @@
+name: Generate GQL Types
+description: Generate graphql types before application build
+    
+inputs:
+  generate-types-command:
+    description: Command to generate gql types
+    default: generate:types
+  gcr-gql-schemas-bucket-token: 
+    description: Necessary token to pull gql schema from google cloud
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Auth Google cloud toolchain
+      uses: google-github-actions/auth@v1.0.0
+      with:
+        credentials_json: ${{ inputs.gcr-gql-schemas-bucket-token }}
+        create_credentials_file: true
+
+    - name: Setup Google cloud toolchain
+      uses: google-github-actions/setup-gcloud@v0.6.0
+
+    - name: Check types cache
+      uses: actions/cache@v3
+      id: gql-types-cache
+      with:
+        path: |
+          libs/graphql
+          **/*.types.tsx
+        key: ${{ runner.os }}-types-${{ hashFiles('yarn.lock', '**/codegen.js', '**/*.graphql', '**/*.graphql.ts', '**/*.gql.ts') }}
+
+    - name: Generate types
+      if: ${{ steps.gql-types-cache.outputs.cache-hit != 'true' }}
+      shell: bash
+      env:
+        COMMAND: ${{ inputs.generate-types-command }}
+      run: yarn $COMMAND
