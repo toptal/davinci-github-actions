@@ -1,5 +1,13 @@
 # davinci-github-actions
 
+## 4.8.1
+
+### Patch Changes
+
+- [#90](https://github.com/toptal/davinci-github-actions/pull/90) [`4f73ed9`](https://github.com/toptal/davinci-github-actions/commit/4f73ed97c582c8c1b577611eda7f15894228eebd) Thanks [@rasitozcan](https://github.com/rasitozcan)! - ---
+
+  - fix version number typo used inside `deploy-storybook` action
+
 ## 4.8.0
 
 ### Minor Changes
