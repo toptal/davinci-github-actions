@@ -33,7 +33,7 @@ runs:
   using: composite
   steps:
     - name: Checkout davinci
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
         repository: toptal/davinci
         token: ${{ env.GITHUB_TOKEN }}
@@ -51,7 +51,7 @@ runs:
         ENVIRONMENT: ${{ inputs.environment }}
       run: |
         latest=$(if [[ $ENVIRONMENT == 'temploy' ]]; then echo false; else echo true; fi)
-        echo "::set-output name=latest::$latest"
+        echo latest=$latest >> $GITHUB_OUTPUT
 
     - name: Docker meta
       id: meta
