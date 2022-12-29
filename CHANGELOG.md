@@ -1,5 +1,13 @@
 # davinci-github-actions
 
+## 4.8.2
+
+### Patch Changes
+
+- [#93](https://github.com/toptal/davinci-github-actions/pull/93) [`5782d6f`](https://github.com/toptal/davinci-github-actions/commit/5782d6f0f78e0c4aee06ee3814240676bc53a5d0) Thanks [@lorainegarutti](https://github.com/lorainegarutti)! - ---
+
+  - updating set-output command and checkout action version for build-push-image package
+
 ## 4.8.1
 
 ### Patch Changes
