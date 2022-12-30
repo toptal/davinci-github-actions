@@ -16,9 +16,9 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Exctract Env variables
+    - name: Extract Env variables
       id: env-variables
-      uses: actions/github-script@v3.0.0
+      uses: actions/github-script@v6.3.3
       with:
         github-token: ${{ inputs.github-token }}
         result-encoding: string

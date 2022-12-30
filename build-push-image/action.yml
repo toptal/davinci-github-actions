@@ -55,7 +55,7 @@ runs:
 
     - name: Docker meta
       id: meta
-      uses: docker/metadata-action@v4.0.1
+      uses: docker/metadata-action@v4.1.1
       with:
         images: |
           gcr.io/toptal-hub/${{ inputs.image-name }}
