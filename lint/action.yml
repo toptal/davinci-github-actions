@@ -4,5 +4,6 @@ description: Checks for lint issues
 runs:
   using: composite
   steps:
-    - shell: bash
-      run: yarn lint
+    - run: yarn run davinci syntax lint code --check .
+    - run: yarn run davinci syntax lint styles .
+    - run: yarn run davinci syntax lint dirs .
