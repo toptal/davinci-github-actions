@@ -62,11 +62,11 @@ runs:
 
     - name: Install Dependencies
       if: ${{ inputs.use-prebuilt-package == 'false' && inputs.use-prebuilt-image == 'false' }}
-      uses: toptal/davinci-github-actions/yarn-install@v4.4.2
+      uses: toptal/davinci-github-actions/yarn-install@v4.8.2
 
     - name: Generate Types
       if: ${{ inputs.generate-types-command != 'false' }}
-      uses: toptal/davinci-github-actions/generate-gql-types@v4.8.1
+      uses: toptal/davinci-github-actions/generate-gql-types@v4.8.2
       with:
         generate-types-command: ${{ inputs.generate-types-command }}
         gcr-gql-schemas-bucket-token: ${{ env.GCR_GQL_SCHEMAS_BUCKET_TOKEN }}
@@ -98,7 +98,7 @@ runs:
         echo "pr_number=${{ inputs.pr-number }}" >> $GITHUB_OUTPUT
         
     - name: Build and Push Storybook Image
-      uses: toptal/davinci-github-actions/build-push-image@v4.4.2
+      uses: toptal/davinci-github-actions/build-push-image@v4.8.2
       if: ${{ inputs.use-prebuilt-image == 'false' }}
       with:
         sha: ${{ inputs.sha }}
@@ -113,7 +113,7 @@ runs:
 
     - name: Trigger Deploy to Staging
       if: ${{ inputs.environment == 'staging' }}
-      uses: toptal/jenkins-job-trigger-action@1.0.0
+      uses: toptal/jenkins-job-trigger-action@1.0.1
       env:
         JENKINS_FOLDER_NAME: ${{ steps.repo.outputs.folder_name }}
         REPOSITORY_NAME: ${{ steps.repo.outputs.repository_name }}
@@ -128,7 +128,7 @@ runs:
           }
         job_timeout: 1200
 
-    - uses: toptal/davinci-github-actions/extract-env-variables@v4.4.2
+    - uses: toptal/davinci-github-actions/extract-env-variables@v4.8.3
       if: ${{ inputs.environment == 'temploy' }}
       id: env-variables
       with:
@@ -137,7 +137,7 @@ runs:
 
     - name: Trigger Deploy to Temploy
       if: ${{ inputs.environment == 'temploy' }}
-      uses: toptal/jenkins-job-trigger-action@1.0.0
+      uses: toptal/jenkins-job-trigger-action@1.0.1
       env:
         JENKINS_FOLDER_NAME: ${{ steps.repo.outputs.folder_name }}
         REPOSITORY_NAME: ${{ steps.repo.outputs.repository_name }}
@@ -158,7 +158,7 @@ runs:
 
     - name: Post Temploy Link
       if: ${{ inputs.environment == 'temploy' }}
-      uses: actions/github-script@v3.0.0
+      uses: actions/github-script@v6.3.3
       env:
         RELEASE: ${{ steps.repo.outputs.release_name }}
         PR_NUMBER: ${{ steps.repo.outputs.pr_number }}
@@ -169,5 +169,4 @@ runs:
           const name = ['${{ env.RELEASE }}', '${{ steps.repo.outputs.repository_name }}-storybook'].join('-').substring(0, 45)
           const body = `Storybook temploy is available at https://${name}.toptal.rocks :tada:`
           const number = issue_number || ${{ env.PR_NUMBER }}
-          github.issues.createComment({ issue_number: number, owner, repo, body })
-          
+          github.rest.issues.createComment({ issue_number: number, owner, repo, body })
