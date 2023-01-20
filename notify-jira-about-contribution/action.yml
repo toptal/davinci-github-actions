@@ -57,7 +57,7 @@ runs:
       if: ${{ fromJson(steps.is-pr-eligible.outputs.result) == true }}
       uses: andymckay/labeler@1.0.4
       with:
-        add-labels: "contribution"
+        add-labels: 'contribution'
 
     - name: Notify JIRA
       if: ${{ fromJson(steps.is-pr-eligible.outputs.result) == true && fromJson(steps.jira-issue-can-be-created.outputs.result) == true }}
@@ -66,10 +66,21 @@ runs:
         JIRA_HOOK: ${{ inputs.jira-hook }}
         REPO: ${{ inputs.repo }}
         TITLE: ${{ fromJson(steps.get-pr.outputs.data).title }}
+        AUTHOR: ${{ fromJson(steps.get-pr.outputs.data).user.login }}
+        AUTHOR_URL: ${{ fromJson(steps.get-pr.outputs.data).user.html_url }}
+        NUMBER: ${{ fromJson(steps.get-pr.outputs.data).number }}
+        URL: ${{ fromJson(steps.get-pr.outputs.data).html_url }}
       run: |
-        curl -X POST -H 'Content-type: application/json' \
-        --data '{"data": {"author":"${{fromJson(steps.get-pr.outputs.data).user.login}}", "author_url":"${{fromJson(steps.get-pr.outputs.data).user.html_url}}", "title":"${{ env.TITLE }}", "number":"${{fromJson(steps.get-pr.outputs.data).number}}", "url":"${{fromJson(steps.get-pr.outputs.data).html_url}}", "repo":"${{ env.REPO }}"}}' \
-        $JIRA_HOOK
+        echo {
+          "data": {
+            "author": "${{ env.AUTHOR }}", 
+            "author_url": "${{ env.AUTHOR_URL }}", 
+            "title": "${{ env.TITLE }}", 
+            "number": "${{ env.NUMBER }}", 
+            "url": "${{ env.URL }}",
+            "repo": "${{ env.REPO }}"
+          }
+        } | sed "s/'/\\\\'/g" | curl -H 'Content-type: application/json' --data-binary @- $JIRA_HOOK
 
     - name: Greet author
       if: ${{ fromJson(steps.is-pr-eligible.outputs.result) == true && fromJson(steps.jira-issue-can-be-created.outputs.result) == true }}
