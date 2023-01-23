@@ -75,7 +75,7 @@ runs:
         AUTHOR_URL: ${{ fromJson(steps.get-pr.outputs.data).user.html_url }}
         NUMBER: ${{ fromJson(steps.get-pr.outputs.data).number }}
         URL: ${{ fromJson(steps.get-pr.outputs.data).html_url }}
-      run: ./notify-jira-about-contribution/notify-jira.sh
+      run: ./notify-jira.sh
 
     - name: Greet author
       if: ${{ fromJson(steps.is-pr-eligible.outputs.result) == true && fromJson(steps.jira-issue-can-be-created.outputs.result) == true }}
