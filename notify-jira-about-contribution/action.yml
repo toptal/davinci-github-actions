@@ -70,17 +70,7 @@ runs:
         AUTHOR_URL: ${{ fromJson(steps.get-pr.outputs.data).user.html_url }}
         NUMBER: ${{ fromJson(steps.get-pr.outputs.data).number }}
         URL: ${{ fromJson(steps.get-pr.outputs.data).html_url }}
-      run: |
-        echo "{
-          \"data\": \"{
-            \"author\": \"${{ env.AUTHOR }}\", 
-            \"author_url\": \"${{ env.AUTHOR_URL }}\", 
-            \"title\": \"${{ env.TITLE }}\", 
-            \"number\": \"${{ env.NUMBER }}\", 
-            \"url\": \"${{ env.URL }}\",
-            \"repo\": \"${{ env.REPO }}\"
-          }\"
-        }" | sed "s/'/\\\\'/g" | curl -H 'Content-type: application/json' --data-binary @- $JIRA_HOOK
+      run: ./notify-jira.sh
 
     - name: Greet author
       if: ${{ fromJson(steps.is-pr-eligible.outputs.result) == true && fromJson(steps.jira-issue-can-be-created.outputs.result) == true }}
