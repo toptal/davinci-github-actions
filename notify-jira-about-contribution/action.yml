@@ -22,11 +22,6 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Checkout code
-      uses: actions/checkout@v3.3.0
-      with:
-        ref: ${{ github.event.pull_request.head.sha }}
-
     - name: Get PR data
       id: get-pr
       uses: octokit/request-action@v2.x
