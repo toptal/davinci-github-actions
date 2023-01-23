@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 echo "{
   \"data\": \"{
     \"author\": \"$AUTHOR\",
