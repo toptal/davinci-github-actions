@@ -61,6 +61,7 @@ runs:
 
     - name: Notify JIRA
       # if: ${{ fromJson(steps.is-pr-eligible.outputs.result) == true && fromJson(steps.jira-issue-can-be-created.outputs.result) == true }}
+      uses: actions/checkout@v3.3.0
       shell: bash
       env:
         JIRA_HOOK: ${{ inputs.jira-hook }}
