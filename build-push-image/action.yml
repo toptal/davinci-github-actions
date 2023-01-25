@@ -84,7 +84,7 @@ runs:
       uses: docker/setup-buildx-action@v2
 
     - name: Build and push release image
-      uses: docker/build-push-action@v3
+      uses: docker/build-push-action@v3.2.0
       with:
         tags: ${{ steps.meta.outputs.tags }}
         push: true
