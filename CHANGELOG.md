@@ -1,5 +1,13 @@
 # davinci-github-actions
 
+## 4.8.4
+
+### Patch Changes
+
+- [#104](https://github.com/toptal/davinci-github-actions/pull/104) [`37f9934`](https://github.com/toptal/davinci-github-actions/commit/37f9934a651e75c9f3b5e73451e44d9d3b58a5b4) Thanks [@LashaJini](https://github.com/LashaJini)! - ### build-push-image
+
+  - Use specific version to fix the issue with gcr. Reason: [docker/buildx#1533](https://github.com/toptal/davinci-github-actions/pull/104)
+
 ## 4.8.3
 
 ### Patch Changes
