@@ -57,10 +57,10 @@ runs:
       if: ${{ fromJson(steps.is-pr-eligible.outputs.result) == true }}
       uses: andymckay/labeler@1.0.4
       with:
-        add-labels: 'contribution'
+        add-labels: "contribution"
 
     - name: Notify JIRA
-      # if: ${{ fromJson(steps.is-pr-eligible.outputs.result) == true && fromJson(steps.jira-issue-can-be-created.outputs.result) == true }}
+      if: ${{ fromJson(steps.is-pr-eligible.outputs.result) == true && fromJson(steps.jira-issue-can-be-created.outputs.result) == true }}
       shell: bash
       env:
         JIRA_HOOK: ${{ inputs.jira-hook }}
