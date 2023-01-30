@@ -1,5 +1,17 @@
 # davinci-github-actions
 
+## 4.8.5
+
+### Patch Changes
+
+- [#106](https://github.com/toptal/davinci-github-actions/pull/106) [`00ba92a`](https://github.com/toptal/davinci-github-actions/commit/00ba92a66959e74b3c5822ddd7fe49f2ee15091c) Thanks [@LashaJini](https://github.com/LashaJini)! - ### build-push-release-image
+
+  - bump build-push-image version
+
+  ### deploy-storybook
+
+  - bump build-push-image version
+
 ## 4.8.4
 
 ### Patch Changes
