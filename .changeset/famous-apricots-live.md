@@ -4,4 +4,6 @@
 
 ---
 
-- updating internal packages for build-push-release-image
+### build-push-release-image
+
+- bump yarn-install action to newer version
