@@ -21,7 +21,7 @@ inputs:
 runs:
   using: composite
   steps:
-    - uses: toptal/davinci-github-actions/yarn-install@v4.8.2
+    - uses: toptal/davinci-github-actions/yarn-install@v4.8.3
 
     - name: Build
       shell: bash
