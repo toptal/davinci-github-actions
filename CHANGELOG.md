@@ -1,5 +1,15 @@
 # davinci-github-actions
 
+## 4.8.6
+
+### Patch Changes
+
+- [#110](https://github.com/toptal/davinci-github-actions/pull/110) [`8011c3f`](https://github.com/toptal/davinci-github-actions/commit/8011c3f061dae796122df58c3143b129aec451c7) Thanks [@eceakcck](https://github.com/eceakcck)! - ---
+
+  ### build-push-release-image
+
+  - bump yarn-install action to newer version
+
 ## 4.8.5
 
 ### Patch Changes
