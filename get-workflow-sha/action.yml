@@ -26,4 +26,4 @@ runs:
         VERSION: ${{ github.event.inputs.version }}
         SHA: ${{ github.sha }}
       run: |
-        echo "::set-output name=sha::${HEAD_SHA:-${VERSION:-${SHA}}}"
+        echo echo "sha=${HEAD_SHA:-${VERSION:-${SHA}}}" >> $GITHUB_OUTPUT
