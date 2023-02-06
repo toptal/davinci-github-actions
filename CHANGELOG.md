@@ -1,5 +1,31 @@
 # davinci-github-actions
 
+## 4.9.0
+
+### Minor Changes
+
+- [#108](https://github.com/toptal/davinci-github-actions/pull/108) [`3e49260`](https://github.com/toptal/davinci-github-actions/commit/3e492606327ecb4d0c492bb4588534f592053753) Thanks [@waleedtt](https://github.com/waleedtt)! - ---
+
+  ### yarn-install
+
+  - add custom cache for self-hosted runners
+
+### Patch Changes
+
+- [#113](https://github.com/toptal/davinci-github-actions/pull/113) [`79421e9`](https://github.com/toptal/davinci-github-actions/commit/79421e9d611b53fffff801c038708c80b601c961) Thanks [@eceakcck](https://github.com/eceakcck)! - ---
+
+  ### build-push-release-image
+
+  - bump yarn-install action to latest version
+
+  ### get-workflow-sha
+
+  - address deprecated commands
+
+* [#103](https://github.com/toptal/davinci-github-actions/pull/103) [`04317df`](https://github.com/toptal/davinci-github-actions/commit/04317df260398e4268bbf8af8bca2c5e2eed23af) Thanks [@LashaJini](https://github.com/LashaJini)! - ### notify-jira-about-contribution
+
+  - escape single quotes in PR's title
+
 ## 4.8.6
 
 ### Patch Changes
