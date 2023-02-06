@@ -12,10 +12,13 @@ inputs:
     description: Relative path under $GITHUB_WORKSPACE where to run `yarn install` command
     default: .
     required: false
+  checkout-token:
+    description: Repository checkout access token `GITHUB_TOKEN`. Required for self hosted runners
+    required: false
 outputs:
   cache-hit:
     description: 'Indicates an exact match was found for `node_modules` || boolean'
-    value: ${{ steps.node-modules-cache.outputs.cache-hit }}
+    value: ${{ steps.node-modules-cache.outputs.cache-hit || steps.node-modules-cache-custom.outputs.cache-hit }}
 runs:
   using: composite
   steps:
@@ -41,7 +44,29 @@ runs:
         fi
       shell: bash
 
+    - name: Checkout `cache action` from actions repository
+      if: "inputs.checkout-token && contains(runner.name, 'inf-gha-runners-ci')"
+      uses: actions/checkout@v3
+      with:
+        repository: toptal/actions
+        token: ${{ inputs.checkout-token }}
+        path: ./.github/cache_action/
+        
     - name: Cache yarn and node_modules folder
+      if: "inputs.checkout-token && contains(runner.name, 'inf-gha-runners-ci')"
+      uses: ./.github/cache_action/cache/
+      id: node-modules-cache-custom
+      with:
+        # Do not change the order of the values because if something goes wrong with the network or node_modules during
+        # the caching process, GitHub can still end up creating a valid cache entry.
+        # The cache from yarn is smaller and of higher priority for us
+        path: |
+          ${{ steps.yarn-cache.outputs.dir }}
+          **/node_modules
+        key: ${{ runner.os }}-node-${{ steps.set-node-version.outputs.version }}-yarn-node_modules-${{ hashFiles('**/yarn.lock', 'tmp-workspaces.json') }}-${{ inputs.cache-version }}
+
+    - name: Cache yarn and node_modules folder
+      if: "!contains(runner.name, 'inf-gha-runners-ci') || !inputs.checkout-token"
       uses: actions/cache@v3
       id: node-modules-cache
       with:
