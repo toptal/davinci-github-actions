@@ -66,10 +66,11 @@ runs:
         JIRA_HOOK: ${{ inputs.jira-hook }}
         REPO: ${{ inputs.repo }}
         TITLE: ${{ fromJson(steps.get-pr.outputs.data).title }}
-      run: |
-        curl -X POST -H 'Content-type: application/json' \
-        --data '{"data": {"author":"${{fromJson(steps.get-pr.outputs.data).user.login}}", "author_url":"${{fromJson(steps.get-pr.outputs.data).user.html_url}}", "title":"${{ env.TITLE }}", "number":"${{fromJson(steps.get-pr.outputs.data).number}}", "url":"${{fromJson(steps.get-pr.outputs.data).html_url}}", "repo":"${{ env.REPO }}"}}' \
-        $JIRA_HOOK
+        AUTHOR: ${{ fromJson(steps.get-pr.outputs.data).user.login }}
+        AUTHOR_URL: ${{ fromJson(steps.get-pr.outputs.data).user.html_url }}
+        NUMBER: ${{ fromJson(steps.get-pr.outputs.data).number }}
+        URL: ${{ fromJson(steps.get-pr.outputs.data).html_url }}
+      run: bash ${{ github.action_path }}/notify-jira.sh
 
     - name: Greet author
       if: ${{ fromJson(steps.is-pr-eligible.outputs.result) == true && fromJson(steps.jira-issue-can-be-created.outputs.result) == true }}
