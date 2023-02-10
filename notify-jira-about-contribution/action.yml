@@ -45,13 +45,13 @@ runs:
       id: is-pr-eligible
       shell: bash
       run: |
-        echo "::set-output name=result::${{ fromJson(steps.is-team-member.outputs.result) == false && fromJson(steps.get-pr.outputs.data).draft == false && env.IS_NOT_DEPENDABOT_BOT }}"
+        echo "result=${{ fromJson(steps.is-team-member.outputs.result) == false && fromJson(steps.get-pr.outputs.data).draft == false && env.IS_NOT_DEPENDABOT_BOT }}" >> $GITHUB_OUTPUT
 
     - name: Jira issue can be created
       id: jira-issue-can-be-created
       shell: bash
       run: |
-        echo "::set-output name=result::${{ fromJson(steps.is-pr-eligible.outputs.result) == true && !contains(github.event.pull_request.labels.*.name, 'contribution') }}"
+        echo "result=${{ fromJson(steps.is-pr-eligible.outputs.result) == true && !contains(github.event.pull_request.labels.*.name, 'contribution') }}" >> $GITHUB_OUTPUT
 
     - name: Add label - JIRA issue created - for non-Draft PR
       if: ${{ fromJson(steps.is-pr-eligible.outputs.result) == true }}

@@ -52,4 +52,4 @@ runs:
         versions=$(cat .version)
         [ -z "$versions" ] && exit 1
 
-        echo "::set-output name=versions::$versions"
+        echo "versions=$versions" >> $GITHUB_OUTPUT
