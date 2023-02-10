@@ -1,0 +1,31 @@
+name: Get user slack from email
+description: Get user slack handler based on user email
+inputs:
+  email:
+    required: true
+    description: User email
+  slack-bot-token:
+    required: true
+    description: Slack bot token with scope "users:read.email" **Read-only**. If undefined, `env.SLACK_BOT_TOKEN` is used
+
+outputs:
+  slack-name:
+    description: "Slack user name/slack user handler"
+    value: ${{ steps.slack-user.outputs.name }}
+
+runs:
+  using: composite
+  steps:
+    - name: Get slack user name
+      id: slack-user
+      shell: bash
+      env:
+        SLACK_BOT_TOKEN: ${{ inputs.slack-bot-token || env.SLACK_BOT_TOKEN }}
+      run: |
+        data=$(curl -X POST -H "Content-Type: application/json; charset=utf-8" \
+          -H "Authorization: Bearer ${{ env.SLACK_BOT_TOKEN }}" \
+          --data '{"email":"${{ inputs.email }}"' \
+          https://slack.com/api/users.lookupByEmail)
+        echo $data
+        name=$(echo $data | jq '.user.name')
+        echo "name=$name" >> $GITHUB_OUTPUT
