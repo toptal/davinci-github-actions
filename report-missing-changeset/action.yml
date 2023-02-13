@@ -1,7 +1,7 @@
 name: Report Missing Changeset
 description: |
-  Tool for monorepos that use changesets for release. 
-  It compares packages described in changesets with packages that have been changed and 
+  Tool for monorepos that use changesets for release.
+  It compares packages described in changesets with packages that have been changed and
   issues a warning comment if there is a missing dependency.
   Requires checked out repository with `fetch-depth: 0`
 
@@ -27,10 +27,10 @@ runs:
 
     - name: Get changeset status
       id: changeset-info
-      uses: toptal/davinci-github-actions/get-changeset-info@v4.5.0
+      uses: toptal/davinci-github-actions/get-changeset-info@set-output-deprecation
       with:
         base-ref: origin/${{ inputs.base-branch }}
-        
+
     - name: Report missing changeset
       shell: bash
       env:
