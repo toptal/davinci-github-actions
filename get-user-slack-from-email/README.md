@@ -19,13 +19,18 @@ The list of arguments, that are used in GH Action:
 
 The list of variables, that are returned by GH Action:
 
-| name         | type   | description                        |
-| ------------ | ------ | ---------------------------------- |
-| `slack-name` | string | Slack user name/slack user handler |
+| name           | type   | description   |
+| -------------- | ------ | ------------- |
+| `slack-userId` | string | Slack user id |
 
 ### ENV Variables
 
-Not specified
+All ENV Variables, defined in a GH Workflow are also passed to a GH Action. It means, the might be reused as is.
+This is a list of ENV Variables that are used in GH Action:
+
+| name              | description                                                  |
+| ----------------- | ------------------------------------------------------------ |
+| `SLACK_BOT_TOKEN` | Slack bot token with scope "users:read.email" **Read-only**. |
 
 ### Usage
 
