@@ -1,5 +1,13 @@
 # davinci-github-actions
 
+## 4.10.1
+
+### Patch Changes
+
+- [#116](https://github.com/toptal/davinci-github-actions/pull/116) [`5f34497`](https://github.com/toptal/davinci-github-actions/commit/5f34497595bab09dedd7c05298e69841c2b930f7) Thanks [@TomasSlama](https://github.com/TomasSlama)! - ---
+
+  - refactor deprecated function `set-output`
+
 ## 4.10.0
 
 ### Minor Changes
