@@ -1,5 +1,13 @@
 # davinci-github-actions
 
+## 4.10.2
+
+### Patch Changes
+
+- [#121](https://github.com/toptal/davinci-github-actions/pull/121) [`6d4f0b5`](https://github.com/toptal/davinci-github-actions/commit/6d4f0b5db547a7a18c5e82013b62a32473b8f8e8) Thanks [@TomasSlama](https://github.com/TomasSlama)! - ---
+
+  - use the latest version of gha internally
+
 ## 4.10.1
 
 ### Patch Changes
