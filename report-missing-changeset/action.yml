@@ -27,7 +27,7 @@ runs:
 
     - name: Get changeset status
       id: changeset-info
-      uses: toptal/davinci-github-actions/get-changeset-info@v4
+      uses: toptal/davinci-github-actions/get-changeset-info@v4.10.1
       with:
         base-ref: origin/${{ inputs.base-branch }}
 
