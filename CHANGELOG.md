@@ -1,5 +1,15 @@
 # davinci-github-actions
 
+## 4.10.0
+
+### Minor Changes
+
+- [#117](https://github.com/toptal/davinci-github-actions/pull/117) [`0f78c59`](https://github.com/toptal/davinci-github-actions/commit/0f78c593701bab2601d095d20865480d3d06c4a3) Thanks [@denieler](https://github.com/denieler)! - ---
+
+  ### get-user-slack-from-email
+
+  - add new github action
+
 ## 4.9.0
 
 ### Minor Changes
