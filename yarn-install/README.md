@@ -10,12 +10,12 @@ Installs package dependencies. Caches `node_modules` for faster subsequent insta
 
 The list of arguments, that are used in GH Action:
 
-| name            | type   | required | default | description                                                                                                               |
-| --------------- | ------ | -------- | ------- | ------------------------------------------------------------------------------------------------------------------------- |
-| `npm-token`     | string |          |         | Access token type **Read-only**. Required for repository with private dependencies. If undefined, `env.NPM_TOKEN` is used |
-| `cache-version` | string |          | 0.0     | Cache version                                                                                                             |
-| `path`          | string |          | .       | Relative path under $GITHUB\_WORKSPACE where to run `yarn install` command                                                |
-| `checkout-token`          | string |          |        | Repository checkout access token `GITHUB_TOKEN`. Required for self hosted runners command                                                |
+| name             | type   | required | default | description                                                                                                               |
+| ---------------- | ------ | -------- | ------- | ------------------------------------------------------------------------------------------------------------------------- |
+| `npm-token`      | string |          |         | Access token type **Read-only**. Required for repository with private dependencies. If undefined, `env.NPM_TOKEN` is used |
+| `cache-version`  | string |          | 0.0     | Cache version                                                                                                             |
+| `path`           | string |          | .       | Relative path under $GITHUB\_WORKSPACE where to run `yarn install` command                                                |
+| `checkout-token` | string |          |         | Repository checkout access token `GITHUB_TOKEN`. Required for self hosted runners                                         |
 
 ### Outputs
 
