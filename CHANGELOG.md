@@ -1,5 +1,13 @@
 # davinci-github-actions
 
+## 4.10.3
+
+### Patch Changes
+
+- [#123](https://github.com/toptal/davinci-github-actions/pull/123) [`ef8bd12`](https://github.com/toptal/davinci-github-actions/commit/ef8bd122670b913904f4963bf50ef768706be909) Thanks [@OleksandrNechai](https://github.com/OleksandrNechai)! - ---
+
+  - fix broken notify-jira-about-contribution GHA
+
 ## 4.10.2
 
 ### Patch Changes
