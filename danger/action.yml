@@ -6,5 +6,8 @@ runs:
   steps:
     - shell: bash
       env:
+        # The self-hosted runners overrides the GITHUB_URL to incorrect value,
+        # and may use this env variable for another purpose.
+        # DANGER_GITHUB_API_BASE_URL has higher priority
         DANGER_GITHUB_API_BASE_URL: https://api.github.com
       run: yarn davinci-ci danger
