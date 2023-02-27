@@ -1,5 +1,13 @@
 # davinci-github-actions
 
+## 4.10.4
+
+### Patch Changes
+
+- [#128](https://github.com/toptal/davinci-github-actions/pull/128) [`83acd56`](https://github.com/toptal/davinci-github-actions/commit/83acd562a8fe55548995a6ca5c01cdda5733f081) Thanks [@dmaklygin](https://github.com/dmaklygin)! - ---
+
+  - set the `danger` environment variable to ensure that all API requests are performed on the correct domain
+
 ## 4.10.3
 
 ### Patch Changes
