@@ -4,4 +4,4 @@
 
 ---
 
-- update danger environment variable for proper API domain requests
+- set the `danger` environment variable to ensure that all API requests are performed on the correct domain

@@ -6,6 +6,5 @@ runs:
   steps:
     - shell: bash
       env:
-        # We must specify the base URL for the GitHub API because the self-hosted runner overrides the default one
         DANGER_GITHUB_API_BASE_URL: https://api.github.com
       run: yarn davinci-ci danger
