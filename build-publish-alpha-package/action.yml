@@ -13,7 +13,7 @@ inputs:
     required: true
     description: 'Name of the branch that will be published || string'
   root-folder:
-    default: .
+    required: false
     description: 'Root folder of a package to be published || string'
 
 runs:
