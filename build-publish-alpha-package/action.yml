@@ -52,7 +52,7 @@ runs:
         --alpha \
         --outputVersion .version \
         --branch "$BRANCH" \
-        --publishRootFolder "$ROOT_FOLDER"
+        --publishRootFolder $ROOT_FOLDER
 
         versions=$(cat .version)
         [ -z "$versions" ] && exit 1
