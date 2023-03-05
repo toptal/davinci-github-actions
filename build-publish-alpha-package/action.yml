@@ -12,6 +12,9 @@ inputs:
   branch:
     required: true
     description: 'Name of the branch that will be published || string'
+  root-folder:
+    required: false
+    description: 'Root folder of a package to be published || string'
 
 runs:
   using: composite
@@ -40,6 +43,7 @@ runs:
       shell: bash
       env:
         BRANCH: ${{ inputs.branch }}
+        ROOT_FOLDER: ${{ inputs.root-folder }}
       run: |
         # set .github folder as an unchanged, because lerna throws an error if there are uncommited changes
         git checkout .github/
@@ -48,6 +52,7 @@ runs:
         --alpha \
         --outputVersion .version \
         --branch "$BRANCH" \
+        --publishRootFolder $ROOT_FOLDER
 
         versions=$(cat .version)
         [ -z "$versions" ] && exit 1
