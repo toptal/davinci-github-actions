@@ -1,5 +1,16 @@
 # davinci-github-actions
 
+## 5.0.0
+
+### Major Changes
+
+- [#127](https://github.com/toptal/davinci-github-actions/pull/127) [`c9c3a78`](https://github.com/toptal/davinci-github-actions/commit/c9c3a78d6ce69fd45a169bb375a5ae11a1a11da6) Thanks [@mkrl](https://github.com/mkrl)! - ---
+
+  ### build-publish-alpha-package
+
+  - add new input `root-folder` to specify the root folder of a package to be published
+  - build-publish-alpha-package now requires davinci-engine@9.1.0 or later
+
 ## 4.10.4
 
 ### Patch Changes
