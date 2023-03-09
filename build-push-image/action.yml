@@ -17,6 +17,10 @@ inputs:
     required: false
     default: staging
     description: 'Determines additional procedures while creating a Docker image. || enum<<br/>`temploy`,<br/>`staging`,<br/>`production`,<br/>>'
+  node-version:
+    required: false
+    default: '14.17'
+    description: 'Node version'
   build-args:
     required: true
     description: 'Multiline string to describe build arguments that will be used during dockerization'
@@ -43,7 +47,7 @@ runs:
     - name: Setup node
       uses: actions/setup-node@v3.2.0
       with:
-        node-version: '14.17'
+        node-version: ${{ inputs.node-version }}
 
     - id: meta-latest
       shell: bash
