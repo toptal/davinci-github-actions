@@ -28,7 +28,7 @@ runs:
       env:
         GITHUB_TOKEN: ${{ inputs.github-token }}
 
-    - uses: actions/github-script@v5
+    - uses: actions/github-script@v6
       id: check-team-member
       with:
         github-token: ${{ inputs.github-token }}
