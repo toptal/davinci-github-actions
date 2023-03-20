@@ -1,5 +1,13 @@
 # davinci-github-actions
 
+## 6.0.0
+
+### Major Changes
+
+- [#135](https://github.com/toptal/davinci-github-actions/pull/135) [`085cb7e`](https://github.com/toptal/davinci-github-actions/commit/085cb7e3243c43dde3358793d3164c60c2f315bd) Thanks [@sashuk](https://github.com/sashuk)! - ---
+
+  - support for `node < 14` was dropped; `actions/checkout`, `docker/metadata-action`, `xt0rted/pull-request-comment-branch`, `actions/upload-artifact`, `actions/github-script` dependencies were updated
+
 ## 5.0.0
 
 ### Major Changes
