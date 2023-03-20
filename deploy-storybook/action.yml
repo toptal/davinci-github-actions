@@ -62,11 +62,11 @@ runs:
 
     - name: Install Dependencies
       if: ${{ inputs.use-prebuilt-package == 'false' && inputs.use-prebuilt-image == 'false' }}
-      uses: toptal/davinci-github-actions/yarn-install@v4.8.2
+      uses: toptal/davinci-github-actions/yarn-install@v6.0.0
 
     - name: Generate Types
       if: ${{ inputs.generate-types-command != 'false' }}
-      uses: toptal/davinci-github-actions/generate-gql-types@v4.8.2
+      uses: toptal/davinci-github-actions/generate-gql-types@v6.0.0
       with:
         generate-types-command: ${{ inputs.generate-types-command }}
         gcr-gql-schemas-bucket-token: ${{ env.GCR_GQL_SCHEMAS_BUCKET_TOKEN }}
@@ -98,7 +98,7 @@ runs:
         echo "pr_number=${{ inputs.pr-number }}" >> $GITHUB_OUTPUT
         
     - name: Build and Push Storybook Image
-      uses: toptal/davinci-github-actions/build-push-image@v4.8.4
+      uses: toptal/davinci-github-actions/build-push-image@v6.0.0
       if: ${{ inputs.use-prebuilt-image == 'false' }}
       with:
         sha: ${{ inputs.sha }}
@@ -128,7 +128,7 @@ runs:
           }
         job_timeout: 1200
 
-    - uses: toptal/davinci-github-actions/extract-env-variables@v4.8.3
+    - uses: toptal/davinci-github-actions/extract-env-variables@v6.0.0
       if: ${{ inputs.environment == 'temploy' }}
       id: env-variables
       with:

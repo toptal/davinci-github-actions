@@ -32,7 +32,7 @@ runs:
         pull-number: ${{ inputs.pull-number }}
         GITHUB_TOKEN: ${{ inputs.github-token }}
 
-    - uses: toptal/davinci-github-actions/is-team-member@v4.4.2
+    - uses: toptal/davinci-github-actions/is-team-member@v6.0.0
       id: is-team-member
       with:
         team: ${{ inputs.team }}
