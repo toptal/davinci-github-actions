@@ -74,7 +74,7 @@ runs:
 
     - name: Greet author
       if: ${{ fromJson(steps.is-pr-eligible.outputs.result) == true && fromJson(steps.jira-issue-can-be-created.outputs.result) == true }}
-      uses: actions/github-script@v5
+      uses: actions/github-script@v6
       with:
         github-token: ${{ inputs.github-token }}
         script: |

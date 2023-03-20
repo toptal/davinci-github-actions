@@ -16,7 +16,7 @@ runs:
   steps:
     - id: branch
       if: github.event_name == 'issue_comment'
-      uses: xt0rted/pull-request-comment-branch@v1.3.0
+      uses: xt0rted/pull-request-comment-branch@0cb1cc92a57e44274e9d862202f0d40df70f4478
 
     - id: specify-sha
       name: Specify SHA

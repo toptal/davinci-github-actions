@@ -13,7 +13,7 @@ runs:
   using: composite
   steps:
     - name: Set status check
-      uses: actions/github-script@v4
+      uses: actions/github-script@v6
       env:
         STATUS_TARGET_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
         STATUS_STATE: ${{ inputs.state }}
