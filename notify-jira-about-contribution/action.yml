@@ -32,8 +32,7 @@ runs:
         pull-number: ${{ inputs.pull-number }}
         GITHUB_TOKEN: ${{ inputs.github-token }}
 
-    # TODO: revert / change version of "notify-jira-about-contribution" to latest in the follow-up
-    - uses: toptal/davinci-github-actions/is-team-member@FX-3787-update-external-dependencies
+    - uses: toptal/davinci-github-actions/is-team-member@v4.4.2
       id: is-team-member
       with:
         team: ${{ inputs.team }}

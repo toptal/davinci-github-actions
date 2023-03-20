@@ -12,8 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Call notify jira about contribution
     steps:
-      # TODO: revert / change version of "notify-jira-about-contribution" to latest in the follow-up
-      - uses: toptal/davinci-github-actions/notify-jira-about-contribution@FX-3787-update-external-dependencies
+      - uses: toptal/davinci-github-actions/notify-jira-about-contribution@v4.10.4
         with:
           team: frontend-experience-eng
           repo: ${{ github.event.repository.name }}
