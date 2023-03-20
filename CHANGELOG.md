@@ -1,5 +1,13 @@
 # davinci-github-actions
 
+## 6.0.1
+
+### Patch Changes
+
+- [#138](https://github.com/toptal/davinci-github-actions/pull/138) [`0afea29`](https://github.com/toptal/davinci-github-actions/commit/0afea29a192c36ccd3b473a4dd4db98424113ae3) Thanks [@sashuk](https://github.com/sashuk)! - ---
+
+  - bring `toptal/davinci-github-actions/*` dependencies up-to-date
+
 ## 6.0.0
 
 ### Major Changes
