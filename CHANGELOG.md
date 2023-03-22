@@ -1,5 +1,13 @@
 # davinci-github-actions
 
+## 6.0.2
+
+### Patch Changes
+
+- [#140](https://github.com/toptal/davinci-github-actions/pull/140) [`f2ea3c5`](https://github.com/toptal/davinci-github-actions/commit/f2ea3c5e08027611afe047d1be326cd0278a7840) Thanks [@sashuk](https://github.com/sashuk)! - ---
+
+  - the `Ana06/get-changed-files` was replaced with `masesgroup/retrieve-changed-files`
+
 ## 6.0.1
 
 ### Patch Changes
