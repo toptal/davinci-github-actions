@@ -8,7 +8,7 @@ runs:
       with:
         node-version: 16
 
-    - uses: Ana06/get-changed-files@v2.1.0
+    - uses: masesgroup/retrieve-changed-files@2e42889ff54e0810cf088f73a38a2db5a9d0684f
       id: files
       with:
         format: 'json'
