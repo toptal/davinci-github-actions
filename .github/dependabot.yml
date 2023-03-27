@@ -7,6 +7,9 @@ updates:
     open-pull-requests-limit: 4
     pull-request-branch-name:
       separator: "-"
+    ignore:
+      - dependency-name: '*'
+        update-types: ['version-update:semver-patch']
     labels:
       - no-jira
       - dependencies
