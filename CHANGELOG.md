@@ -1,5 +1,13 @@
 # davinci-github-actions
 
+## 6.0.3
+
+### Patch Changes
+
+- [#143](https://github.com/toptal/davinci-github-actions/pull/143) [`29b70ec`](https://github.com/toptal/davinci-github-actions/commit/29b70ec28060045c7b0f6226ea9176f28275afd5) Thanks [@dependabot](https://github.com/apps/dependabot)! - ---
+
+  - bump actions/checkout from 3.4.0 to 3.5.0
+
 ## 6.0.2
 
 ### Patch Changes
