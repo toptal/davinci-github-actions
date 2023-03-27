@@ -48,11 +48,18 @@ runs:
         # set .github folder as an unchanged, because lerna throws an error if there are uncommited changes
         git checkout .github/
 
-        yarn davinci-engine publish-package \
-        --alpha \
-        --outputVersion .version \
-        --branch "$BRANCH" \
-        --publishRootFolder $ROOT_FOLDER
+        if [ -n "${ROOT_FOLDER}" ]; then
+          yarn davinci-engine publish-package \
+          --alpha \
+          --outputVersion .version \
+          --branch "$BRANCH" \
+          --publishRootFolder $ROOT_FOLDER
+        else
+          yarn davinci-engine publish-package \
+          --alpha \
+          --outputVersion .version \
+          --branch "$BRANCH"
+        fi
 
         versions=$(cat .version)
         [ -z "$versions" ] && exit 1
