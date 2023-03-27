@@ -1,5 +1,15 @@
 # davinci-github-actions
 
+## 6.0.4
+
+### Patch Changes
+
+- [#146](https://github.com/toptal/davinci-github-actions/pull/146) [`f66544e`](https://github.com/toptal/davinci-github-actions/commit/f66544e0fd2b45c732c42b3803458b0dc36429e2) Thanks [@mkrl](https://github.com/mkrl)! - ---
+
+  ### build-publish-alpha-package
+
+  - fixed a bug with an action failing when root-folder is not specified
+
 ## 6.0.3
 
 ### Patch Changes
