@@ -49,10 +49,9 @@ runs:
         git checkout .github/
 
         yarn davinci-engine publish-package \
-        --alpha \
-        --outputVersion .version \
-        --branch "$BRANCH" \
-        --publishRootFolder $ROOT_FOLDER
+          --alpha \
+          --outputVersion .version \
+          --branch "$BRANCH" ${ROOT_FOLDER:+"--publishRootFolder=$ROOT_FOLDER"}
 
         versions=$(cat .version)
         [ -z "$versions" ] && exit 1
