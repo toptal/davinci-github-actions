@@ -12,11 +12,10 @@ jobs:
     runs-on: ubuntu-latest
     name: Call notify jira about contribution
     steps:
-      - uses: toptal/davinci-github-actions/notify-jira-about-contribution@v6
+      - uses: toptal/davinci-github-actions/notify-jira-about-contribution@v6.0.4
         with:
           team: frontend-experience-eng
           repo: ${{ github.event.repository.name }}
           pull-number: ${{ github.event.pull_request.number}}
           jira-hook: ${{ secrets.JIRA_AUTOMATION_HOOK_FOR_NEW_CONTRIBUTION }}
           github-token: ${{ secrets.TOPTAL_DEVBOT_TOKEN }}
-
