@@ -23,6 +23,7 @@ The list of arguments, that are used in GH Action:
 | `jenkins-folder-name`    | string                                     |          |                    | Jenkins folder where the deployment jobs are located                                    |
 | `generate-types-command` | string                                     |          | false              | Command to generate gql types                                                           |
 | `pr-number`              | string                                     |          |                    | Event number of the original pr, in case event number or issue number is not present. . |
+| `checkout-token`         | string                                     |          |                    | Repository checkout access token `GITHUB_TOKEN`. Required for self hosted runners       |
 
 ### Outputs
 
