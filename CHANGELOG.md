@@ -1,5 +1,12 @@
 # davinci-github-actions
 
+## 6.0.5
+
+### Patch Changes
+
+- [#148](https://github.com/toptal/davinci-github-actions/pull/148) [`400fb0c`](https://github.com/toptal/davinci-github-actions/commit/400fb0c1531a25e5aed8cdfb214a5ffd654b26fa) Thanks [@dmaklygin](https://github.com/dmaklygin)! - ---
+  - pass checkout-token from deploy-storybook GH Action to yarn-install
+
 ## 6.0.4
 
 ### Patch Changes
