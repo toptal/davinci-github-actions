@@ -33,5 +33,5 @@ runs:
             .toString()
             .split(/\n/)
             .filter(line => !line.startsWith('#') && line.length > 0)
-            .map(line => `ENV.${line}`)
+            .map(line => `ENV.${line},davinci-app.ENV.${line}`)
             .join(',')
