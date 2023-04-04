@@ -157,7 +157,7 @@ runs:
             "REPOSITORY_NAME": "${{ env.REPOSITORY_NAME }}-storybook",
             "RELEASE": "${{ env.RELEASE }}",
             "TAG": "${{ inputs.sha }}",
-            "ENV": "${{ steps.env-variables.outputs.variables }}"
+            "ENV": "${{ steps.env-variables.outputs.variables || 'ENV=null' }}"
           }
         job_timeout: 1200
 
