@@ -1,5 +1,27 @@
 # davinci-github-actions
 
+## 6.1.0
+
+### Minor Changes
+
+- [#151](https://github.com/toptal/davinci-github-actions/pull/151) [`8bcd3f0`](https://github.com/toptal/davinci-github-actions/commit/8bcd3f05e3588ba9813a650babe8069383e73798) Thanks [@denieler](https://github.com/denieler)!
+
+---
+
+### extract-env-variables
+
+- add support of old and new davinci-app charts. Append env variables with `davinci-app` prefix.
+
+### Patch Changes
+
+- [#154](https://github.com/toptal/davinci-github-actions/pull/154) [`50812b1`](https://github.com/toptal/davinci-github-actions/commit/50812b14e0f2b5c7b0aa09a7251d1927b5cc8710) Thanks [@denieler](https://github.com/denieler)!
+
+---
+
+### deploy-storybook
+
+- fix when no .env file is used for a project
+
 ## 6.0.5
 
 ### Patch Changes
