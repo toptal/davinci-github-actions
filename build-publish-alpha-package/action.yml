@@ -15,6 +15,10 @@ inputs:
   root-folder:
     required: false
     description: 'Root folder of a package to be published || string'
+  node-version:
+    description: Node version for building
+    required: false
+    default: 14
 
 runs:
   using: composite
@@ -29,7 +33,7 @@ runs:
     - name: Setup node
       uses: actions/setup-node@v3.2.0
       with:
-        node-version: 14
+        node-version: ${{ inputs.node-version }}
 
     - uses: toptal/davinci-github-actions/yarn-install@v6.0.0
 

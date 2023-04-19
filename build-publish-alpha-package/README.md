@@ -14,11 +14,12 @@ Uses `yarn build:package` command to build the package.
 
 The list of arguments, that are used in GH Action:
 
-| name          | type   | required | default | description                                           |
-| ------------- | ------ | -------- | ------- | ----------------------------------------------------- |
-| `npm-token`   | string | ✅        |         | NPM token used for publishing. Has to be type Publish |
-| `branch`      | string | ✅        |         | Name of the branch that will be published             |
-| `root-folder` | string |          |         | Root folder of a package to be published              |
+| name           | type   | required | default | description                                           |
+| -------------- | ------ | -------- | ------- | ----------------------------------------------------- |
+| `npm-token`    | string | ✅        |         | NPM token used for publishing. Has to be type Publish |
+| `branch`       | string | ✅        |         | Name of the branch that will be published             |
+| `root-folder`  | string |          |         | Root folder of a package to be published              |
+| `node-version` | string |          | 14      | Node version for building                             |
 
 ### Outputs
 
