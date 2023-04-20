@@ -2,12 +2,12 @@ import fs from 'fs'
 import { remark } from 'remark'
 import { gfmTableToMarkdown } from 'mdast-util-gfm-table'
 
-import { YMLConfiguration } from './types'
+import type { YMLConfiguration } from './types'
 import remarkGithubActionReadme from './remark-github-action-readme'
 import {
   getActionContent,
   getReadmeSourceContent,
-  updateReadmeFile
+  updateReadmeFile,
 } from './utils/files'
 import { getYMLConfiguration } from './utils/yaml'
 

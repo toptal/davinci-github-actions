@@ -1,5 +1,5 @@
-{
-  "extends": "./node_modules/@toptal/davinci-syntax/src/configs/.eslintrc",
+module.exports = {
+  "extends": './node_modules/@toptal/davinci-syntax/src/configs/.eslintrc.cjs',
   "rules": {
     "id-length": "off",
     "@typescript-eslint/no-non-null-assertion": "off",

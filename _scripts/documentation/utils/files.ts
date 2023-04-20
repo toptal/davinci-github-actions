@@ -35,6 +35,6 @@ export const updateReadmeFile = (
   content: string
 ) => {
   fs.writeFileSync(getActionReadmeFilePath(rootDir, folder), content, {
-    encoding: 'utf8'
+    encoding: 'utf8',
   })
 }

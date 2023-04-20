@@ -23,7 +23,7 @@ const dependents = {}
  */
 const changedPackages = changedFiles
   .map(file => {
-    for (let packageName in info) {
+    for (const packageName in info) {
       if (file.startsWith(info[packageName].location)) {
         return packageName
       }
@@ -38,10 +38,10 @@ const highlights = [...new Set(changedPackages)]
 /**
  * Reverse the dependency tree from the info file for easy access to the dependent packages.
  */
-for (let packageName in info) {
+for (const packageName in info) {
   const package = info[packageName]
 
-  for (let dependency of package.workspaceDependencies) {
+  for (const dependency of package.workspaceDependencies) {
     dependents[dependency] = dependents[dependency] || []
     dependents[dependency].push(packageName)
   }
@@ -50,7 +50,7 @@ for (let packageName in info) {
 /**
  * Compile a list of packages directly or indirectly depending on the modified packages
  */
-function getDependents(packageName, ancestors = []) {
+const getDependents = (packageName, ancestors = []) => {
   const list = dependents[packageName] || []
 
   // Detect a cycle and bail
@@ -60,15 +60,19 @@ function getDependents(packageName, ancestors = []) {
 
   return [
     ...list,
-    ...list.map(dependentName => getDependents(dependentName, [...ancestors, packageName])).flat()
+    ...list
+      .map(dependentName =>
+        getDependents(dependentName, [...ancestors, packageName])
+      )
+      .flat(),
   ]
 }
 
 const includeList = [
   ...new Set([
     ...highlights,
-    ...highlights.map(packageName => getDependents(packageName)).flat()
-  ])
+    ...highlights.map(packageName => getDependents(packageName)).flat(),
+  ]),
 ]
 
 /**
@@ -114,14 +118,14 @@ const assignNode = (node, paths, content) => {
   assignNode(node.nodes[step], rest, content)
 }
 
-for (let package of packages) {
+for (const package of packages) {
   if (isIncluded(package)) {
     const paths = getGroup(package)
     const color = highlights.includes(package) ? ':::highlighted' : ''
     assignNode(root, paths, `    ${getId(package)}["${package}"]${color}`)
   }
 
-  for (let dependency of info[package].workspaceDependencies) {
+  for (const dependency of info[package].workspaceDependencies) {
     if (!isIncluded(dependency)) {
       continue
     }

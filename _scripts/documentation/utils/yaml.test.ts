@@ -3,12 +3,12 @@ import yaml from 'js-yaml'
 import {
   getYMLConfiguration,
   parseActionDescription,
-  parseInputDescription
+  parseInputDescription,
 } from './yaml'
-import { YMLConfiguration } from '../types'
+import type { YMLConfiguration } from '../types'
 
 jest.mock('js-yaml', () => ({
-  load: jest.fn()
+  load: jest.fn(),
 }))
 
 const mockedLoad = yaml.load as jest.Mock<YMLConfiguration>
@@ -28,7 +28,7 @@ describe('yaml util', () => {
         name: '__NAME__',
         description: '__DESC__',
         inputs: {},
-        outputs: {}
+        outputs: {},
       }
       mockedLoad.mockReturnValueOnce(content)
 
@@ -45,12 +45,12 @@ describe('yaml util', () => {
       content = {
         envInputs: {
           ENV_VARIABLE1: 'description1',
-          ENV_VARIABLE2: 'description2'
+          ENV_VARIABLE2: 'description2',
         },
         name: '__NAME__',
         description: '__DESC__',
         inputs: {},
-        outputs: {}
+        outputs: {},
       }
       mockedLoad.mockReturnValueOnce(content)
     })
