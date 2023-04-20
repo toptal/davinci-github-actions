@@ -27,7 +27,7 @@ Not specified
 ### Usage
 
 ```yaml
-  - uses: toptal/davinci-github-actions/create-jira-deployment@v6.1.1
+  - uses: toptal/davinci-github-actions/create-jira-deployment@v6.2.0
     with:
       token: ${{ env.GITHUB_TOKEN }}
       environment: staging
