@@ -1,6 +1,7 @@
-import { Plugin } from 'unified'
-import { headingRange, Node } from 'mdast-util-heading-range'
-import { Heading } from 'mdast'
+import type { Plugin } from 'unified'
+import type { Node } from 'mdast-util-heading-range'
+import { headingRange } from 'mdast-util-heading-range'
+import type { Heading } from 'mdast'
 import {
   heading,
   inlineCode,
@@ -8,11 +9,11 @@ import {
   table,
   tableCell,
   tableRow,
-  text
+  text,
 } from 'mdast-builder'
 import { fromMarkdown } from 'mdast-util-from-markdown'
 
-import { YMLConfiguration } from './types'
+import type { YMLConfiguration } from './types'
 import { parseActionDescription, parseInputDescription } from './utils/yaml'
 
 const buildTable = (headers: string[], rows: any[][]) => {
@@ -28,7 +29,7 @@ const buildTable = (headers: string[], rows: any[][]) => {
             )
           )
         )
-      )
+      ),
     ]
   )
 }
@@ -51,9 +52,9 @@ const injectTableToSection = (
       ? paragraph(text('Not specified'))
       : paragraph([
           paragraph(text(options.subtitle || '')),
-          buildTable(tableHeaders, rows)
+          buildTable(tableHeaders, rows),
         ]),
-    end
+    end,
   ])
 }
 
@@ -82,7 +83,7 @@ const remarkGithubActionReadme: Plugin<
         heading(2, [text(yamlContent.name)]),
         paragraph(fromMarkdown(description)),
         ...filteredNodes,
-        end
+        end,
       ]
     })
 
@@ -96,7 +97,7 @@ const remarkGithubActionReadme: Plugin<
           type || 'string',
           input.required ? '✅' : '',
           input.default || '',
-          description
+          description,
         ]
       }
     )
@@ -106,7 +107,7 @@ const remarkGithubActionReadme: Plugin<
       ['name', 'type', 'required', 'default', 'description'],
       inputs,
       {
-        subtitle: 'The list of arguments, that are used in GH Action:\n\n'
+        subtitle: 'The list of arguments, that are used in GH Action:\n\n',
       }
     )
 
@@ -124,19 +125,19 @@ const remarkGithubActionReadme: Plugin<
       ['name', 'type', 'description'],
       outputs,
       {
-        subtitle: 'The list of variables, that are returned by GH Action:\n\n'
+        subtitle: 'The list of variables, that are returned by GH Action:\n\n',
       }
     )
 
     // inject `ENV Variables` table
     const env = Object.keys(envInputs || {}).map(envKey => [
       inlineCode(envKey) as Node,
-      envInputs![envKey]
+      envInputs![envKey],
     ])
     injectTableToSection(tree, 'ENV Variables', ['name', 'description'], env, {
       subtitle:
         'All ENV Variables, defined in a GH Workflow are also passed to a GH Action. It means, the might be reused as is.\n' +
-        'This is a list of ENV Variables that are used in GH Action:\n\n'
+        'This is a list of ENV Variables that are used in GH Action:\n\n',
     })
   }
 }

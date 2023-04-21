@@ -1,6 +1,6 @@
 import yaml from 'js-yaml'
 
-import { YMLConfiguration } from '../types'
+import type { YMLConfiguration } from '../types'
 
 export const getYMLConfiguration = (content: string): YMLConfiguration => {
   return yaml.load(content) as YMLConfiguration
@@ -12,7 +12,7 @@ export const parseActionDescription = (information: string) => {
 
   return {
     description,
-    envInputs: envInputs ? envInputs.envInputs : null
+    envInputs: envInputs ? envInputs.envInputs : null,
   }
 }
 
@@ -21,6 +21,6 @@ export const parseInputDescription = (information: string) => {
 
   return {
     description,
-    type
+    type,
   }
 }

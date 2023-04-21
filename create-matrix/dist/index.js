@@ -2757,7 +2757,7 @@
       /***/
     },
 
-    /***/ 7740: /***/ (
+    /***/ 1585: /***/ (
       module,
       __unused_webpack_exports,
       __nccwpck_require__
@@ -2819,7 +2819,7 @@
       /***/
     },
 
-    /***/ 1336: /***/ (
+    /***/ 1766: /***/ (
       module,
       __unused_webpack_exports,
       __nccwpck_require__
@@ -2829,7 +2829,7 @@
       const { constants: BufferConstants } = __nccwpck_require__(4300)
       const stream = __nccwpck_require__(2781)
       const { promisify } = __nccwpck_require__(3837)
-      const bufferStream = __nccwpck_require__(7740)
+      const bufferStream = __nccwpck_require__(1585)
 
       const streamPipelinePromisified = promisify(stream.pipeline)
 
@@ -5574,8 +5574,8 @@
         return isDuplexStream(stream) && typeof stream._transform === 'function'
       }
 
-      // EXTERNAL MODULE: ./node_modules/execa/node_modules/get-stream/index.js
-      var get_stream = __nccwpck_require__(1336)
+      // EXTERNAL MODULE: ./node_modules/get-stream/index.js
+      var get_stream = __nccwpck_require__(1766)
       // EXTERNAL MODULE: ./node_modules/merge-stream/index.js
       var merge_stream = __nccwpck_require__(2621) // CONCATENATED MODULE: ./node_modules/execa/lib/stream.js
       // `input` option

@@ -4,11 +4,7 @@ const execa = require('execa').execa
 const getWorkspaces = async () => {
   const { exitCode, stdout } = await execa(
     'yarn',
-    [
-      'workspaces',
-      '--no-default-rc',
-      'info'
-    ],
+    ['workspaces', '--no-default-rc', 'info'],
     {
       reject: false,
     }
@@ -35,7 +31,9 @@ const run = async () => {
 
     core.setOutput('is-monorepo', isMonorepo)
 
-    let groups = workspaces ? Object.entries(workspaces) : [['default', { location: '.' }]]
+    let groups = workspaces
+      ? Object.entries(workspaces)
+      : [['default', { location: '.' }]]
 
     // custom matrix
     if (parallelMatrixInput) {
@@ -47,7 +45,7 @@ const run = async () => {
 
       groups = parallelMatrix.map(({ pkg, location, parallelGroups }) => [
         pkg,
-        { location, parallelGroups }
+        { location, parallelGroups },
       ])
     }
 
@@ -56,12 +54,16 @@ const run = async () => {
     const matrix = groups.reduce((acc, [pkg, { location, parallelGroups }]) => {
       const groupsTotal = parallelGroups || parallelGroupsInput
 
-      Array(groupsTotal).fill().forEach((_, index) => acc.push({
-        pkg,
-        location,
-        index,
-        total: groupsTotal,
-      }))
+      Array(groupsTotal)
+        .fill()
+        .forEach((_, index) =>
+          acc.push({
+            pkg,
+            location,
+            index,
+            total: groupsTotal,
+          })
+        )
 
       return acc
     }, [])
@@ -69,7 +71,6 @@ const run = async () => {
     core.setOutput('matrix', matrix)
 
     console.log('Done.')
-
   } catch (error) {
     core.setFailed(error.message)
   }
