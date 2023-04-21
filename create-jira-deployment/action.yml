@@ -23,7 +23,7 @@ runs:
       with:
         token: ${{ inputs.token }}
         environment-url: ${{ inputs.environment-url }}
-        environment: ${{ inputs.toenvironmentken }}
+        environment: ${{ inputs.environment }}
 
     - name: Update deployment status on success
       if: ${{ success() }}
