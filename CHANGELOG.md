@@ -1,5 +1,15 @@
 # davinci-github-actions
 
+## 6.3.0
+
+### Minor Changes
+
+- [#158](https://github.com/toptal/davinci-github-actions/pull/158) [`7921199`](https://github.com/toptal/davinci-github-actions/commit/79211995c3b0c401091715c4b72b0d236751ce60) Thanks [@dmaklygin](https://github.com/dmaklygin)!
+
+---
+
+- add new GH Action to create a Jira deployment
+
 ## 6.2.0
 
 ### Minor Changes
