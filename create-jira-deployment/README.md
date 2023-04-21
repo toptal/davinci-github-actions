@@ -10,11 +10,11 @@ Installs package dependencies. Caches `node_modules` for faster subsequent insta
 
 The list of arguments, that are used in GH Action:
 
-| name              | type   | required | default    | description                                |
-| ----------------- | ------ | -------- | ---------- | ------------------------------------------ |
-| `token`           | string | ✅        |            | GitHub token to create a deployment        |
-| `environment-url` | string | ✅        |            | URL of the environment                     |
-| `environment`     | string |          | production | Name for the target deployment environment |
+| name              | type   | required | default | description                                |
+| ----------------- | ------ | -------- | ------- | ------------------------------------------ |
+| `token`           | string | ✅        |         | GitHub token to create a deployment        |
+| `environment-url` | string | ✅        |         | URL of the environment                     |
+| `environment`     | string | ✅        |         | Name for the target deployment environment |
 
 ### Outputs
 

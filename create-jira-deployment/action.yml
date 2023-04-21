@@ -10,8 +10,7 @@ inputs:
     required: true
     description: 'URL of the environment'
   environment:
-    required: false
-    default: production
+    required: true
     description: 'Name for the target deployment environment'
 
 runs:
