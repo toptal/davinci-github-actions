@@ -1,5 +1,29 @@
 # davinci-github-actions
 
+## 6.2.0
+
+### Minor Changes
+
+- [#156](https://github.com/toptal/davinci-github-actions/pull/156) [`5a2eb19`](https://github.com/toptal/davinci-github-actions/commit/5a2eb19e1f33647e281becf1175d4c61abdef2b1) Thanks [@augustobmoura](https://github.com/augustobmoura)!
+
+---
+
+### build-publish-alpha
+
+- change node version to follow 14 major
+
+### build-push-image
+
+- change node version to follow 14 major
+
+### Patch Changes
+
+- [#159](https://github.com/toptal/davinci-github-actions/pull/159) [`4edb936`](https://github.com/toptal/davinci-github-actions/commit/4edb936f813b168d7a23cb0711e491153c7ca7ee) Thanks [@dmaklygin](https://github.com/dmaklygin)!
+
+---
+
+- bump davinci-syntax version to 20
+
 ## 6.1.0
 
 ### Minor Changes
