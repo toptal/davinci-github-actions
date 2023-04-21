@@ -1,0 +1,46 @@
+name: Create new Jira Deployment
+description: |
+  It creates and engages a new Jira Deployment. Notice: Jira App must be installed in the repository.
+
+inputs:
+  token:
+    required: true
+    description: 'GitHub token to create a deployment'
+  environment-url:
+    required: true
+    description: 'URL of the environment'
+  environment:
+    required: true
+    description: 'Name for the target deployment environment'
+
+runs:
+  using: composite
+  steps:
+    - uses: chrnorm/deployment-action@v2
+      name: Create GitHub deployment
+      id: gh-deployment
+      if: ${{ always() }}
+      with:
+        token: ${{ inputs.token }}
+        environment-url: ${{ inputs.environment-url }}
+        environment: ${{ inputs.environment }}
+
+    - name: Update deployment status on success
+      if: ${{ success() }}
+      uses: chrnorm/deployment-status@v2
+      with:
+        token: ${{ inputs.token }}
+        environment-url: ${{ steps.gh-deployment.outputs.environment_url }}
+        deployment-id: ${{ steps.gh-deployment.outputs.deployment_id }}
+        log-url: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        state: 'success'
+
+    - name: Update deployment status on failure
+      if: ${{ failure() }}
+      uses: chrnorm/deployment-status@v2
+      with:
+        token: ${{ inputs.token }}
+        environment-url: ${{ steps.gh-deployment.outputs.environment_url }}
+        deployment-id: ${{ steps.gh-deployment.outputs.deployment_id }}
+        log-url: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        state: 'failure'
