@@ -15,6 +15,8 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - name: Setup node 16
         uses: actions/setup-node@v3
@@ -24,7 +26,7 @@ jobs:
       - name: Get new tag version
         id: tag-version
         run: |
-          echo LATEST_TAG=$(git describe --tags --abbrev=0) >> $GITHUB_OUTPUT
+          echo "LATEST_TAG=$(git describe --tags --abbrev=0)" >> $GITHUB_OUTPUT
 
       - uses: toptal/davinci-github-actions/create-jira-deployment@v6.3.0
         name: Create Production Jira deployment
