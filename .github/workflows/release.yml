@@ -8,6 +8,7 @@ on:
 env:
   SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
   GITHUB_WORKFLOW_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+  DEVBOT_TOKEN: ${{ secrets.TOPTAL_DEVBOT_TOKEN }}
 
 jobs:
   release:
@@ -92,3 +93,17 @@ jobs:
           slack-message: "A new PR was merged to davinci-github-actions :parrotspin:"
         env:
           SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
+
+      - name: Get new tag version
+        id: tag-version
+        if: ${{ steps.changesets.outputs.published == 'true' }}
+        run: |
+          echo LATEST_TAG=$(git describe --tags --abbrev=0) >> $GITHUB_OUTPUT
+
+      - uses: toptal/davinci-github-actions/create-jira-deployment@v6.3.0
+        name: Create Production Jira deployment
+        if: ${{ steps.changesets.outputs.published == 'true' }}
+        with:
+          token: ${{ env.DEVBOT_TOKEN }}
+          environment: production
+          environment-url: https://github.com/toptal/davinci-github-actions/releases/tag/${{ steps.tag-version.outputs.LATEST_TAG }}
