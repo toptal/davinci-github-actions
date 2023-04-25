@@ -1,5 +1,15 @@
 # davinci-github-actions
 
+## 6.4.0
+
+### Minor Changes
+
+- [#160](https://github.com/toptal/davinci-github-actions/pull/160) [`39bddf5`](https://github.com/toptal/davinci-github-actions/commit/39bddf582488467328921d3a45ec4ddfb064b694) Thanks [@jcobarreto](https://github.com/jcobarreto)!
+
+---
+
+- add npm-gar-token input to yarn-install action to enable npm package caching in Artifact Registry
+
 ## 6.3.0
 
 ### Minor Changes
