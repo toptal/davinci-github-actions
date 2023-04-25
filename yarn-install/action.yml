@@ -13,7 +13,10 @@ inputs:
     default: .
     required: false
   checkout-token:
-    description: Repository checkout access token `GITHUB_TOKEN`. Required for self hosted runners
+    description: Repository checkout access token `GITHUB_TOKEN`. Required for self-hosted runners
+    required: false
+  npm-gar-token:
+    description: Repository npm Artifact Registry access token `NPM_GAR_TOKEN`. Required when using self-hosted runners with npm in GAR (Google Artifact Registry, the npm registry works as a proxy-cache, downloading and storing the public npm packages)
     required: false
 outputs:
   cache-hit:
@@ -51,7 +54,7 @@ runs:
         repository: toptal/actions
         token: ${{ inputs.checkout-token }}
         path: ./.github/cache_action/
-        
+
     - name: Cache yarn and node_modules folder
       if: "inputs.checkout-token && contains(runner.name, 'inf-gha-runners-ci')"
       uses: ./.github/cache_action/cache/
@@ -77,6 +80,34 @@ runs:
           ${{ steps.yarn-cache.outputs.dir }}
           **/node_modules
         key: ${{ runner.os }}-node-${{ steps.set-node-version.outputs.version }}-yarn-node_modules-${{ hashFiles('**/yarn.lock', 'tmp-workspaces.json') }}-${{ inputs.cache-version }}
+
+    # This step creates .npmrc file that references to npm registry in GAR (Google Artifact Registry)
+    # The npm registry works as a proxy-cache, downloading and storing the public npm packages
+    - name: Create .npmrc file using npm Artifact Registry
+      if: "inputs.checkout-token && inputs.npm-gar-token && contains(runner.name, 'inf-gha-runners-ci')"
+      run: |
+        echo "registry=https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/" > .npmrc &&
+        echo "//us-central1-npm.pkg.dev/toptal-ci/npm-registry/:username=_json_key_base64" >> .npmrc &&
+        echo "//us-central1-npm.pkg.dev/toptal-ci/npm-registry/:_password=${{ inputs.npm-gar-token }}" >> .npmrc &&
+
+        echo "@toptal:registry=https://registry.npmjs.org/" >> .npmrc &&
+        echo "//registry.npmjs.org/:_authToken=${{ inputs.npm-token || env.NPM_TOKEN }}" >> .npmrc &&
+
+        echo "@topkit:registry=https://registry.npmjs.org/" >> .npmrc &&
+        echo "//registry.npmjs.org/:_authToken=${{ inputs.npm-token || env.NPM_TOKEN }}" >> .npmrc &&
+        echo "always-auth=true" >> .npmrc
+      shell: bash
+
+    # This step changes the public npm registry in yarn.lock file to npm in AR
+    # We still use the public npm registry to our private packages
+    - name: Change registry in yarn.lock file to npm Artifact Registry
+      if: "inputs.checkout-token && inputs.npm-gar-token && contains(runner.name, 'inf-gha-runners-ci')"
+      run: |
+        sed -i -e "s#https://registry.yarnpkg.com/#https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/#g" yarn.lock
+        sed -i -e "s#https://registry.npmjs.org/#https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/#g" yarn.lock
+        sed -i -e "s#https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/@toptal/#https://registry.npmjs.org/@toptal/#g" yarn.lock
+        sed -i -e "s#https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/@topkit/#https://registry.npmjs.org/@topkit/#g" yarn.lock
+      shell: bash
 
     - name: yarn install
       shell: bash

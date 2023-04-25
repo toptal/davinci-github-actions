@@ -10,12 +10,13 @@ Installs package dependencies. Caches `node_modules` for faster subsequent insta
 
 The list of arguments, that are used in GH Action:
 
-| name             | type   | required | default | description                                                                                                               |
-| ---------------- | ------ | -------- | ------- | ------------------------------------------------------------------------------------------------------------------------- |
-| `npm-token`      | string |          |         | Access token type **Read-only**. Required for repository with private dependencies. If undefined, `env.NPM_TOKEN` is used |
-| `cache-version`  | string |          | 0.0     | Cache version                                                                                                             |
-| `path`           | string |          | .       | Relative path under $GITHUB\_WORKSPACE where to run `yarn install` command                                                |
-| `checkout-token` | string |          |         | Repository checkout access token `GITHUB_TOKEN`. Required for self hosted runners                                         |
+| name             | type   | required | default | description                                                                                                                                                                                                                                 |
+| ---------------- | ------ | -------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `npm-token`      | string |          |         | Access token type **Read-only**. Required for repository with private dependencies. If undefined, `env.NPM_TOKEN` is used                                                                                                                   |
+| `cache-version`  | string |          | 0.0     | Cache version                                                                                                                                                                                                                               |
+| `path`           | string |          | .       | Relative path under $GITHUB\_WORKSPACE where to run `yarn install` command                                                                                                                                                                  |
+| `checkout-token` | string |          |         | Repository checkout access token `GITHUB_TOKEN`. Required for self-hosted runners                                                                                                                                                           |
+| `npm-gar-token`  | string |          |         | Repository npm Artifact Registry access token `NPM_GAR_TOKEN`. Required when using self-hosted runners with npm in GAR (Google Artifact Registry, the npm registry works as a proxy-cache, downloading and storing the public npm packages) |
 
 ### Outputs
 
@@ -32,8 +33,9 @@ Not specified
 ### Usage
 
 ```yaml
-  - uses: toptal/davinci-github-actions/yarn-install@v4.4.2
+  - uses: toptal/davinci-github-actions/yarn-install@v6.4.0
     with:
       npm-token: ${{ env.NPM_TOKEN }}
+      npm-gar-token: ${{ env.NPM_GAR_TOKEN }}
       cache-version: "1.0"
 ```
