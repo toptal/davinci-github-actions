@@ -33,7 +33,7 @@ Not specified
 ### Usage
 
 ```yaml
-  - uses: toptal/davinci-github-actions/yarn-install@v6.4.0
+  - uses: toptal/davinci-github-actions/yarn-install@v6.5.0
     with:
       npm-token: ${{ env.NPM_TOKEN }}
       npm-gar-token: ${{ env.NPM_GAR_TOKEN }}

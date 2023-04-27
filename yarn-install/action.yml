@@ -10,7 +10,7 @@ inputs:
     required: false
   path:
     description: Relative path under $GITHUB_WORKSPACE where to run `yarn install` command
-    default: .
+    default: ./
     required: false
   checkout-token:
     description: Repository checkout access token `GITHUB_TOKEN`. Required for self-hosted runners
@@ -86,16 +86,16 @@ runs:
     - name: Create .npmrc file using npm Artifact Registry
       if: "inputs.checkout-token && inputs.npm-gar-token && contains(runner.name, 'inf-gha-runners-ci')"
       run: |
-        echo "registry=https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/" > .npmrc &&
-        echo "//us-central1-npm.pkg.dev/toptal-ci/npm-registry/:username=_json_key_base64" >> .npmrc &&
-        echo "//us-central1-npm.pkg.dev/toptal-ci/npm-registry/:_password=${{ inputs.npm-gar-token }}" >> .npmrc &&
+        echo "registry=https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/" > ${{ inputs.path }}.npmrc &&
+        echo "//us-central1-npm.pkg.dev/toptal-ci/npm-registry/:username=_json_key_base64" >> ${{ inputs.path }}.npmrc &&
+        echo "//us-central1-npm.pkg.dev/toptal-ci/npm-registry/:_password=${{ inputs.npm-gar-token }}" >> ${{ inputs.path }}.npmrc &&
 
-        echo "@toptal:registry=https://registry.npmjs.org/" >> .npmrc &&
-        echo "//registry.npmjs.org/:_authToken=${{ inputs.npm-token || env.NPM_TOKEN }}" >> .npmrc &&
+        echo "@toptal:registry=https://registry.npmjs.org/" >> ${{ inputs.path }}.npmrc &&
+        echo "//registry.npmjs.org/:_authToken=${{ inputs.npm-token || env.NPM_TOKEN }}" >> ${{ inputs.path }}.npmrc &&
 
-        echo "@topkit:registry=https://registry.npmjs.org/" >> .npmrc &&
-        echo "//registry.npmjs.org/:_authToken=${{ inputs.npm-token || env.NPM_TOKEN }}" >> .npmrc &&
-        echo "always-auth=true" >> .npmrc
+        echo "@topkit:registry=https://registry.npmjs.org/" >> ${{ inputs.path }}.npmrc &&
+        echo "//registry.npmjs.org/:_authToken=${{ inputs.npm-token || env.NPM_TOKEN }}" >> ${{ inputs.path }}.npmrc &&
+        echo "always-auth=true" >> ${{ inputs.path }}.npmrc
       shell: bash
 
     # This step changes the public npm registry in yarn.lock file to npm in AR
@@ -103,10 +103,10 @@ runs:
     - name: Change registry in yarn.lock file to npm Artifact Registry
       if: "inputs.checkout-token && inputs.npm-gar-token && contains(runner.name, 'inf-gha-runners-ci')"
       run: |
-        sed -i -e "s#https://registry.yarnpkg.com/#https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/#g" yarn.lock
-        sed -i -e "s#https://registry.npmjs.org/#https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/#g" yarn.lock
-        sed -i -e "s#https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/@toptal/#https://registry.npmjs.org/@toptal/#g" yarn.lock
-        sed -i -e "s#https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/@topkit/#https://registry.npmjs.org/@topkit/#g" yarn.lock
+        sed -i -e "s#https://registry.yarnpkg.com/#https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/#g" ${{ inputs.path }}yarn.lock
+        sed -i -e "s#https://registry.npmjs.org/#https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/#g" ${{ inputs.path }}yarn.lock
+        sed -i -e "s#https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/@toptal/#https://registry.npmjs.org/@toptal/#g" ${{ inputs.path }}yarn.lock
+        sed -i -e "s#https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/@topkit/#https://registry.npmjs.org/@topkit/#g" ${{ inputs.path }}yarn.lock
       shell: bash
 
     - name: yarn install
