@@ -1,5 +1,15 @@
 # davinci-github-actions
 
+## 6.5.0
+
+### Minor Changes
+
+- [#167](https://github.com/toptal/davinci-github-actions/pull/167) [`f5de2f0`](https://github.com/toptal/davinci-github-actions/commit/f5de2f085f722dd84e5c0cefa9538fa3f6a2be47) Thanks [@jcobarreto](https://github.com/jcobarreto)!
+
+---
+
+- change to use inputs.path in yarn-install action when provided
+
 ## 6.4.0
 
 ### Minor Changes
