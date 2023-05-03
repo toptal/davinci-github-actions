@@ -50,7 +50,7 @@ runs:
       env:
         ENVIRONMENT: ${{ inputs.environment }}
       run: |
-        latest=$(if [[ $ENVIRONMENT == 'temploy' ]]; then echo false; else echo true; fi)
+        latest=$(if [[ '${{ env.ENVIRONMENT }}' == 'temploy' ]]; then echo false; else echo true; fi)
         echo latest=$latest >> $GITHUB_OUTPUT
 
     - name: Docker meta

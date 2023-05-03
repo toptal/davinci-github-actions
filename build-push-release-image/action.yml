@@ -27,7 +27,7 @@ runs:
       shell: bash
       run: yarn build
 
-    - uses: toptal/davinci-github-actions/build-push-image@v6.0.0
+    - uses: toptal/davinci-github-actions/build-push-image@fix-build-push-image-env-check
       with:
         sha: ${{ inputs.sha }}
         image-name: ${{ inputs.repository-name }}-release
