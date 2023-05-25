@@ -1,5 +1,12 @@
 # davinci-github-actions
 
+## 7.0.0
+
+### Major Changes
+
+- [#173](https://github.com/toptal/davinci-github-actions/pull/173) [`7ff6c6c`](https://github.com/toptal/davinci-github-actions/commit/7ff6c6c6e444d2f69155cd3f26d87a8231d13de7) Thanks [@dmaklygin](https://github.com/dmaklygin)!
+- build-push-image: avoid pushing images to Google Cloud Registy
+
 ## 6.5.0
 
 ### Minor Changes
