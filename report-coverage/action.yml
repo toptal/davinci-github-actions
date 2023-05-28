@@ -28,7 +28,7 @@ runs:
         npx nyc merge "$FOLDER" merged-coverage/coverage.json
 
     - name: Print Coverage
-      uses: tj-actions/coverage-reporter@v5.1
+      uses: tj-actions/coverage-reporter@v5.3
       env:
         REPORTER: ${{ inputs.reporter }}
       with:
