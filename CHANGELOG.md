@@ -1,5 +1,15 @@
 # davinci-github-actions
 
+## 7.0.1
+
+### Patch Changes
+
+- [#175](https://github.com/toptal/davinci-github-actions/pull/175) [`83362f1`](https://github.com/toptal/davinci-github-actions/commit/83362f1062cdcd81a828fa0486fad935631d27ad) Thanks [@dmaklygin](https://github.com/dmaklygin)!
+
+---
+
+- bump coverage-reporter gh action
+
 ## 7.0.0
 
 ### Major Changes
