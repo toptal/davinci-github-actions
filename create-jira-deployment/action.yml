@@ -17,7 +17,7 @@ inputs:
     description: 'Specifies if the given environment is specific to the deployment and will no longer exist at some point in the future.'
   auto-inactive:
     required: false
-    description: 'Adds a new inactive status to all prior non-transient, non-production environment deployments with the same repository and environment name as the created status\u0027s deployment. An inactive status is only added to deployments that had a success state. Default true'
+    description: Adds a new inactive status to all prior non-transient, non-production environment deployments with the same repository and environment name as the created status's deployment. An inactive status is only added to deployments that had a success state. Default true
 
 runs:
   using: composite
