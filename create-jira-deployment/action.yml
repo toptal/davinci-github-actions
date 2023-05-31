@@ -12,6 +12,14 @@ inputs:
   environment:
     required: true
     description: 'Name for the target deployment environment'
+  transient-environment:
+    required: false
+    description: 'Specifies if the given environment is specific to the deployment and will no longer exist at some point in the future.'
+    default: 'true'
+  auto-inactive:
+    required: false
+    description: Adds a new inactive status to all prior non-transient, non-production environment deployments with the same repository and environment name as the created status's deployment. An inactive status is only added to deployments that had a success state.
+    default: 'true'
 
 runs:
   using: composite
@@ -24,6 +32,8 @@ runs:
         token: ${{ inputs.token }}
         environment-url: ${{ inputs.environment-url }}
         environment: ${{ inputs.environment }}
+        transient-environment: ${{ inputs.transient-environment }}
+        auto-inactive: ${{ inputs.auto-inactive }}
 
     - name: Update deployment status on success
       if: ${{ success() }}
