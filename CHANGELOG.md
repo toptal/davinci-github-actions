@@ -1,5 +1,26 @@
 # davinci-github-actions
 
+## 7.1.0
+
+### Minor Changes
+
+- [#179](https://github.com/toptal/davinci-github-actions/pull/179) [`c6762f2`](https://github.com/toptal/davinci-github-actions/commit/c6762f24d0e5d091929169311142c7cc3c50a030) Thanks [@TomasSlama](https://github.com/TomasSlama)!
+
+### Create new Jira Deployment
+
+- add new inputs `transient-environment` and `auto-inactive`
+- useful for development environment when we want to have multiple deployments active for a single environment
+
+```yaml
+- uses: toptal/davinci-github-actions/create-jira-deployment@v6.3.0
+  with:
+    token: ${{ env.GITHUB_TOKEN }}
+    environment: temploy
+    environment-url: http://temploy.example.com
+    transient-environment: false
+    auto-inactive: false
+```
+
 ## 7.0.1
 
 ### Patch Changes
