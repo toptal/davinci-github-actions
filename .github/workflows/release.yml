@@ -100,7 +100,7 @@ jobs:
         run: |
           echo LATEST_TAG=$(git describe --tags --abbrev=0) >> $GITHUB_OUTPUT
 
-      - uses: toptal/davinci-github-actions/create-jira-deployment@v7.0.0
+      - uses: toptal/davinci-github-actions/create-jira-deployment@v7.1.0
         name: Create Production Jira deployment
         if: ${{ steps.changesets.outputs.published == 'true' }}
         with:
