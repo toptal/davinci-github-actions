@@ -1,5 +1,12 @@
 # davinci-github-actions
 
+## 8.0.0
+
+### Major Changes
+
+- [#182](https://github.com/toptal/davinci-github-actions/pull/182) [`aa67f39`](https://github.com/toptal/davinci-github-actions/commit/aa67f392d003ed6b6dec66a4219b6239bf11cff7) Thanks [@sashuk](https://github.com/sashuk)!
+- all workflows use `node@16`
+
 ## 7.1.0
 
 ### Minor Changes
