@@ -29,7 +29,7 @@ runs:
     - name: Setup node
       uses: actions/setup-node@v3.2.0
       with:
-        node-version: 14
+        node-version: 16
 
     - uses: toptal/davinci-github-actions/yarn-install@v6.0.0
 
