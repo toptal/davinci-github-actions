@@ -1,5 +1,17 @@
 # davinci-github-actions
 
+## 8.0.1
+
+### Patch Changes
+
+- [#185](https://github.com/toptal/davinci-github-actions/pull/185) [`77f204d`](https://github.com/toptal/davinci-github-actions/commit/77f204d525b47fbe27693d531707ed528b762a89) Thanks [@rafael-anachoreta](https://github.com/rafael-anachoreta)!
+
+---
+
+### yarn-install
+
+- add architecture to yarn-install cache key
+
 ## 8.0.0
 
 ### Major Changes
