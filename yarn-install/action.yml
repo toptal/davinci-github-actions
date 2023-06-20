@@ -66,7 +66,7 @@ runs:
         path: |
           ${{ steps.yarn-cache.outputs.dir }}
           **/node_modules
-        key: ${{ runner.os }}-node-${{ steps.set-node-version.outputs.version }}-yarn-node_modules-${{ hashFiles('**/yarn.lock', 'tmp-workspaces.json') }}-${{ inputs.cache-version }}
+        key: ${{ runner.os }}-${{ runner.arch }}-node-${{ steps.set-node-version.outputs.version }}-yarn-node_modules-${{ hashFiles('**/yarn.lock', 'tmp-workspaces.json') }}-${{ inputs.cache-version }}
 
     - name: Cache yarn and node_modules folder
       if: "!contains(runner.name, 'inf-gha-runners-ci') || !inputs.checkout-token"
@@ -79,7 +79,7 @@ runs:
         path: |
           ${{ steps.yarn-cache.outputs.dir }}
           **/node_modules
-        key: ${{ runner.os }}-node-${{ steps.set-node-version.outputs.version }}-yarn-node_modules-${{ hashFiles('**/yarn.lock', 'tmp-workspaces.json') }}-${{ inputs.cache-version }}
+        key: ${{ runner.os }}-${{ runner.arch }}-node-${{ steps.set-node-version.outputs.version }}-yarn-node_modules-${{ hashFiles('**/yarn.lock', 'tmp-workspaces.json') }}-${{ inputs.cache-version }}
 
     # This step creates .npmrc file that references to npm registry in GAR (Google Artifact Registry)
     # The npm registry works as a proxy-cache, downloading and storing the public npm packages
