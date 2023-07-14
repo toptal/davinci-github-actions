@@ -52,6 +52,7 @@ runs:
       uses: actions/checkout@v3
       with:
         repository: toptal/actions
+        ref: catch-missing-zstd-for-the-cache-action
         token: ${{ inputs.checkout-token }}
         path: ./.github/cache_action/
 
