@@ -60,6 +60,7 @@ runs:
 
     - name: Set appName
       id: repo
+      shell: bash
       run: |
         echo APP_NAME=$(echo "${{ github.repository }}" | cut -d'/' -f2) >> $GITHUB_OUTPUT
 
