@@ -70,7 +70,7 @@ runs:
       uses: toptal/jenkins-job-trigger-action@1.0.1
       with:
         jenkins_url: https://jenkins-build.toptal.net/
-        jenkins_user: ${{ env.JIRA_USER }}}
+        jenkins_user: ${{ env.JIRA_USER }}
         jenkins_token: ${{ env.JENKINS_BUILD_TOKEN }}
         proxy: ${{ env.PROXY }}
         job_name: Davinci/job/create-jira-deployment
