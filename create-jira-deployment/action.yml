@@ -1,6 +1,9 @@
 name: Create new Jira Deployment
 description: |
   It creates and engages a new Jira Deployment. Notice: Jira App must be installed in the repository.
+  ****
+  envInputs:
+    JENKINS_DEPLOY_TOKEN: Jenkins deployment token. Keep in mind that tokens for `temploy` and `staging` differ
 
 inputs:
   token:
@@ -54,3 +57,23 @@ runs:
         deployment-id: ${{ steps.gh-deployment.outputs.deployment_id }}
         log-url: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
         state: 'failure'
+
+    - name: Set appName
+      id: repo
+      run: |
+        echo APP_NAME=$(echo "${{ github.repository }}" | cut -d'/' -f2) >> $GITHUB_OUTPUT
+
+    - name: Trigger `Create JIRA` deployment
+      uses: toptal/jenkins-job-trigger-action@1.0.1
+      with:
+        jenkins_url: https://jenkins-build.toptal.net/
+        jenkins_user: ${{ secrets.TOPTAL_TRIGGERBOT_USERNAME }}
+        jenkins_token: ${{ env.JENKINS_DEPLOY_TOKEN }}
+        job_name: Davinci/job/create-jira-deployment
+        job_params: |
+          {
+            "appName": "${{ steps.repo.outputs.APP_NAME }}",
+            "envType": "${{ inputs.environment }}",
+            "sha": "${{ github.sha }}"
+          }
+        job_timeout: '3600'
