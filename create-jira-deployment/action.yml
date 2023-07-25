@@ -3,7 +3,7 @@ description: |
   It creates and engages a new Jira Deployment. Notice: Jira App must be installed in the repository.
   ****
   envInputs:
-    JENKINS_DEPLOY_TOKEN: Jenkins deployment token. Keep in mind that tokens for `temploy` and `staging` differ
+    JENKINS_BUILD_TOKEN: Jenkins build token. Keep in mind that tokens for `temploy` and `staging` differ
 
 inputs:
   token:
@@ -68,7 +68,7 @@ runs:
       with:
         jenkins_url: https://jenkins-build.toptal.net/
         jenkins_user: ${{ secrets.TOPTAL_TRIGGERBOT_USERNAME }}
-        jenkins_token: ${{ env.JENKINS_DEPLOY_TOKEN }}
+        jenkins_token: ${{ env.JENKINS_BUILD_TOKEN }}
         job_name: Davinci/job/create-jira-deployment
         job_params: |
           {
