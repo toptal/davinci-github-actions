@@ -29,7 +29,9 @@ This is a list of ENV Variables that are used in GH Action:
 
 | name                  | description                                                                      |
 | --------------------- | -------------------------------------------------------------------------------- |
+| `JIRA_USER`           | Jenkins user                                                                     |
 | `JENKINS_BUILD_TOKEN` | Jenkins build token. Keep in mind that tokens for `temploy` and `staging` differ |
+| `PROXY`               | Proxy to use for Jenkins                                                         |
 
 ### Usage
 
