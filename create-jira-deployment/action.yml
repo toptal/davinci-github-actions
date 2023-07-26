@@ -3,7 +3,7 @@ description: |
   It creates and engages a new Jira Deployment. Notice: Jira App must be installed in the repository.
   ****
   envInputs:
-    JIRA_USER: Jenkins user
+    JENKINS_USER: Jenkins user
     JENKINS_BUILD_TOKEN: Jenkins build token. Keep in mind that tokens for `temploy` and `staging` differ
     PROXY: Proxy to use for Jenkins
 
@@ -72,7 +72,7 @@ runs:
       if: ${{ always() }}
       with:
         jenkins_url: https://jenkins-build.toptal.net/
-        jenkins_user: ${{ env.JIRA_USER }}
+        jenkins_user: ${{ env.JENKINS_USER }}
         jenkins_token: ${{ env.JENKINS_BUILD_TOKEN }}
         proxy: ${{ env.PROXY }}
         job_name: create-jira-deployment
