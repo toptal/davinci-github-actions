@@ -24,7 +24,14 @@ Not specified
 
 ### ENV Variables
 
-Not specified
+All ENV Variables, defined in a GH Workflow are also passed to a GH Action. It means, the might be reused as is.
+This is a list of ENV Variables that are used in GH Action:
+
+| name                  | description                                                                      |
+| --------------------- | -------------------------------------------------------------------------------- |
+| `JENKINS_USER`        | Jenkins user                                                                     |
+| `JENKINS_BUILD_TOKEN` | Jenkins build token. Keep in mind that tokens for `temploy` and `staging` differ |
+| `PROXY`               | Proxy to use for Jenkins                                                         |
 
 ### Usage
 
