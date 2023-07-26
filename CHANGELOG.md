@@ -1,5 +1,12 @@
 # davinci-github-actions
 
+## 9.0.0
+
+### Major Changes
+
+- [#190](https://github.com/toptal/davinci-github-actions/pull/190) [`6996874`](https://github.com/toptal/davinci-github-actions/commit/6996874543e496444f40d8be61989f25af75b4e9) Thanks [@dmaklygin](https://github.com/dmaklygin)!
+- use jenkins to create jira deployment
+
 ## 8.0.1
 
 ### Patch Changes
