@@ -77,7 +77,7 @@ runs:
         job_params: |
           {
             "appName": "${{ steps.repo.outputs.APP_NAME }}",
-            "envType": "${{ inputs.environment }}",
+            "envName": "${{ inputs.environment }}",
             "sha": "${{ github.sha }}"
           }
         job_timeout: '3600'
