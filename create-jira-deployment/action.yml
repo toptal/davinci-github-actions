@@ -66,6 +66,17 @@ runs:
       run: |
         echo APP_NAME=$(echo "${{ github.repository }}" | cut -d'/' -f2) >> $GITHUB_OUTPUT
 
+    - name: Set state
+      id: state
+      run: |
+        if ${{ success() }}
+        then
+          echo STATE=success >> $GITHUB_OUTPUT
+        elif ${{ failure() }}
+        then
+          echo STATE=failure >> $GITHUB_OUTPUT
+        fi
+
     - name: Trigger `Create JIRA` deployment
       uses: toptal/jenkins-job-trigger-action@1.0.1
       with:
@@ -78,6 +89,7 @@ runs:
           {
             "appName": "${{ steps.repo.outputs.APP_NAME }}",
             "envName": "${{ inputs.environment }}",
-            "sha": "${{ github.sha }}"
+            "sha": "${{ github.sha }}",
+            "state": "${{ steps.state.outputs.STATE }}",
           }
         job_timeout: '3600'
