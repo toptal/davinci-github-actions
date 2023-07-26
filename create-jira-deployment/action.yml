@@ -73,7 +73,7 @@ runs:
         jenkins_user: ${{ env.JIRA_USER }}
         jenkins_token: ${{ env.JENKINS_BUILD_TOKEN }}
         proxy: ${{ env.PROXY }}
-        job_name: Davinci/job/create-jira-deployment
+        job_name: create-jira-deployment
         job_params: |
           {
             "appName": "${{ steps.repo.outputs.APP_NAME }}",
