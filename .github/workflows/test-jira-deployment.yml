@@ -1,9 +1,18 @@
 name: Test JIRA Deployment
 
+# on:
+#   pull_request:
+#     types: [opened, reopened, ready_for_review, synchronize]
+    # branches: [master]
+
+# on:
+#   issue_comment:
+#     types: [created]
+
 on:
-  pull_request:
-    types: [opened, reopened, ready_for_review, synchronize]
-    branches: [master]
+  push:
+    branches:
+      - fix/use-proper-sha
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -21,10 +30,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Create Jira Deployment
-        uses: toptal/davinci-github-actions/create-jira-deployment@master
+        uses: toptal/davinci-github-actions/create-jira-deployment@fix/use-proper-sha
         with:
           token: ${{ env.DEVBOT_TOKEN }}
-          environment: development
+          environment: production
           environment-url: https://github.com/toptal/davinci-github-actions/releases/tag/
           transient-environment: false
           auto-inactive: false
