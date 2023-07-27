@@ -1,5 +1,12 @@
 # davinci-github-actions
 
+## 9.0.2
+
+### Patch Changes
+
+- [#194](https://github.com/toptal/davinci-github-actions/pull/194) [`4662ded`](https://github.com/toptal/davinci-github-actions/commit/4662dedd38beb02e63692ded0c1a1432f0825e6b) Thanks [@dmaklygin](https://github.com/dmaklygin)!
+- fix sha for jira deployment gh action
+
 ## 9.0.1
 
 ### Patch Changes
