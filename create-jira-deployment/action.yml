@@ -83,6 +83,6 @@ runs:
           {
             "appName": "${{ steps.repo.outputs.APP_NAME }}",
             "envName": "${{ inputs.environment }}",
-            "sha": "${{ steps.sha.outputs.sha }}"
+            "sha": "${{ github.event.pull_request.head.sha || steps.sha.outputs.sha }}"
           }
         job_timeout: '3600'
