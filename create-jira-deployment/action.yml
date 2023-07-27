@@ -67,6 +67,9 @@ runs:
       run: |
         echo APP_NAME=$(echo "${{ github.repository }}" | cut -d'/' -f2) >> $GITHUB_OUTPUT
 
+    - id: branch
+      uses: xt0rted/pull-request-comment-branch@v2.0.0
+
     - name: Trigger `Create JIRA` deployment
       uses: toptal/jenkins-job-trigger-action@1.0.1
       if: ${{ always() }}
@@ -80,6 +83,6 @@ runs:
           {
             "appName": "${{ steps.repo.outputs.APP_NAME }}",
             "envName": "${{ inputs.environment }}",
-            "sha": "${{ github.sha }}"
+            "sha": "${{ steps.branch.outputs.head_sha }}"
           }
         job_timeout: '3600'
