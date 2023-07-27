@@ -1,4 +1,4 @@
-name: Release
+name: Test JIRA Deployment
 
 on:
   pull_request:
@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Create Jira Deployment
-        uses: toptal/davinci-github-actions/create-jira-deployment@fix/use-proper-sha
+        uses: toptal/davinci-github-actions/create-jira-deployment@master
         with:
           token: ${{ env.DEVBOT_TOKEN }}
           environment: development
