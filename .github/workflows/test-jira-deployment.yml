@@ -1,0 +1,30 @@
+name: Release
+
+on:
+  pull_request:
+    types: [opened, reopened, ready_for_review, synchronize]
+    branches: [master]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  DEVBOT_TOKEN: ${{ secrets.TOPTAL_DEVBOT_TOKEN }}
+  JENKINS_USER: ${{ secrets.TOPTAL_TRIGGERBOT_USERNAME }}
+  JENKINS_BUILD_TOKEN: ${{ secrets.TOPTAL_TRIGGERBOT_BUILD_TOKEN }}
+  PROXY: http://${{ secrets.HTTP_PROXY }}
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create Jira Deployment
+        uses: toptal/davinci-github-actions/create-jira-deployment@fx/use-proper-sha
+        with:
+          token: ${{ env.DEVBOT_TOKEN }}
+          environment: development
+          environment-url: https://github.com/toptal/davinci-github-actions/releases/tag/
+          transient-environment: false
+          auto-inactive: false
