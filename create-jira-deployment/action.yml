@@ -68,7 +68,7 @@ runs:
         echo APP_NAME=$(echo "${{ github.repository }}" | cut -d'/' -f2) >> $GITHUB_OUTPUT
 
     - id: sha
-      uses: toptal/get-workflow-sha@master
+      uses: toptal/davinci-github-actions/get-workflow-sha@master
 
     - name: Trigger `Create JIRA` deployment
       uses: toptal/jenkins-job-trigger-action@1.0.1
