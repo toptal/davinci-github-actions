@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Create Jira Deployment
-        uses: toptal/davinci-github-actions/create-jira-deployment@fx/use-proper-sha
+        uses: toptal/davinci-github-actions/create-jira-deployment@fix/use-proper-sha
         with:
           token: ${{ env.DEVBOT_TOKEN }}
           environment: development
