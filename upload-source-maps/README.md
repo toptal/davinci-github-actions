@@ -12,10 +12,13 @@ This GH Action creates a new Sentry release and uploads source maps.
 
 The list of arguments, that are used in GH Action:
 
-| name                | type   | required | default | description                                              |
-| ------------------- | ------ | -------- | ------- | -------------------------------------------------------- |
-| `sentry-project`    | string | ✅        |         | The name of the Sentry project to upload source files to |
-| `working-directory` | string |          | .       | Specifies the working directory where the command is run |
+| name                  | type   | required | default | description                                              |
+| --------------------- | ------ | -------- | ------- | -------------------------------------------------------- |
+| `sentry-project`      | string | ✅        |         | The name of the Sentry project to upload source files to |
+| `working-directory`   | string |          | .       | Specifies the working directory where the command is run |
+| `url-prefix`          | string |          |         | Sets URL prefix for files                                |
+| `app-build-directory` | string |          |         | Directory of the built application                       |
+| `release-name`        | string |          |         | Name for the uploaded source maps                        |
 
 ### Outputs
 
