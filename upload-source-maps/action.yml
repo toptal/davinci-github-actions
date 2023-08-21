@@ -44,7 +44,7 @@ runs:
 
         if [[ $(yarn davinci-engine help) == *"sentry-upload-source-maps"* ]]
         then
-          yarn davinci-engine sentry-upload-source-maps --url-prefix=$URL_PREFIX --app-build-directory=$APP_BUILD_DIRECTORY --release-name=$RELEASE_NAME
+          yarn davinci-engine sentry-upload-source-maps --url-prefix="$URL_PREFIX" --app-build-directory="$APP_BUILD_DIRECTORY" --release-name="$RELEASE_NAME"
         else
           echo "Your current @toptal/davinci-engine version does not support uploading source maps to Sentry. Please update @toptal/davinci-engine package version in your app."
         fi
