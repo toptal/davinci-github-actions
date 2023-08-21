@@ -1,5 +1,12 @@
 # davinci-github-actions
 
+## 9.1.0
+
+### Minor Changes
+
+- [#197](https://github.com/toptal/davinci-github-actions/pull/197) [`706ff24`](https://github.com/toptal/davinci-github-actions/commit/706ff2459054185699581b5796604f6f5a7c8056) Thanks [@pudek357](https://github.com/pudek357)!
+- pass additional variables to upload source maps action
+
 ## 9.0.2
 
 ### Patch Changes
