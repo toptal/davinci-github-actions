@@ -13,6 +13,15 @@ inputs:
     required: false
     description: Specifies the working directory where the command is run
     default: '.'
+  url-prefix:
+    required: false
+    description: Sets URL prefix for files
+  app-build-directory:
+    required: false
+    description: Directory of the built application
+  release-name:
+    required: false
+    description: Name for the uploaded source maps
 
 runs:
   using: composite
@@ -21,6 +30,9 @@ runs:
       env:
         SENTRY_ORG: toptal
         SENTRY_PROJECT: ${{ inputs.sentry-project }}
+        URL_PREFIX: ${{ inputs.url-prefix }}
+        APP_BUILD_DIRECTORY: ${{ inputs.app-build-directory }}
+        RELEASE_NAME: ${{ inputs.release-name }}
       shell: bash
       working-directory: ${{ inputs.working-directory }}
       run: |
@@ -32,7 +44,10 @@ runs:
 
         if [[ $(yarn davinci-engine help) == *"sentry-upload-source-maps"* ]]
         then
-          yarn davinci-engine sentry-upload-source-maps
+          yarn davinci-engine sentry-upload-source-maps \
+            ${URL_PREFIX:+"--url-prefix=$URL_PREFIX"} \
+            ${APP_BUILD_DIRECTORY:+"--app-build-directory=$APP_BUILD_DIRECTORY"} \
+            ${RELEASE_NAME:+"--release-name=$RELEASE_NAME"}
         else
           echo "Your current @toptal/davinci-engine version does not support uploading source maps to Sentry. Please update @toptal/davinci-engine package version in your app."
         fi
