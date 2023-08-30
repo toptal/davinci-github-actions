@@ -1,5 +1,12 @@
 # davinci-github-actions
 
+## 9.1.1
+
+### Patch Changes
+
+- [#203](https://github.com/toptal/davinci-github-actions/pull/203) [`21476cc`](https://github.com/toptal/davinci-github-actions/commit/21476ccfacaf4906bca4ed3bfb3f8f1755bf2158) Thanks [@dmaklygin](https://github.com/dmaklygin)!
+- make `environment-url` input parameter optional in `create-jira-deployment` GH Action
+
 ## 9.1.0
 
 ### Minor Changes
