@@ -12,7 +12,7 @@ inputs:
     required: true
     description: 'GitHub token to create a deployment'
   environment-url:
-    required: true
+    required: false
     description: 'URL of the environment'
   environment:
     required: true
