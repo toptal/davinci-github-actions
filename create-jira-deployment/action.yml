@@ -25,6 +25,11 @@ inputs:
     required: false
     description: Adds a new inactive status to all prior non-transient, non-production environment deployments with the same repository and environment name as the created status's deployment. An inactive status is only added to deployments that had a success state.
     default: 'true'
+  create-gh-deployment:
+    required: false
+    default: 'false'
+    description: Creates a Github Deployment along with JIRA Deployment
+
 
 runs:
   using: composite
@@ -32,7 +37,7 @@ runs:
     - uses: chrnorm/deployment-action@v2
       name: Create GitHub deployment
       id: gh-deployment
-      if: ${{ always() }}
+      if: ${{ always() && inputs.create-gh-deployment == 'true' }}
       with:
         token: ${{ inputs.token }}
         environment-url: ${{ inputs.environment-url }}
@@ -41,7 +46,7 @@ runs:
         auto-inactive: ${{ inputs.auto-inactive }}
 
     - name: Update deployment status on success
-      if: ${{ success() }}
+      if: ${{ success() && inputs.create-gh-deployment == 'true' }}
       uses: chrnorm/deployment-status@v2
       with:
         token: ${{ inputs.token }}
@@ -51,7 +56,7 @@ runs:
         state: 'success'
 
     - name: Update deployment status on failure
-      if: ${{ failure() }}
+      if: ${{ failure() && inputs.create-gh-deployment == 'true' }}
       uses: chrnorm/deployment-status@v2
       with:
         token: ${{ inputs.token }}
