@@ -1,5 +1,12 @@
 # davinci-github-actions
 
+## 10.0.0
+
+### Major Changes
+
+- [#205](https://github.com/toptal/davinci-github-actions/pull/205) [`b8fdfc9`](https://github.com/toptal/davinci-github-actions/commit/b8fdfc9a266596dc3fba05712316d4af1a3f12fd) Thanks [@dmaklygin](https://github.com/dmaklygin)!
+- make GH Deployment optional in `create-jira-deployment` GH Action. By default this feature is disabled
+
 ## 9.1.1
 
 ### Patch Changes
