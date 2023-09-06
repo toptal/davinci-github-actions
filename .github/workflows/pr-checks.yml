@@ -60,22 +60,3 @@ jobs:
 
       - name: trufflehog-actions-scan
         uses: edplato/trufflehog-actions-scan@v0.9l-beta
-
-  test:
-    name: Test Alpha Release
-    runs-on: ubuntu-latest
-    env:
-      DEVBOT_TOKEN: ${{ secrets.TOPTAL_DEVBOT_TOKEN }}
-      JENKINS_USER: ${{ secrets.TOPTAL_TRIGGERBOT_USERNAME }}
-      JENKINS_BUILD_TOKEN: ${{ secrets.TOPTAL_TRIGGERBOT_BUILD_TOKEN }}
-      PROXY: http://${{ secrets.HTTP_PROXY }}
-    steps:
-      - name: Create Jira Deployment
-        uses: toptal/davinci-github-actions/create-jira-deployment@fx-4328-add-parameter-to-jira-deployments
-        with:
-          token: ${{ env.DEVBOT_TOKEN }}
-          environment: staging
-          environment-url: https://github.com/toptal/davinci-github-actions/releases/tag/${{ steps.tag-version.outputs.LATEST_TAG }}
-          transient-environment: false
-          auto-inactive: false
-          create-gh-deployment: true
