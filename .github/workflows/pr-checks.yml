@@ -78,3 +78,4 @@ jobs:
           environment-url: https://github.com/toptal/davinci-github-actions/releases/tag/${{ steps.tag-version.outputs.LATEST_TAG }}
           transient-environment: false
           auto-inactive: false
+          create-gh-deployment: true
