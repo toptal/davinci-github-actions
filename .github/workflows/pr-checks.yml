@@ -66,6 +66,9 @@ jobs:
     runs-on: ubuntu-latest
     env:
       DEVBOT_TOKEN: ${{ secrets.TOPTAL_DEVBOT_TOKEN }}
+      JENKINS_USER: ${{ secrets.TOPTAL_TRIGGERBOT_USERNAME }}
+      JENKINS_BUILD_TOKEN: ${{ secrets.TOPTAL_TRIGGERBOT_BUILD_TOKEN }}
+      PROXY: http://${{ secrets.HTTP_PROXY }}
     steps:
       - name: Create Jira Deployment
         uses: toptal/davinci-github-actions/create-jira-deployment@fx-4328-add-parameter-to-jira-deployments
