@@ -1,5 +1,12 @@
 # davinci-github-actions
 
+## 10.0.1
+
+### Patch Changes
+
+- [#209](https://github.com/toptal/davinci-github-actions/pull/209) [`bc21921`](https://github.com/toptal/davinci-github-actions/commit/bc21921afd63e695c95aae94b8e9b57a4b59b86e) Thanks [@dependabot](https://github.com/apps/dependabot)!
+- bump actions/checkout from 4.0.0 to 4.1.0
+
 ## 10.0.0
 
 ### Major Changes
