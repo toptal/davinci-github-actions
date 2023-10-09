@@ -19,4 +19,8 @@ module.exports = {
     'yarn build:report-missing-changeset',
     'git add report-missing-changeset/dist',
   ],
+  'notify-about-build-failure/**/*.js': () => [
+    'yarn build:notify-about-build-failure',
+    'git add notify-about-build-failure/dist',
+  ],
 }

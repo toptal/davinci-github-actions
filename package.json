@@ -13,7 +13,8 @@
     "prepare": "husky install",
     "build:create-matrix": "ncc build create-matrix/index.js -o create-matrix/dist",
     "build:get-changeset-info": "ncc build get-changeset-info/index.js -o get-changeset-info/dist",
-    "build:report-missing-changeset": "ncc build report-missing-changeset/index.js -o report-missing-changeset/dist"
+    "build:report-missing-changeset": "ncc build report-missing-changeset/index.js -o report-missing-changeset/dist",
+    "build:notify-about-build-failure": "ncc build notify-about-build-failure/index.js -o notify-about-build-failure/dist"
   },
   "devDependencies": {
     "@actions/core": "^1.10.0",
