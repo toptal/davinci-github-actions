@@ -1,5 +1,12 @@
 # davinci-github-actions
 
+## 10.1.0
+
+### Minor Changes
+
+- [#211](https://github.com/toptal/davinci-github-actions/pull/211) [`3ae470b`](https://github.com/toptal/davinci-github-actions/commit/3ae470b92d85b939932f1d2e8cf957006a2604eb) Thanks [@sashuk](https://github.com/sashuk)!
+- add notify-about-build-failure action. It sends notifications about build failure to specified Slack channel and private Slack messages of failing commit author
+
 ## 10.0.1
 
 ### Patch Changes
