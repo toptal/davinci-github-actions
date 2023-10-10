@@ -1,0 +1,22 @@
+name: Notify about build failure
+description: Sends notifications about build failure to specified Slack channel and private Slack messages of failing commit author
+inputs:
+  slack-bot-token:
+    description: Slack API token, needed for sending messages in Slack
+    required: true
+  top-team-api-key:
+    description: TopTeam API key, needed for fetching Company structure to match GitHub name of commit author to Slack handle
+    required: true
+  slack-channel-name:
+    description: Slack channel name (for example, `#-test-channel`)
+    required: true
+  github-commit-author-name:
+    description: GitHub name of commit author, needed for finding the Slack handle of commit author
+    required: true
+  github-action-run-url:
+    description: Failing GitHub Acton run URL (for example, `https://github.com/toptal/staff-portal/actions/runs/123`), needed for the notification message
+    required: true
+  
+runs:
+  using: node20
+  main: ./dist/index.js

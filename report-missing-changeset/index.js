@@ -2,12 +2,8 @@ const github = require('@actions/github')
 
 const reportMissingChangeset = require('./src/report-missing-changeset')
 
-const {
-  GITHUB_TOKEN,
-  CHANGED_PACKAGES,
-  RELEASE_PACKAGES,
-  MISSING_PACKAGES,
-} = process.env
+const { GITHUB_TOKEN, CHANGED_PACKAGES, RELEASE_PACKAGES, MISSING_PACKAGES } =
+  process.env
 
 const octokit = new github.getOctokit(GITHUB_TOKEN)
 const githubContextPayload = github.context.payload
