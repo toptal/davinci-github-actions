@@ -9,7 +9,7 @@ module.exports = {
     paths.length > 0
       ? ['yarn documentation:generate', `git add */README.md`]
       : [],
-  ...(buildTargets.map((acc, target) => {
+  ...(buildTargets.reduce((acc, target) => {
     acc[`${target}/**/*.js`] = () => [
       `yarn ncc build ${target}/index.js -o ${target}/dist`,
       `git add ${target}/dist`,
