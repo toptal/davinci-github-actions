@@ -105,6 +105,7 @@ jobs:
 
       - name: Create Jira Deployment
         uses: toptal/davinci-github-actions/create-jira-deployment@master
+        if: ${{ success() && steps.changesets.outputs.published != 'true'}}
         with:
           token: ${{ env.DEVBOT_TOKEN }}
           environment: production
