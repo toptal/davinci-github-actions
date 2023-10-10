@@ -5,6 +5,7 @@ const reportMissingChangeset = require('./src/report-missing-changeset')
 const { GITHUB_TOKEN, CHANGED_PACKAGES, RELEASE_PACKAGES, MISSING_PACKAGES } =
   process.env
 
+const octokit = new github.getOctokit(GITHUB_TOKEN)
 const githubContextPayload = github.context.payload
 const releasePackages = JSON.parse(RELEASE_PACKAGES)
 const changedPackages = JSON.parse(CHANGED_PACKAGES)
@@ -14,7 +15,6 @@ console.log('Release packages:', releasePackages)
 console.log('Changed packages:', changedPackages)
 console.log('Missing packages:', missingPackages)
 
-const octokit = new github.getOctokit(GITHUB_TOKEN)
 reportMissingChangeset(octokit, githubContextPayload, {
   releasePackages,
   changedPackages,

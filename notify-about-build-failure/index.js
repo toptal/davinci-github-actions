@@ -33,7 +33,7 @@ const getSlackMessage = (
   slackHandle,
   githubActionRunUrl
 ) => `Hello <@${slackHandle}>!
-Build ${githubActionRunUrl} is currently failing on master, please fix to unblock or let the proper team know.`
+Build ${githubActionRunUrl} is currently failing on master, please fix it to unblock the RC or let the proper team know.`
 
 const sendSlackMessage = body => {
   const slackRequest = https.request(SLACK_API_OPTIONS, slackResponse => {
