@@ -1,4 +1,4 @@
-const targets = ['create-matrix', 'get-changeset-info', 'report-missing-changeset', 'notify-about-build-failure']
+const buildTargets = ['create-matrix', 'get-changeset-info', 'report-missing-changeset', 'notify-about-build-failure']
 
 module.exports = {
   '{**/*.{js,jsx,ts,tsx},.changeset/*.md}': [
@@ -9,9 +9,9 @@ module.exports = {
     paths.length > 0
       ? ['yarn documentation:generate', `git add */README.md`]
       : [],
-  ...(targets.map((acc, target) => {
+  ...(buildTargets.map((acc, target) => {
     acc[`${target}/**/*.js`] = () => [
-      `yarn build:${target}`,
+      `yarn ncc build ${target}/index.js -o ${target}/dist`,
       `git add ${target}/dist`,
     ]
 

@@ -63,8 +63,8 @@ const communicationChannelsBody = JSON.stringify({
           directRoles {
             member {
               communicationChannels {
-                kind
                 value
+                kind
                 link
               }
             }
