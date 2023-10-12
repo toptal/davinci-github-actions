@@ -13,17 +13,16 @@ inputs:
   image-name:
     required: true
     description: 'Name of the Docker image. Might be used in the next steps (for ex.: deploy a Docker image)'
-  environment:
-    required: false
-    default: staging
-    description: 'Determines additional procedures while creating a Docker image. || enum<<br/>`temploy`,<br/>`staging`,<br/>`production`,<br/>>'
   build-args:
     required: true
     description: 'Multiline string to describe build arguments that will be used during dockerization'
   docker-file:
     description: 'pathname to Docker file'
+    required: true
+  environment:
     required: false
-    default: ./davinci/packages/ci/src/configs/docker/Dockerfile
+    default: staging
+    description: 'Determines additional procedures while creating a Docker image. || enum<<br/>`temploy`,<br/>`staging`,<br/>`production`,<br/>>'
   davinci-branch:
     description: 'Custom davinci branch'
     required: false
