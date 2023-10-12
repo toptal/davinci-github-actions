@@ -6,7 +6,7 @@ runs:
   steps:
     - uses: actions/setup-node@v3.2.0
       with:
-        node-version: 16
+        node-version: 18
 
     - uses: masesgroup/retrieve-changed-files@2e42889ff54e0810cf088f73a38a2db5a9d0684f
       id: files

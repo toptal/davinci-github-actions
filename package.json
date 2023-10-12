@@ -4,6 +4,9 @@
   "description": "",
   "author": "Toptal",
   "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
     "documentation:generate": "ncc run _scripts/documentation/generate.ts -C",
     "release": "changeset tag",
