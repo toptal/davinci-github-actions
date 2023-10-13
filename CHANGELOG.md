@@ -1,5 +1,12 @@
 # davinci-github-actions
 
+## 11.0.0
+
+### Major Changes
+
+- [#214](https://github.com/toptal/davinci-github-actions/pull/214) [`772025f`](https://github.com/toptal/davinci-github-actions/commit/772025fab6acea12aa5196026f2e949d277fc9ab) Thanks [@dmaklygin](https://github.com/dmaklygin)!
+- bump node version to 18
+
 ## 10.1.0
 
 ### Minor Changes
