@@ -53,6 +53,7 @@ runs:
       with:
         repository: toptal/actions
         token: ${{ inputs.checkout-token }}
+        ref: debug-what-happens-with-cache
         path: ./.github/cache_action/
 
     - name: Cache yarn and node_modules folder
