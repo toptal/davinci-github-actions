@@ -100,14 +100,14 @@ runs:
 
     # This step changes the public npm registry in yarn.lock file to npm in AR
     # We still use the public npm registry to our private packages
-    - name: Change registry in yarn.lock file to npm Artifact Registry
-      if: "inputs.checkout-token && inputs.npm-gar-token && contains(runner.name, 'inf-gha-runners-ci')"
-      run: |
-        sed -i -e "s#https://registry.yarnpkg.com/#https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/#g" ${{ inputs.path }}/yarn.lock
-        sed -i -e "s#https://registry.npmjs.org/#https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/#g" ${{ inputs.path }}/yarn.lock
-        sed -i -e "s#https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/@toptal/#https://registry.npmjs.org/@toptal/#g" ${{ inputs.path }}/yarn.lock
-        sed -i -e "s#https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/@topkit/#https://registry.npmjs.org/@topkit/#g" ${{ inputs.path }}/yarn.lock
-      shell: bash
+    # - name: Change registry in yarn.lock file to npm Artifact Registry
+    #   if: "inputs.checkout-token && inputs.npm-gar-token && contains(runner.name, 'inf-gha-runners-ci')"
+    #   run: |
+    #     sed -i -e "s#https://registry.yarnpkg.com/#https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/#g" ${{ inputs.path }}/yarn.lock
+    #     sed -i -e "s#https://registry.npmjs.org/#https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/#g" ${{ inputs.path }}/yarn.lock
+    #     sed -i -e "s#https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/@toptal/#https://registry.npmjs.org/@toptal/#g" ${{ inputs.path }}/yarn.lock
+    #     sed -i -e "s#https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/@topkit/#https://registry.npmjs.org/@topkit/#g" ${{ inputs.path }}/yarn.lock
+    #   shell: bash
 
     - name: yarn install
       shell: bash
