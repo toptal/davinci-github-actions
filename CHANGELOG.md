@@ -1,5 +1,12 @@
 # davinci-github-actions
 
+## 12.0.0
+
+### Major Changes
+
+- [#215](https://github.com/toptal/davinci-github-actions/pull/215) [`c9298a9`](https://github.com/toptal/davinci-github-actions/commit/c9298a9d97aaa166255f25b77609c03906d3e271) Thanks [@sashuk](https://github.com/sashuk)!
+- change default value of `docker-file` parameter in `davinci-github-actions/build-push-image` action
+
 ## 11.0.0
 
 ### Major Changes
