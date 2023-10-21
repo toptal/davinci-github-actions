@@ -23,7 +23,7 @@ inputs:
   docker-file:
     description: 'pathname to Docker file'
     required: false
-    default: ./davinci/packages/ci/src/configs/docker/Dockerfile
+    default: ./davinci/packages/ci/src/configs/docker/Dockerfile.gha-deploy
   davinci-branch:
     description: 'Custom davinci branch'
     required: false
