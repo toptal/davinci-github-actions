@@ -34,6 +34,8 @@ runs:
       id: yarn-cache
       run: echo dir=$(yarn cache dir) >> $GITHUB_OUTPUT
       shell: bash
+      env:
+        NPM_TOKEN: ${{ inputs.npm-token || env.NPM_TOKEN }}
 
     # This step is needed only because we want to update the cache when a new workspace
     # package has been added and we want symlinks to be presented in ./node_modules folder
