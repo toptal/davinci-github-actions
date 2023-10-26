@@ -5,8 +5,8 @@ inputs:
     description: Access token type **Read-only**. Required for repository with private dependencies. If undefined, `env.NPM_TOKEN` is used
     required: false
   cache-version:
-    description: 'Cache version'
-    default: '0.0'
+    description: "Cache version"
+    default: "0.0"
     required: false
   path:
     description: Relative path under $GITHUB_WORKSPACE where to run `yarn install` command
@@ -20,7 +20,7 @@ inputs:
     required: false
 outputs:
   cache-hit:
-    description: 'Indicates an exact match was found for `node_modules` || boolean'
+    description: "Indicates an exact match was found for `node_modules` || boolean"
     value: ${{ steps.node-modules-cache.outputs.cache-hit || steps.node-modules-cache-custom.outputs.cache-hit }}
 runs:
   using: composite
@@ -41,9 +41,7 @@ runs:
       working-directory: ${{ inputs.path }}
       run: |
         if grep -q "\"workspaces\":" package.json; then
-            yarn --no-default-rc workspaces --json info > tmp-workspaces.json
-        else
-            echo {} > tmp-worskpaces.json
+          yarn --no-default-rc workspaces --json info > tmp-workspaces.json
         fi
       shell: bash
 
@@ -80,6 +78,11 @@ runs:
           ${{ steps.yarn-cache.outputs.dir }}
           **/node_modules
         key: ${{ runner.os }}-${{ runner.arch }}-node-${{ steps.set-node-version.outputs.version }}-yarn-node_modules-${{ hashFiles('**/yarn.lock', 'tmp-workspaces.json') }}-${{ inputs.cache-version }}
+
+    - name: Delete temporary tmp-workspaces.json
+      shell: bash
+      run: |
+        [ -e tmp-workspaces.json ] && rm tmp-workspaces.json || echo "OK"
 
     # This step creates .npmrc file that references to npm registry in GAR (Google Artifact Registry)
     # The npm registry works as a proxy-cache, downloading and storing the public npm packages
