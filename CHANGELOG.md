@@ -1,5 +1,12 @@
 # davinci-github-actions
 
+## 12.0.1
+
+### Patch Changes
+
+- [#224](https://github.com/toptal/davinci-github-actions/pull/224) [`8a6ec9e`](https://github.com/toptal/davinci-github-actions/commit/8a6ec9efc63ff9abaa13c65b26009c2d4bef5c30) Thanks [@ertrzyiks](https://github.com/ertrzyiks)!
+- fix `yarn cache dir` crash when no NPM_TOKEN env variable is available in the job
+
 ## 12.0.0
 
 ### Major Changes
