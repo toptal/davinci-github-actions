@@ -1,5 +1,12 @@
 # davinci-github-actions
 
+## 12.0.2
+
+### Patch Changes
+
+- [#225](https://github.com/toptal/davinci-github-actions/pull/225) [`270798f`](https://github.com/toptal/davinci-github-actions/commit/270798f1e298f16604fd920988757a8f8b353c1b) Thanks [@ertrzyiks](https://github.com/ertrzyiks)!
+- clean up tmp-workspaces.json file after it's not needed
+
 ## 12.0.1
 
 ### Patch Changes
