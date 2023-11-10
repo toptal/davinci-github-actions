@@ -29,5 +29,7 @@ on:
 jobs:
   format_title:
     if: startsWith(github.head_ref, 'dependabot-')
-    uses: toptal/davinci-github-actions/pr-conventional-to-toptal-commits
+    runs-on: ['org/toptal', 'os/linux', 'arch/x64', 'size/large']
+    steps:
+      - uses: toptal/davinci-github-actions/pr-conventional-to-toptal-commits
 ```
