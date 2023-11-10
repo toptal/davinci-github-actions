@@ -17,3 +17,17 @@ Not specified
 Not specified
 
 ### Usage
+
+Formatting dependabot commit messages:
+
+```yaml
+on:
+  pull_request:
+    types: [opened]
+    branches: [master]
+
+jobs:
+  format_title:
+    if: startsWith(github.head_ref, 'dependabot-')
+    uses: toptal/davinci-github-actions/pr-conventional-to-toptal-commits
+```
