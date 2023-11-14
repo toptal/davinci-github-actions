@@ -1,6 +1,11 @@
 name: PR Conventional to Toptal Commit
 description: Convert a PR title from conventional commits to Toptal commit
 
+inputs:
+  github-token:
+    required: true
+    description: Github user token
+
 runs:
   using: composite
   steps:
@@ -20,12 +25,12 @@ runs:
           }
 
           const newPr = {
-            owner: github.context.repo.owner,
-            repo: github.context.repo.repo,
-            pull_number: github.context.payload.pull_request.number,
-            title: convertConventional(github.context.payload.pull_request.title)
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            pull_number: context.payload.pull_request.number,
+            title: convertConventional(context.payload.pull_request.title)
           }
 
-          octokit.pulls.update(newPr);
+          github.rest.pulls.update(newPr);
 
 
