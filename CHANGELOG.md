@@ -1,5 +1,12 @@
 # davinci-github-actions
 
+## 12.1.0
+
+### Minor Changes
+
+- [#230](https://github.com/toptal/davinci-github-actions/pull/230) [`744bc4a`](https://github.com/toptal/davinci-github-actions/commit/744bc4aa77d41d24828cfa541b4ac21eae320c83) Thanks [@serbantarmure](https://github.com/serbantarmure)!
+- add Google Secrets Manager related actions
+
 ## 12.0.2
 
 ### Patch Changes
