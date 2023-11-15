@@ -1,0 +1,12 @@
+name: 'Expose JSON as outputs'
+description: 'Proxies JS shared action outputs from composite actions. See gsm-secrets as an example of the issue.'
+author: 'Dev X'
+inputs:
+  json:
+    description: 'JSON string to process'
+    required: true
+# outputs are intentionally not declared due to the dynamic nature of the outputs
+# outputs:
+runs:
+  using: node20
+  main: ./dist/index.js
