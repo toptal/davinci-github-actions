@@ -1,5 +1,12 @@
 # davinci-github-actions
 
+## 12.2.0
+
+### Minor Changes
+
+- [#228](https://github.com/toptal/davinci-github-actions/pull/228) [`dbb531f`](https://github.com/toptal/davinci-github-actions/commit/dbb531f5979eac4f7e31fb4a01ab96f436dbd4ab) Thanks [@augustobmoura](https://github.com/augustobmoura)!
+- add action for renaming PR titles from conventional commits to Toptal's commits, useful for renaming dependabot PRs
+
 ## 12.1.0
 
 ### Minor Changes
