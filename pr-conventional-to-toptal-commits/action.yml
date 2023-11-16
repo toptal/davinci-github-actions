@@ -1,0 +1,36 @@
+name: PR Conventional to Toptal Commit
+description: Convert a PR title from conventional commits to Toptal commit
+
+inputs:
+  github-token:
+    required: true
+    description: Github user token
+
+runs:
+  using: composite
+  steps:
+    - name: Extract Env variables
+      id: env-variables
+      uses: actions/github-script@v6
+      with:
+        github-token: ${{ inputs.github-token }}
+        result-encoding: string
+        script: |
+          const capitalize = (str) => (str[0] ?? '').toUpperCase() + str.slice(1)
+          const convertConventional = (title) => {
+            const pattern = /^\w+(?:\(.+\))?: (.*)$/
+            const [, titleMessage = ''] = title.match(pattern) ?? []
+
+            return capitalize(titleMessage.trim()) ?? title
+          }
+
+          const newPr = {
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            pull_number: context.payload.pull_request.number,
+            title: convertConventional(context.payload.pull_request.title)
+          }
+
+          github.rest.pulls.update(newPr);
+
+
