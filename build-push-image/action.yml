@@ -36,7 +36,7 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Checkout davinci
+    - name: Check out davinci
       uses: actions/checkout@v3
       with:
         repository: toptal/davinci
@@ -44,7 +44,7 @@ runs:
         path: davinci
         ref: ${{ inputs.davinci-branch }}
 
-    - name: Setup node
+    - name: Set up node
       uses: actions/setup-node@v3.2.0
       with:
         node-version: ${{ inputs.node-version }}
