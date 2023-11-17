@@ -54,6 +54,10 @@ inputs:
   checkout-token:
     description: Repository checkout access token `GITHUB_TOKEN`. Required for self hosted runners
     required: false
+  node-version:
+    required: false
+    default: 18
+    description: 'Node.js version used. The action is guaranteed to work only with Node.js@18 (default value)'
 
 runs:
   using: composite
@@ -61,7 +65,7 @@ runs:
     - name: Set up node
       uses: actions/setup-node@v3
       with:
-        node-version: 18
+        node-version: ${{ inputs.node-version }}
 
     - name: Install Dependencies
       if: ${{ inputs.use-prebuilt-package == 'false' && inputs.use-prebuilt-image == 'false' }}

@@ -1,12 +1,18 @@
 name: 'Report affected packages'
 description: 'Generate a diagram of affected monorepo packages as a job summary. Works with workflows triggered by pull_request event.'
 
+inputs:
+  node-version:
+    required: false
+    default: 18
+    description: 'Node.js version used. The action is guaranteed to work only with Node.js@18 (default value)'
+
 runs:
   using: 'composite'
   steps:
     - uses: actions/setup-node@v3.2.0
       with:
-        node-version: 18
+        node-version: ${{ inputs.node-version }}
 
     - uses: masesgroup/retrieve-changed-files@2e42889ff54e0810cf088f73a38a2db5a9d0684f
       id: files
