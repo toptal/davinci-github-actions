@@ -28,6 +28,10 @@ inputs:
     description: 'Custom davinci branch'
     required: false
     default: 'master'
+  node-version:
+    required: false
+    default: 18
+    description: 'Node.js version used. The action is guaranteed to work only with Node.js@18 (default value)'
 
 runs:
   using: composite
@@ -43,7 +47,7 @@ runs:
     - name: Setup node
       uses: actions/setup-node@v3.2.0
       with:
-        node-version: 18
+        node-version: ${{ inputs.node-version }}
 
     - id: meta-latest
       shell: bash
