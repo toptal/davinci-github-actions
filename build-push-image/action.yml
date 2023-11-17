@@ -49,6 +49,10 @@ runs:
       with:
         node-version: ${{ inputs.node-version }}
 
+    # TODO: remove before merge
+    - name: Check version
+      run: yarn node --version
+
     - id: meta-latest
       shell: bash
       env:
