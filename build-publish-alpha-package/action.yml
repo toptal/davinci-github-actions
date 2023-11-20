@@ -15,6 +15,10 @@ inputs:
   root-folder:
     required: false
     description: 'Root folder of a package to be published || string'
+  node-version:
+    required: false
+    default: 18
+    description: 'Node.js version used. The action is guaranteed to work only with Node.js@18 (default value)'
 
 runs:
   using: composite
@@ -26,10 +30,10 @@ runs:
       run: |
         npm set "//registry.npmjs.org/:_authToken=$NPM_TOKEN"
 
-    - name: Setup node
+    - name: Set up node
       uses: actions/setup-node@v3.2.0
       with:
-        node-version: 18
+        node-version: ${{ inputs.node-version }}
 
     - uses: toptal/davinci-github-actions/yarn-install@v6.0.0
 

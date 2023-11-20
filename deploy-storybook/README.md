@@ -10,20 +10,21 @@ Currently ENV variables for Storybook are not supported.
 
 The list of arguments, that are used in GH Action:
 
-| name                     | type                                       | required | default            | description                                                                             |
-| ------------------------ | ------------------------------------------ | -------- | ------------------ | --------------------------------------------------------------------------------------- |
-| `sha`                    | string                                     | ✅        |                    | Commit hash that will be used as a tag for the Docker image                             |
-| `environment`            | enum<<br/>`temploy`,<br/>`staging`,<br/>>' | ✅        |                    | Environment to deploy Storybook to                                                      |
-| `env-file`               | string                                     |          | .env.temploy       | `.env` file name from which to read variables. Required for temploy deployment only     |
-| `davinci-branch`         | string                                     |          | master             | Custom davinci branch                                                                   |
-| `dist-folder`            | string                                     |          | ./storybook-static | Path to folder where Storybook is built                                                 |
-| `build-command`          | string                                     |          | storybook:build    | Command to build Storybook with                                                         |
-| `use-prebuilt-package`   | string                                     |          | false              | If a prebuilt Storybook package should be used                                          |
-| `use-prebuilt-image`     | string                                     |          | false              | If a prebuilt Storybook Docker image should be used                                     |
-| `jenkins-folder-name`    | string                                     |          |                    | Jenkins folder where the deployment jobs are located                                    |
-| `generate-types-command` | string                                     |          | false              | Command to generate gql types                                                           |
-| `pr-number`              | string                                     |          |                    | Event number of the original pr, in case event number or issue number is not present. . |
-| `checkout-token`         | string                                     |          |                    | Repository checkout access token `GITHUB_TOKEN`. Required for self hosted runners       |
+| name                     | type                                       | required | default            | description                                                                                 |
+| ------------------------ | ------------------------------------------ | -------- | ------------------ | ------------------------------------------------------------------------------------------- |
+| `sha`                    | string                                     | ✅        |                    | Commit hash that will be used as a tag for the Docker image                                 |
+| `environment`            | enum<<br/>`temploy`,<br/>`staging`,<br/>>' | ✅        |                    | Environment to deploy Storybook to                                                          |
+| `env-file`               | string                                     |          | .env.temploy       | `.env` file name from which to read variables. Required for temploy deployment only         |
+| `davinci-branch`         | string                                     |          | master             | Custom davinci branch                                                                       |
+| `dist-folder`            | string                                     |          | ./storybook-static | Path to folder where Storybook is built                                                     |
+| `build-command`          | string                                     |          | storybook:build    | Command to build Storybook with                                                             |
+| `use-prebuilt-package`   | string                                     |          | false              | If a prebuilt Storybook package should be used                                              |
+| `use-prebuilt-image`     | string                                     |          | false              | If a prebuilt Storybook Docker image should be used                                         |
+| `jenkins-folder-name`    | string                                     |          |                    | Jenkins folder where the deployment jobs are located                                        |
+| `generate-types-command` | string                                     |          | false              | Command to generate gql types                                                               |
+| `pr-number`              | string                                     |          |                    | Event number of the original pr, in case event number or issue number is not present. .     |
+| `checkout-token`         | string                                     |          |                    | Repository checkout access token `GITHUB_TOKEN`. Required for self hosted runners           |
+| `node-version`           | string                                     |          | 18                 | Node.js version used. The action is guaranteed to work only with Node.js@18 (default value) |
 
 ### Outputs
 

@@ -26,7 +26,7 @@ jobs:
           # This forces changesets to use git user, provided by GITHUB_TOKEN env var
           persist-credentials: false
 
-      - name: Setup node
+      - name: Set up node
         uses: actions/setup-node@v3.8.1
         with:
           node-version: 18
