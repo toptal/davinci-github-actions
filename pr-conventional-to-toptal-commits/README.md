@@ -10,7 +10,7 @@ The list of arguments, that are used in GH Action:
 
 | name           | type   | required | default | description       |
 | -------------- | ------ | -------- | ------- | ----------------- |
-| `github-token` | string | ✅        |         | Github user token |
+| `github-token` | string | ✅        |         | GitHub user token |
 
 ### Outputs
 
