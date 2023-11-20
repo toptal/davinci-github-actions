@@ -172,7 +172,7 @@ runs:
         script: |
           const trimSuffix = (name) => name.endsWith('-') ? name.slice(0, -1) : name
           const { issue: { number: issue_number }, repo: { owner, repo }  } = context
-          const name = trimSuffix(['${{ env.RELEASE }}', '${{ steps.repo.outputs.repository_name }}-storybook'].join('-').substring(0, 63))
+          const name = trimSuffix(['${{ env.RELEASE }}', '${{ steps.repo.outputs.repository_name }}'].join('-').substring(0, 63))
           const body = `Storybook temploy is available at https://${name}.toptal.rocks :tada:`
           const number = issue_number || ${{ env.PR_NUMBER }}
           github.rest.issues.createComment({ issue_number: number, owner, repo, body })
