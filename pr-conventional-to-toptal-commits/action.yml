@@ -23,10 +23,10 @@ runs:
           }
 
           const newPr = {
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            pull_number: context.payload.pull_request.number,
-            title: convertConventional(context.payload.pull_request.title)
+            owner: 'toptal',
+            repo: 'davinci',
+            pull_number: 2231,
+            title: convertConventional('chore(deps): update a package')
           }
 
           github.rest.pulls.update(newPr)
