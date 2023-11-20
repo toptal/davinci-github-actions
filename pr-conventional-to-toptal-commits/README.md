@@ -35,7 +35,7 @@ jobs:
   format_title:
     name: Format title
     if: startsWith(github.head_ref, 'dependabot-')
-    runs-on: ['org/toptal', 'os/linux', 'arch/x64', 'size/large', 'ubuntu-latest']
+    runs-on: ['org/toptal', 'os/linux', 'arch/x64', 'size/standard']
     steps:
       - uses: toptal/davinci-github-actions/pr-conventional-to-toptal-commits
         with:
