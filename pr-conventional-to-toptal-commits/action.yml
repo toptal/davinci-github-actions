@@ -29,6 +29,4 @@ runs:
             title: convertConventional(context.payload.pull_request.title)
           }
 
-          github.rest.pulls.update(newPr);
-
-
+          github.rest.pulls.update(newPr)
