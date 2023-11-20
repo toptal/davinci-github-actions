@@ -1,5 +1,12 @@
 # davinci-github-actions
 
+## 12.3.0
+
+### Minor Changes
+
+- [#233](https://github.com/toptal/davinci-github-actions/pull/233) [`711fad8`](https://github.com/toptal/davinci-github-actions/commit/711fad852c1004f2faed8b092874cd5a8f78480d) Thanks [@sashuk](https://github.com/sashuk)!
+- add option of specifying the version of Node.js used for some of the actions (`build-publish-alpha-package`, `build-push-image`, `deploy-storybook`, `report-affected-packages`)
+
 ## 12.2.0
 
 ### Minor Changes
