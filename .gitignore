@@ -31,3 +31,6 @@ yarn-error.log*
 .envrc
 
 anvil_test_results.json
+
+# Ignore generated credentials from google-github-actions/auth
+gha-creds-*.json
