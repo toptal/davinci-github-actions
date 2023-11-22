@@ -1,5 +1,12 @@
 # davinci-github-actions
 
+## 12.4.0
+
+### Minor Changes
+
+- [#240](https://github.com/toptal/davinci-github-actions/pull/240) [`1c06cf7`](https://github.com/toptal/davinci-github-actions/commit/1c06cf7488dd24d99ffcd500431fe9fcbef08068) Thanks [@serbantarmure](https://github.com/serbantarmure)!
+- use GSM in workflows
+
 ## 12.3.0
 
 ### Minor Changes
