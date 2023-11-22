@@ -1,5 +1,15 @@
 # davinci-github-actions
 
+## 12.4.0
+
+### Minor Changes
+
+- [#239](https://github.com/toptal/davinci-github-actions/pull/239) [`c8ea3b9`](https://github.com/toptal/davinci-github-actions/commit/c8ea3b973bb005d3eb0baf565c0fb10edda3e420) Thanks [@mkrl](https://github.com/mkrl)!
+
+### deploy-storybook
+
+- fixed storybook temploy link
+
 ## 12.3.0
 
 ### Minor Changes
