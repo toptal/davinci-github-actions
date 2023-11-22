@@ -1,5 +1,5 @@
 ---
-'@toptal/davinci-github-actions': minor
+'davinci-github-actions': minor
 ---
 
 ### deploy-storybook
