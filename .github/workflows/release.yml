@@ -54,7 +54,7 @@ jobs:
           echo "PROXY=${{ steps.parse_secrets.outputs.HTTP_PROXY }}" >> $GITHUB_ENV
                   
       - name: Set up node
-        uses: actions/setup-node@v3.8.1
+        uses: actions/setup-node@v4.0.0
         with:
           node-version: 18
 
