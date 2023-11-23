@@ -2,8 +2,8 @@ name: Release
 
 on:
   push:
-    # branches:
-    #   - master
+    branches:
+      - master
 
 env:
   GITHUB_WORKFLOW_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
