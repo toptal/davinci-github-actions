@@ -1,5 +1,15 @@
 # davinci-github-actions
 
+## 12.5.1
+
+### Patch Changes
+
+- [#222](https://github.com/toptal/davinci-github-actions/pull/222) [`0cd098d`](https://github.com/toptal/davinci-github-actions/commit/0cd098d3927e6b7a10fd5cad5df52a7b805b8e86) Thanks [@dependabot](https://github.com/apps/dependabot)!
+- bump actions/setup-node
+
+- [#235](https://github.com/toptal/davinci-github-actions/pull/235) [`8da2e7b`](https://github.com/toptal/davinci-github-actions/commit/8da2e7b0661d71b19073bf10cf5cc34c3743e09c) Thanks [@dependabot](https://github.com/apps/dependabot)!
+- bump github-scripts
+
 ## 12.5.0
 
 ### Minor Changes
