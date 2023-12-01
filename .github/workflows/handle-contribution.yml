@@ -20,7 +20,7 @@ jobs:
     steps:
       - name: GSM Secrets
         id: secrets_manager
-        uses: toptal/davinci-github-actions/gsm-secrets@master
+        uses: toptal/actions/gsm-secrets@main
         with:
           workload_identity_provider: ${{ secrets.IDENTITY_POOL }}
           service_account: ${{ secrets.SA_IDENTITY_POOL }}
