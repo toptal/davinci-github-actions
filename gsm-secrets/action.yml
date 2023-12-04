@@ -21,7 +21,7 @@ runs:
   using: 'composite'
   steps:
     - name: Authenticate to Google Cloud using WIF
-      uses: google-github-actions/auth@v1
+      uses: google-github-actions/auth@v2
       with:
         workload_identity_provider: ${{ inputs.workload_identity_provider }}
         service_account: ${{ inputs.service_account }}
