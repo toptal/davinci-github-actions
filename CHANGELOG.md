@@ -1,5 +1,12 @@
 # davinci-github-actions
 
+## 12.5.2
+
+### Patch Changes
+
+- [#247](https://github.com/toptal/davinci-github-actions/pull/247) [`4822b13`](https://github.com/toptal/davinci-github-actions/commit/4822b13a2d75556da162b658e4d866eef5a84f2e) Thanks [@sashuk](https://github.com/sashuk)!
+- update dependencies (`google-github-actions/*` and `docker/*`)
+
 ## 12.5.1
 
 ### Patch Changes
