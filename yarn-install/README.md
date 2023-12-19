@@ -17,6 +17,7 @@ The list of arguments, that are used in GH Action:
 | `path`           | string |          | .       | Relative path under $GITHUB\_WORKSPACE where to run `yarn install` command                                                                                                                                                                  |
 | `checkout-token` | string |          |         | Repository checkout access token `GITHUB_TOKEN`. Required for self-hosted runners                                                                                                                                                           |
 | `npm-gar-token`  | string |          |         | Repository npm Artifact Registry access token `NPM_GAR_TOKEN`. Required when using self-hosted runners with npm in GAR (Google Artifact Registry, the npm registry works as a proxy-cache, downloading and storing the public npm packages) |
+| `maxAttempts`    | string |          | 1       | How many times to retry installing. This is specially useful if the building of packages might fail because of network connections                                                                                                          |
 
 ### Outputs
 

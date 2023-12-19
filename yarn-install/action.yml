@@ -18,6 +18,10 @@ inputs:
   npm-gar-token:
     description: Repository npm Artifact Registry access token `NPM_GAR_TOKEN`. Required when using self-hosted runners with npm in GAR (Google Artifact Registry, the npm registry works as a proxy-cache, downloading and storing the public npm packages)
     required: false
+  maxAttempts:
+    description: How many times to retry installing. This is specially useful if the building of packages might fail because of network connections
+    default: "1"
+    required: false
 outputs:
   cache-hit:
     description: "Indicates an exact match was found for `node_modules` || boolean"
@@ -119,5 +123,10 @@ runs:
       working-directory: ${{ inputs.path }}
       env:
         NPM_TOKEN: ${{ inputs.npm-token || env.NPM_TOKEN }}
+        MAX_ATTEMPTS: ${{ inputs.max-attempts }}
       run: |
-        yarn install --frozen-lockfile --non-interactive
+        for i in {1..$MAX_ATTEMPTS}; do
+          printf "Trying to install #%s...\n" "$i"
+          yarn install --frozen-lockfile --non-interactive && break
+          sleep 10 # 10s wait time
+        done
