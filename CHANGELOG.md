@@ -1,5 +1,15 @@
 # davinci-github-actions
 
+## 12.6.0
+
+### Minor Changes
+
+- [#251](https://github.com/toptal/davinci-github-actions/pull/251) [`3822c87`](https://github.com/toptal/davinci-github-actions/commit/3822c87a4ccb74313e3dceecf17048c319cd3b27) Thanks [@augustobmoura](https://github.com/augustobmoura)!
+
+### yarn-install
+
+- add option for retry yarn install multiple times
+
 ## 12.5.2
 
 ### Patch Changes
