@@ -62,7 +62,7 @@ inputs:
     required: false
     default: 'false'
   pr-number:
-    description: Event number of the original pr, in case event number or issue number is not present. .
+    description: Event number of the original pr, in case event number or issue number is not present
     required: false
     default: 'false'
   checkout-token:
@@ -76,63 +76,63 @@ inputs:
 runs:
   using: composite
   steps:
-    # - name: Set up node
-    #   uses: actions/setup-node@v3
-    #   with:
-    #     node-version: ${{ inputs.node-version }}
+    - name: Set up node
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ inputs.node-version }}
 
-    # - name: Install Dependencies
-    #   if: ${{ inputs.use-prebuilt-package == 'false' && inputs.use-prebuilt-image == 'false' }}
-    #   uses: toptal/davinci-github-actions/yarn-install@v6.0.0
-    #   with:
-    #     checkout-token: ${{ inputs.checkout-token }}
+    - name: Install Dependencies
+      if: ${{ inputs.use-prebuilt-package == 'false' && inputs.use-prebuilt-image == 'false' }}
+      uses: toptal/davinci-github-actions/yarn-install@v6.0.0
+      with:
+        checkout-token: ${{ inputs.checkout-token }}
 
-    # - name: Generate Types
-    #   if: ${{ inputs.generate-types-command != 'false' }}
-    #   uses: toptal/davinci-github-actions/generate-gql-types@v6.0.0
-    #   with:
-    #     generate-types-command: ${{ inputs.generate-types-command }}
-    #     gcr-gql-schemas-bucket-token: ${{ env.GCR_GQL_SCHEMAS_BUCKET_TOKEN }}
+    - name: Generate Types
+      if: ${{ inputs.generate-types-command != 'false' }}
+      uses: toptal/davinci-github-actions/generate-gql-types@v6.0.0
+      with:
+        generate-types-command: ${{ inputs.generate-types-command }}
+        gcr-gql-schemas-bucket-token: ${{ env.GCR_GQL_SCHEMAS_BUCKET_TOKEN }}
 
-    # - name: Build Storybook
-    #   if: ${{ inputs.use-prebuilt-package == 'false' && inputs.use-prebuilt-image == 'false' }}
-    #   shell: bash
-    #   env:
-    #     BUILD_COMMAND: ${{ inputs.build-command }}
-    #   run: yarn "$BUILD_COMMAND"
+    - name: Build Storybook
+      if: ${{ inputs.use-prebuilt-package == 'false' && inputs.use-prebuilt-image == 'false' }}
+      shell: bash
+      env:
+        BUILD_COMMAND: ${{ inputs.build-command }}
+      run: yarn "$BUILD_COMMAND"
 
-    # - name: Specify Repository, Jenkins folder and Release Name
-    #   id: repo
-    #   shell: bash
-    #   env:
-    #     FOLDER_NAME: ${{ inputs.jenkins-folder-name }}
-    #     EVENT_NUMBER: ${{ github.event.number || github.event.issue.number || inputs.pr-number }}
-    #   run: |
-    #     folder_name=$FOLDER_NAME
+    - name: Specify Repository, Jenkins folder and Release Name
+      id: repo
+      shell: bash
+      env:
+        FOLDER_NAME: ${{ inputs.jenkins-folder-name }}
+        EVENT_NUMBER: ${{ github.event.number || github.event.issue.number || inputs.pr-number }}
+      run: |
+        folder_name=$FOLDER_NAME
 
-    #     if [[ "$folder_name" == '' ]]; then
-    #       echo folder_name=${{ github.event.repository.name }} >> $GITHUB_OUTPUT
-    #     else
-    #       echo folder_name=$FOLDER_NAME >> $GITHUB_OUTPUT
-    #     fi
+        if [[ "$folder_name" == '' ]]; then
+          echo folder_name=${{ github.event.repository.name }} >> $GITHUB_OUTPUT
+        else
+          echo folder_name=$FOLDER_NAME >> $GITHUB_OUTPUT
+        fi
 
-    #     echo "repository_name=${{ github.event.repository.name }}" >> $GITHUB_OUTPUT
-    #     echo "release_name=${{ github.event.repository.name }}-pr-$EVENT_NUMBER-storybook" >> $GITHUB_OUTPUT
-    #     echo "pr_number=${{ inputs.pr-number }}" >> $GITHUB_OUTPUT
+        echo "repository_name=${{ github.event.repository.name }}" >> $GITHUB_OUTPUT
+        echo "release_name=${{ github.event.repository.name }}-pr-$EVENT_NUMBER-storybook" >> $GITHUB_OUTPUT
+        echo "pr_number=${{ inputs.pr-number }}" >> $GITHUB_OUTPUT
 
-    # - name: Build and Push Storybook Image
-    #   uses: toptal/davinci-github-actions/build-push-image@v6.0.0
-    #   if: ${{ inputs.use-prebuilt-image == 'false' }}
-    #   with:
-    #     sha: ${{ inputs.sha }}
-    #     image-name: ${{ steps.repo.outputs.repository_name }}-storybook-release
-    #     build-args: |
-    #       DIST_FOLDER=${{ inputs.dist-folder }}
-    #       NGINX_CONFIG=./davinci/packages/davinci/docker/nginx-vhost.conf
-    #       ENV_RUNTIME_ENTRYPOINT=./davinci/packages/ci/src/configs/docker/env-runtime.entrypoint.sh
-    #       VERSION=${{ inputs.sha }}
-    #     docker-file: ./davinci/packages/ci/src/configs/docker/Dockerfile.gha-deploy
-    #     davinci-branch: ${{ inputs.davinci-branch }}
+    - name: Build and Push Storybook Image
+      uses: toptal/davinci-github-actions/build-push-image@v6.0.0
+      if: ${{ inputs.use-prebuilt-image == 'false' }}
+      with:
+        sha: ${{ inputs.sha }}
+        image-name: ${{ steps.repo.outputs.repository_name }}-storybook-release
+        build-args: |
+          DIST_FOLDER=${{ inputs.dist-folder }}
+          NGINX_CONFIG=./davinci/packages/davinci/docker/nginx-vhost.conf
+          ENV_RUNTIME_ENTRYPOINT=./davinci/packages/ci/src/configs/docker/env-runtime.entrypoint.sh
+          VERSION=${{ inputs.sha }}
+        docker-file: ./davinci/packages/ci/src/configs/docker/Dockerfile.gha-deploy
+        davinci-branch: ${{ inputs.davinci-branch }}
 
     - name: Trigger Deploy to Staging
       if: ${{ inputs.environment == 'staging' }}
@@ -142,24 +142,23 @@ runs:
         REPOSITORY_NAME: ${{ steps.repo.outputs.repository_name }}
       with:
         jenkins_url: ${{ inputs.jenkins_url }}
-        jenkins_user: ${{ inputs.jenkins_user }} ##toptal-devbot
-        jenkins_token: ${{ inputs.jenkins_token }} ##${{ env.JENKINS_DEPLOY_TOKEN }}
+        jenkins_user: ${{ inputs.jenkins_user }}
+        jenkins_token: ${{ inputs.jenkins_token }}
         jenkins_client_id: ${{ inputs.jenkins_client_id }}
         jenkins_sa_credentials: ${{ inputs.jenkins_sa_credentials }}
-        # job_name: ${{ env.JENKINS_FOLDER_NAME }}/job/${{ env.REPOSITORY_NAME }}-storybook-staging-deployment
-        # job_params: |
-        #   {
-        #     "TAG": "${{ inputs.sha }}"
-        #   }
-        job_name: job-test-iap
+        job_name: ${{ env.JENKINS_FOLDER_NAME }}/job/${{ env.REPOSITORY_NAME }}-storybook-staging-deployment
+        job_params: |
+          {
+            "TAG": "${{ inputs.sha }}"
+          }
         job_timeout: 1200
 
-    # - uses: toptal/davinci-github-actions/extract-env-variables@v6.0.0
-    #   if: ${{ inputs.environment == 'temploy' }}
-    #   id: env-variables
-    #   with:
-    #     github-token: ${{ env.GITHUB_TOKEN }}
-    #     filename: ${{ inputs.env-file }}
+    - uses: toptal/davinci-github-actions/extract-env-variables@v6.0.0
+      if: ${{ inputs.environment == 'temploy' }}
+      id: env-variables
+      with:
+        github-token: ${{ env.GITHUB_TOKEN }}
+        filename: ${{ inputs.env-file }}
 
     - name: Trigger Deploy to Temploy
       if: ${{ inputs.environment == 'temploy' }}
@@ -170,33 +169,32 @@ runs:
         RELEASE: ${{ steps.repo.outputs.release_name }}
       with:
         jenkins_url: ${{ inputs.jenkins_url }}
-        jenkins_user: ${{ inputs.jenkins_user }} ##toptal-jenkins
-        jenkins_token: ${{ inputs.jenkins_token }} ###${{ env.JENKINS_DEPLOY_TOKEN }}
+        jenkins_user: ${{ inputs.jenkins_user }}
+        jenkins_token: ${{ inputs.jenkins_token }}
         jenkins_client_id: ${{ inputs.jenkins_client_id }}
         jenkins_sa_credentials: ${{ inputs.jenkins_sa_credentials }}
-        # job_name: ${{ env.JENKINS_FOLDER_NAME }}/job/${{ env.REPOSITORY_NAME }}-storybook-temploy-helm-run
-        # job_params: |
-        #   {
-        #     "REPOSITORY_NAME": "${{ env.REPOSITORY_NAME }}-storybook",
-        #     "RELEASE": "${{ env.RELEASE }}",
-        #     "TAG": "${{ inputs.sha }}",
-        #     "ENV": "${{ steps.env-variables.outputs.variables || 'ENV=null' }}"
-        #   }
-        job_name: job-test-iap
+        job_name: ${{ env.JENKINS_FOLDER_NAME }}/job/${{ env.REPOSITORY_NAME }}-storybook-temploy-helm-run
+        job_params: |
+          {
+            "REPOSITORY_NAME": "${{ env.REPOSITORY_NAME }}-storybook",
+            "RELEASE": "${{ env.RELEASE }}",
+            "TAG": "${{ inputs.sha }}",
+            "ENV": "${{ steps.env-variables.outputs.variables || 'ENV=null' }}"
+          }
         job_timeout: 1200
 
-    # - name: Post Temploy Link
-    #   if: ${{ inputs.environment == 'temploy' }}
-    #   uses: actions/github-script@v6.3.3
-    #   env:
-    #     RELEASE: ${{ steps.repo.outputs.release_name }}
-    #     PR_NUMBER: ${{ steps.repo.outputs.pr_number }}
-    #   with:
-    #     github-token: ${{ env.GITHUB_TOKEN }}
-    #     script: |
-    #       const trimSuffix = (name) => name.endsWith('-') ? name.slice(0, -1) : name
-    #       const { issue: { number: issue_number }, repo: { owner, repo }  } = context
-    #       const name = trimSuffix(['${{ env.RELEASE }}', '${{ steps.repo.outputs.repository_name }}-storybook'].join('-').substring(0, 45))
-    #       const body = `Storybook temploy is available at https://${name}.toptal.rocks :tada:`
-    #       const number = issue_number || ${{ env.PR_NUMBER }}
-    #       github.rest.issues.createComment({ issue_number: number, owner, repo, body })
+    - name: Post Temploy Link
+      if: ${{ inputs.environment == 'temploy' }}
+      uses: actions/github-script@v6.3.3
+      env:
+        RELEASE: ${{ steps.repo.outputs.release_name }}
+        PR_NUMBER: ${{ steps.repo.outputs.pr_number }}
+      with:
+        github-token: ${{ env.GITHUB_TOKEN }}
+        script: |
+          const trimSuffix = (name) => name.endsWith('-') ? name.slice(0, -1) : name
+          const { issue: { number: issue_number }, repo: { owner, repo }  } = context
+          const name = trimSuffix(['${{ env.RELEASE }}', '${{ steps.repo.outputs.repository_name }}-storybook'].join('-').substring(0, 45))
+          const body = `Storybook temploy is available at https://${name}.toptal.rocks :tada:`
+          const number = issue_number || ${{ env.PR_NUMBER }}
+          github.rest.issues.createComment({ issue_number: number, owner, repo, body })

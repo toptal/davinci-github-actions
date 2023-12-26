@@ -12,13 +12,13 @@ The list of arguments, that are used in GH Action:
 
 | name                     | type                                       | required | default            | description                                                                                 |
 | ------------------------ | ------------------------------------------ | -------- | ------------------ | ------------------------------------------------------------------------------------------- |
-| `jenkins_url`            | string                                     | ✅       |                    | Jenkins instance URL                                                                        |
-| `jenkins_user`           | string                                     | ✅       |                    | Jenkins user                                                                                |
-| `jenkins_token`          | string                                     | ✅       |                    | Jenkins token                                                                               |
-| `jenkins_client_id`      | string                                     | ✅       |                    | Jenkins Client ID used with IAP                                                             |
-| `jenkins_sa_credentials` | string                                     | ✅       |                    | Jenkins service account credentials to use with IAP                                         |
-| `sha`                    | string                                     | ✅       |                    | Commit hash that will be used as a tag for the Docker image                                 |
-| `environment`            | enum<<br/>`temploy`,<br/>`staging`,<br/>>' | ✅       |                    | Environment to deploy Storybook to                                                          |
+| `jenkins_url`            | string                                     | ✅        |                    | Jenkins main instance URL                                                                   |
+| `jenkins_user`           | string                                     | ✅        |                    | Jenkins user                                                                                |
+| `jenkins_token`          | string                                     | ✅        |                    | Jenkins main token                                                                          |
+| `jenkins_client_id`      | string                                     | ✅        |                    | Jenkins main Client ID used with IAP                                                        |
+| `jenkins_sa_credentials` | string                                     | ✅        |                    | Jenkins service account credentials to use with IAP                                         |
+| `sha`                    | string                                     | ✅        |                    | Commit hash that will be used as a tag for the Docker image                                 |
+| `environment`            | enum<<br/>`temploy`,<br/>`staging`,<br/>>' | ✅        |                    | Environment to deploy Storybook to                                                          |
 | `env-file`               | string                                     |          | .env.temploy       | `.env` file name from which to read variables. Required for temploy deployment only         |
 | `davinci-branch`         | string                                     |          | master             | Custom davinci branch                                                                       |
 | `dist-folder`            | string                                     |          | ./storybook-static | Path to folder where Storybook is built                                                     |
@@ -27,7 +27,7 @@ The list of arguments, that are used in GH Action:
 | `use-prebuilt-image`     | string                                     |          | false              | If a prebuilt Storybook Docker image should be used                                         |
 | `jenkins-folder-name`    | string                                     |          |                    | Jenkins folder where the deployment jobs are located                                        |
 | `generate-types-command` | string                                     |          | false              | Command to generate gql types                                                               |
-| `pr-number`              | string                                     |          |                    | Event number of the original pr, in case event number or issue number is not present. .     |
+| `pr-number`              | string                                     |          | false              | Event number of the original pr, in case event number or issue number is not present        |
 | `checkout-token`         | string                                     |          |                    | Repository checkout access token `GITHUB_TOKEN`. Required for self hosted runners           |
 | `node-version`           | string                                     |          | 18                 | Node.js version used. The action is guaranteed to work only with Node.js@18 (default value) |
 
@@ -40,20 +40,17 @@ Not specified
 All ENV Variables, defined in a GH Workflow are also passed to a GH Action. It means, the might be reused as is.
 This is a list of ENV Variables that are used in GH Action:
 
-| name                           | description                                                                           |
-| ------------------------------ | ------------------------------------------------------------------------------------- |
-| `GITHUB_TOKEN`                 | GitHub token. Is used to checkout `davinci` branch                                    |
-| `GCR_ACCOUNT_KEY`              | Necessary token to push image to Google cloud                                         |
-| `GCR_GQL_SCHEMAS_BUCKET_TOKEN` | Necessary token to pull GQL schema from Google Cloud                                  |
-| `NPM_TOKEN`                    | Necessary token to install private dependencies                                       |
+| name                           | description                                          |
+| ------------------------------ | ---------------------------------------------------- |
+| `GITHUB_TOKEN`                 | GitHub token. Is used to checkout `davinci` branch   |
+| `GCR_ACCOUNT_KEY`              | Necessary token to push image to Google cloud        |
+| `GCR_GQL_SCHEMAS_BUCKET_TOKEN` | Necessary token to pull GQL schema from Google Cloud |
+| `NPM_TOKEN`                    | Necessary token to install private dependencies      |
 
 ### Usage
 
 ```yaml
   - uses: toptal/davinci-github-actions/deploy-storybook@v4.4.2
-    env:
-      GITHUB_TOKEN: ${{ secrets.TOPTAL_DEVBOT_TOKEN }}
-      GCR_ACCOUNT_KEY: ${{ secrets.GCR_ACCOUNT_KEY }}
     with:
       jenkins_url: ${{ steps.parse_secrets.outputs.JENKINS_URL }}
       jenkins_build_url: ${{ steps.parse_secrets.outputs.JENKINS_BUILD_URL }}

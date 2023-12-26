@@ -43,46 +43,46 @@ inputs:
 runs:
   using: composite
   steps:
-    # - uses: chrnorm/deployment-action@v2
-    #   name: Create GitHub deployment
-    #   id: gh-deployment
-    #   if: ${{ always() && inputs.create-gh-deployment == 'true' }}
-    #   with:
-    #     token: ${{ inputs.token }}
-    #     environment-url: ${{ inputs.environment-url }}
-    #     environment: ${{ inputs.environment }}
-    #     transient-environment: ${{ inputs.transient-environment }}
-    #     auto-inactive: ${{ inputs.auto-inactive }}
+    - uses: chrnorm/deployment-action@v2
+      name: Create GitHub deployment
+      id: gh-deployment
+      if: ${{ always() && inputs.create-gh-deployment == 'true' }}
+      with:
+        token: ${{ inputs.token }}
+        environment-url: ${{ inputs.environment-url }}
+        environment: ${{ inputs.environment }}
+        transient-environment: ${{ inputs.transient-environment }}
+        auto-inactive: ${{ inputs.auto-inactive }}
 
-    # - name: Update deployment status on success
-    #   if: ${{ success() && inputs.create-gh-deployment == 'true' }}
-    #   uses: chrnorm/deployment-status@v2
-    #   with:
-    #     token: ${{ inputs.token }}
-    #     environment-url: ${{ steps.gh-deployment.outputs.environment_url }}
-    #     deployment-id: ${{ steps.gh-deployment.outputs.deployment_id }}
-    #     log-url: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
-    #     state: 'success'
+    - name: Update deployment status on success
+      if: ${{ success() && inputs.create-gh-deployment == 'true' }}
+      uses: chrnorm/deployment-status@v2
+      with:
+        token: ${{ inputs.token }}
+        environment-url: ${{ steps.gh-deployment.outputs.environment_url }}
+        deployment-id: ${{ steps.gh-deployment.outputs.deployment_id }}
+        log-url: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        state: 'success'
 
-    # - name: Update deployment status on failure
-    #   if: ${{ failure() && inputs.create-gh-deployment == 'true' }}
-    #   uses: chrnorm/deployment-status@v2
-    #   with:
-    #     token: ${{ inputs.token }}
-    #     environment-url: ${{ steps.gh-deployment.outputs.environment_url }}
-    #     deployment-id: ${{ steps.gh-deployment.outputs.deployment_id }}
-    #     log-url: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
-    #     state: 'failure'
+    - name: Update deployment status on failure
+      if: ${{ failure() && inputs.create-gh-deployment == 'true' }}
+      uses: chrnorm/deployment-status@v2
+      with:
+        token: ${{ inputs.token }}
+        environment-url: ${{ steps.gh-deployment.outputs.environment_url }}
+        deployment-id: ${{ steps.gh-deployment.outputs.deployment_id }}
+        log-url: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        state: 'failure'
 
-    # - name: Set appName
-    #   id: repo
-    #   if: ${{ always() }}
-    #   shell: bash
-    #   run: |
-    #     echo APP_NAME=$(echo "${{ github.repository }}" | cut -d'/' -f2) >> $GITHUB_OUTPUT
+    - name: Set appName
+      id: repo
+      if: ${{ always() }}
+      shell: bash
+      run: |
+        echo APP_NAME=$(echo "${{ github.repository }}" | cut -d'/' -f2) >> $GITHUB_OUTPUT
 
-    # - id: sha
-    #   uses: toptal/davinci-github-actions/get-workflow-sha@master
+    - id: sha
+      uses: toptal/davinci-github-actions/get-workflow-sha@master
 
     - name: Trigger `Create JIRA` deployment
       uses: toptal/actions/trigger-jenkins-job@main
@@ -93,12 +93,11 @@ runs:
         jenkins_token: ${{ inputs.jenkins_token }}
         jenkins_client_id: ${{ inputs.jenkins_client_id }}
         jenkins_sa_credentials: ${{ inputs.jenkins_sa_credentials }}
-        # job_name: create-jira-deployment
-        # job_params: |
-        #   {
-        #     "appName": "${{ steps.repo.outputs.APP_NAME }}",
-        #     "envName": "${{ inputs.environment }}",
-        #     "sha": "${{ github.event.pull_request.head.sha || steps.sha.outputs.result }}"
-        #   }
-        job_name: job-test-iap
+        job_name: create-jira-deployment
+        job_params: |
+          {
+            "appName": "${{ steps.repo.outputs.APP_NAME }}",
+            "envName": "${{ inputs.environment }}",
+            "sha": "${{ github.event.pull_request.head.sha || steps.sha.outputs.result }}"
+          }
         job_timeout: '3600'
