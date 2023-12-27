@@ -1,13 +1,23 @@
 name: Create new Jira Deployment
 description: |
   It creates and engages a new Jira Deployment. Notice: Jira App must be installed in the repository.
-  ****
-  envInputs:
-    JENKINS_USER: Jenkins user
-    JENKINS_BUILD_TOKEN: Jenkins build token. Keep in mind that tokens for `temploy` and `staging` differ
-    PROXY: Proxy to use for Jenkins
 
 inputs:
+  jenkins_url:
+    description: 'Jenkins build instance URL'
+    required: true
+  jenkins_user:
+    description: 'Jenkins build user'
+    required: true
+  jenkins_token:
+    description: 'Jenkins build token'
+    required: true
+  jenkins_client_id:
+    description: 'Jenkins Client ID used with IAP'
+    required: true
+  jenkins_sa_credentials:
+    description: 'Jenkins service account credentials to use with IAP'
+    required: true
   token:
     required: true
     description: 'GitHub token to create a deployment'
@@ -29,7 +39,6 @@ inputs:
     required: false
     default: 'false'
     description: Creates a Github Deployment along with JIRA Deployment
-
 
 runs:
   using: composite
@@ -76,13 +85,14 @@ runs:
       uses: toptal/davinci-github-actions/get-workflow-sha@master
 
     - name: Trigger `Create JIRA` deployment
-      uses: toptal/jenkins-job-trigger-action@1.0.1
+      uses: toptal/actions/trigger-jenkins-job@main
       if: ${{ always() }}
       with:
-        jenkins_url: https://jenkins-build.toptal.net/
-        jenkins_user: ${{ env.JENKINS_USER }}
-        jenkins_token: ${{ env.JENKINS_BUILD_TOKEN }}
-        proxy: ${{ env.PROXY }}
+        jenkins_url: ${{ inputs.jenkins_url }}
+        jenkins_user: ${{ inputs.jenkins_user }}
+        jenkins_token: ${{ inputs.jenkins_token }}
+        jenkins_client_id: ${{ inputs.jenkins_client_id }}
+        jenkins_sa_credentials: ${{ inputs.jenkins_sa_credentials }}
         job_name: create-jira-deployment
         job_params: |
           {
