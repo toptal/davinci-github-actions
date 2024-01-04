@@ -33,12 +33,15 @@ jobs:
           workload_identity_provider: ${{ secrets.IDENTITY_POOL }}
           service_account: ${{ secrets.SA_IDENTITY_POOL }}
           secrets_name: |-
-            HTTP_PROXY:toptal-ci/HTTP_PROXY
+            JENKINS_BUILD_URL:toptal-ci/JENKINS_BUILD_URL
+            JENKINS_BUILD_CLIENT_ID:toptal-ci/JENKINS_BUILD_CLIENT_ID
+            JENKINS_SA_CREDENTIALS:toptal-ci/JENKINS_SA_CREDENTIALS
             SLACK_BOT_TOKEN:toptal-ci/SLACK_BOT_TOKEN
             TOPTAL_DEVBOT_TOKEN:toptal-ci/TOPTAL_DEVBOT_TOKEN
+            TOPTAL_REPOACCESSBOT_TOKEN:toptal-ci/TOPTAL_REPOACCESSBOT_TOKEN
             TOPTAL_TRIGGERBOT_BUILD_TOKEN:toptal-ci/TOPTAL_TRIGGERBOT_BUILD_TOKEN
             TOPTAL_TRIGGERBOT_USERNAME:toptal-ci/TOPTAL_TRIGGERBOT_USERNAME
-                
+
       - name: Parse secrets
         id: parse_secrets
         uses: toptal/davinci-github-actions/expose-json-outputs@master
@@ -49,10 +52,7 @@ jobs:
         run: |-
           echo "SLACK_BOT_TOKEN=${{ steps.parse_secrets.outputs.SLACK_BOT_TOKEN }}" >> $GITHUB_ENV
           echo "DEVBOT_TOKEN=${{ steps.parse_secrets.outputs.TOPTAL_DEVBOT_TOKEN }}" >> $GITHUB_ENV
-          echo "JENKINS_USER=${{ steps.parse_secrets.outputs.TOPTAL_TRIGGERBOT_USERNAME }}" >> $GITHUB_ENV
-          echo "JENKINS_BUILD_TOKEN=${{ steps.parse_secrets.outputs.TOPTAL_TRIGGERBOT_BUILD_TOKEN }}" >> $GITHUB_ENV
-          echo "PROXY=${{ steps.parse_secrets.outputs.HTTP_PROXY }}" >> $GITHUB_ENV
-                  
+
       - name: Set up node
         uses: actions/setup-node@v4.0.0
         with:
@@ -130,10 +130,28 @@ jobs:
         run: |
           echo LATEST_TAG=$(git describe --tags --abbrev=0) >> $GITHUB_OUTPUT
 
+      - name: Get toptal/actions
+        uses: actions/checkout@v4
+        with:
+          repository: toptal/actions
+          token: ${{ steps.parse_secrets.outputs.TOPTAL_REPOACCESSBOT_TOKEN }}
+          path: ./.github/actions/
+
+      - name: Replace toptal/actions/get-job-url@main from trigger-jenkins-job/action.yml
+        shell: bash
+        run: |
+          sed -i 's|toptal/actions/get-job-url@main|./.github/actions/get-job-url|' ./.github/actions/trigger-jenkins-job/action.yml
+          sed -i 's|toptal/actions/trigger-jenkins-job@main|./.github/actions/trigger-jenkins-job|' ./.github/actions/create-jira-deployment/action.yml
+
       - name: Create Jira Deployment
-        uses: toptal/davinci-github-actions/create-jira-deployment@master
+        uses: ./.github/actions/create-jira-deployment/
         if: ${{ always() && steps.changesets.outputs.published == 'true'}}
         with:
+          jenkins_url: ${{ steps.parse_secrets.outputs.JENKINS_BUILD_URL }}
+          jenkins_user: ${{ steps.parse_secrets.outputs.TOPTAL_TRIGGERBOT_USERNAME }}
+          jenkins_token: ${{ steps.parse_secrets.outputs.TOPTAL_TRIGGERBOT_BUILD_TOKEN }}
+          jenkins_client_id: ${{ steps.parse_secrets.outputs.JENKINS_BUILD_CLIENT_ID }}
+          jenkins_sa_credentials: ${{ steps.parse_secrets.outputs.JENKINS_SA_CREDENTIALS }}
           token: ${{ env.DEVBOT_TOKEN }}
           environment: production
           environment-url: https://github.com/toptal/davinci-github-actions/releases/tag/${{ steps.tag-version.outputs.LATEST_TAG }}
