@@ -1,5 +1,12 @@
 # davinci-github-actions
 
+## 12.6.1
+
+### Patch Changes
+
+- [#257](https://github.com/toptal/davinci-github-actions/pull/257) [`27cad6c`](https://github.com/toptal/davinci-github-actions/commit/27cad6c7d5e40bcde6ef94c27a7feb4b7ab8d252) Thanks [@sashuk](https://github.com/sashuk)!
+- rename max attempts parameter in `yarn-install`
+
 ## 12.6.0
 
 ### Minor Changes
