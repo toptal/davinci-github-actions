@@ -2,4 +2,4 @@
 'davinci-github-actions': patch
 ---
 
-- standardise max attempts parameter in `yarn-install`
+- rename max attempts parameter in `yarn-install`
