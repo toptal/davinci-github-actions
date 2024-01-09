@@ -1,0 +1,57 @@
+name: Update dependency to latest
+description: Create a PR for updating a dependency to the latest version
+
+inputs:
+  dependency-regex:
+    required: true
+    description: Regex pattern for NPM package names that should be updated, leave it blank to update everything
+  pr-title:
+    description: Title for the PR created
+
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      name: Bump dependencies to the latest version
+      id: bump-versions
+      run: |
+        filter="${{ inputs.dependency-regex }}"
+
+        syncpack() {
+          npx --yes syncpack@11 "$@"
+        }
+
+        old_versions=$(syncpack list --filter "$filter")
+        printf "old-versions=%s\n" "$old_versions" > "$GITHUB_OUTPUT"
+
+        echo | syncpack update --filter "$filter"
+
+        new_versions=$(syncpack list --filter "$filter")
+        printf "new-versions=%s\n" "$new_versions" > "$GITHUB_OUTPUT"
+
+    - name: Install packages
+      uses: toptal/davinci-github-actions/yarn-install
+
+    - name: Commit changes to new branch and create PR
+      shell: bash
+      run: |
+        git config --global user.email "bot@toptal.com"
+        git config --global user.name "toptal-devbot"
+
+        formatted_pr_name=$(gh pr view "${{ github.event.inputs.pull_request_url }}" --json headRefName | jq -r ".headRefName")
+        git checkout -b "$formatted_pr_name"
+
+        old_versions=$(sort <<< "${{ steps.bump-versions.outputs.old-versions }}")
+        new_versions=$(sort <<< "${{ steps.bump-versions.outputs.new-versions }}")
+
+        changed_versions=$(comm -13 <(cat <<< "$old_versions") <(cat <<< "$new_versions"))
+
+        git add .
+        git commit --no-verify -m "${{ inputs.pr-title }}"
+        git push --no-verify -u origin "$formatted_pr_name"
+
+        gh pr create --draft \
+          --title "${{ inputs.pr-title }}" \
+          --body "Updating packages to the latest versions available. It was created automatically from ${{ github.event.inputs.pull_request_url }}.\n\nVersions changed:\n\n$changed_versions" \
+          --base "master" \
+          --head "$formatted_pr_name"
