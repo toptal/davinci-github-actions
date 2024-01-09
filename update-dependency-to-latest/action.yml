@@ -7,6 +7,9 @@ inputs:
     description: Regex pattern for NPM package names that should be updated, leave it blank to update everything
   pr-title:
     description: Title for the PR created
+  branch-name:
+    description: Name of the branch to be created
+    default: davinci-depedencies-bump
 
 runs:
   using: composite
@@ -38,8 +41,9 @@ runs:
         git config --global user.email "bot@toptal.com"
         git config --global user.name "toptal-devbot"
 
-        formatted_pr_name=$(gh pr view "${{ github.event.inputs.pull_request_url }}" --json headRefName | jq -r ".headRefName")
-        git checkout -b "$formatted_pr_name"
+        branch_name="${{ inputs.branch-name }}"
+
+        git checkout -b "$branch_name"
 
         old_versions=$(sort <<< "${{ steps.bump-versions.outputs.old-versions }}")
         new_versions=$(sort <<< "${{ steps.bump-versions.outputs.new-versions }}")
@@ -48,10 +52,10 @@ runs:
 
         git add .
         git commit --no-verify -m "${{ inputs.pr-title }}"
-        git push --no-verify -u origin "$formatted_pr_name"
+        git push --no-verify -u origin "$branch_name"
 
         gh pr create --draft \
           --title "${{ inputs.pr-title }}" \
           --body "Updating packages to the latest versions available. It was created automatically from ${{ github.event.inputs.pull_request_url }}.\n\nVersions changed:\n\n$changed_versions" \
           --base "master" \
-          --head "$formatted_pr_name"
+          --head "$branch_name"

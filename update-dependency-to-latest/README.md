@@ -8,10 +8,11 @@ Create a PR for updating a dependency to the latest version
 
 The list of arguments, that are used in GH Action:
 
-| name               | type   | required | default | description                                                                                     |
-| ------------------ | ------ | -------- | ------- | ----------------------------------------------------------------------------------------------- |
-| `dependency-regex` | string | ✅        |         | Regex pattern for NPM package names that should be updated, leave it blank to update everything |
-| `pr-title`         | string |          |         | Title for the PR created                                                                        |
+| name               | type   | required | default                  | description                                                                                     |
+| ------------------ | ------ | -------- | ------------------------ | ----------------------------------------------------------------------------------------------- |
+| `dependency-regex` | string | ✅        |                          | Regex pattern for NPM package names that should be updated, leave it blank to update everything |
+| `pr-title`         | string |          |                          | Title for the PR created                                                                        |
+| `branch-name`      | string |          | davinci-depedencies-bump | Name of the branch to be created                                                                |
 
 ### Outputs
 
