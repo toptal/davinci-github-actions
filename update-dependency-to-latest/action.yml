@@ -65,7 +65,7 @@ runs:
         if ! (( $(gh pr list --state open --head "$BRANCH_NAME" --json number --jq length) )); then
           gh pr create \
             --title "$PR_TITLE" \
-            --body $"Updating packages to the latest versions available. It was created automatically.\n\nVersions changed:\n\n$CHANGED_VERSIONS" \
+            --body "$(printf 'Updating packages to the latest versions available. It was created automatically.\n\nVersions changed:\n\n%s' "$CHANGED_VERSIONS")" \
             --base "$MAIN_BRANCH" \
             --head "$BRANCH_NAME"
         fi
