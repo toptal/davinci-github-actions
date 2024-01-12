@@ -1,5 +1,15 @@
 # davinci-github-actions
 
+## 12.7.0
+
+### Minor Changes
+
+- [#259](https://github.com/toptal/davinci-github-actions/pull/259) [`7ef334d`](https://github.com/toptal/davinci-github-actions/commit/7ef334d54424df9c076e0fa3c02cac37eccb1dca) Thanks [@augustobmoura](https://github.com/augustobmoura)!
+
+### update-dependency-to-latest
+
+- add action for updating a npm dependency to the latest available
+
 ## 12.6.1
 
 ### Patch Changes
