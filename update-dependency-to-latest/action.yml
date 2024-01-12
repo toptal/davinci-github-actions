@@ -1,0 +1,71 @@
+name: Update dependency to latest
+description: Create a PR for updating a dependency to the latest version
+
+inputs:
+  dependency-regex:
+    required: true
+    description: Regex pattern for NPM package names that should be updated, leave it blank to update everything
+  pr-title:
+    description: Title for the PR created
+  branch-name:
+    description: Name of the branch to be created
+    default: davinci-dependencies-bump
+  main-branch:
+    description: Name of the branch that the PR will be based upon
+    default: master
+
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      name: Bump dependencies to the latest version
+      id: bump-versions
+      env:
+        FILTER_REGEX: ${{ inputs.dependency-regex }}
+      run: |
+        # Wrapper function on syncpack
+        syncpack() {
+          npx --yes syncpack@11 "$@"
+        }
+
+        old_versions=$(syncpack list --filter "$FILTER_REGEX" | sort)
+
+        echo | syncpack update --filter "$FILTER_REGEX"
+
+        new_versions=$(syncpack list --filter "$FILTER_REGEX" | sort)
+
+        changed_versions=$(comm -13 <(cat <<< "$old_versions") <(cat <<< "$new_versions"))
+
+        printf "changed-versions<<EOF\n" >> "$GITHUB_OUTPUT"
+        printf "%s\n" "$changed_versions" >> "$GITHUB_OUTPUT"
+        printf "EOF\n" >> "$GITHUB_OUTPUT"
+
+        yarn install
+
+    - name: Commit changes to new branch and create PR
+      shell: bash
+      env:
+        BRANCH_NAME: ${{ inputs.branch-name }}
+        MAIN_BRANCH: ${{ inputs.main-branch }}
+        PR_TITLE: ${{ inputs.pr-title }}
+        CHANGED_VERSIONS: ${{ steps.bump-versions.outputs.changed-versions }}
+      run: |
+        set -x
+        git config --global user.email "bot@toptal.com"
+        git config --global user.name "toptal-devbot"
+
+        git fetch origin master
+        git checkout -B "$BRANCH_NAME" origin/"$MAIN_BRANCH"
+
+        git add .
+        git commit --no-verify -m "$PR_TITLE"
+        git push --no-verify -u origin "$BRANCH_NAME" --force
+
+        # Only create a PR if not already created
+        if ! (( $(gh pr list --state open --head "$BRANCH_NAME" --json number --jq length) )); then
+          gh pr create \
+            --title "$PR_TITLE" \
+            --body "$(printf 'Updating packages to the latest versions available. It was created automatically.\n\nVersions changed:\n\n%s' "$CHANGED_VERSIONS")" \
+            --base "$MAIN_BRANCH" \
+            --head "$BRANCH_NAME"
+        fi
