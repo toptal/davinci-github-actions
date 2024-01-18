@@ -21,10 +21,11 @@ runs:
             const pattern = /^\w+(?:\(.+\))?: (.*)$/
             const [, titleMessage = ''] = title.match(pattern) ?? []
 
-            return capitalize(titleMessage.trim()) ?? title
+            return capitalize(titleMessage.trim()) || title
           }
 
-          const updatedTitle = convertConventional(context.payload.pull_request.title)
+          const oldTitle = context.payload.pull_request.title
+          const updatedTitle = convertConventional(oldTitle)
 
           const newPr = {
             owner: context.repo.owner,
@@ -33,7 +34,7 @@ runs:
             title: updatedTitle,
           }
 
-          if (updatedTitle) {
+          if (oldTitle !== updatedTitle) {
             github.rest.pulls.update(newPr);
           }
 
