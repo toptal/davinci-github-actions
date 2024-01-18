@@ -26,9 +26,6 @@ runs:
 
           const updatedTitle = convertConventional(context.payload.pull_request.title)
 
-          console.log('title', context.payload.pull_request.title)
-          console.log('updatedTitle', updatedTitle)
-
           const newPr = {
             owner: context.repo.owner,
             repo: context.repo.repo,
