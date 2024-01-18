@@ -36,7 +36,7 @@ runs:
             title: updatedTitle,
           }
 
-          if (title) {
+          if (updatedTitle) {
             github.rest.pulls.update(newPr);
           }
 
