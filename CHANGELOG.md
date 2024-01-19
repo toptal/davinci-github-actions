@@ -1,5 +1,12 @@
 # davinci-github-actions
 
+## 12.7.1
+
+### Patch Changes
+
+- [#265](https://github.com/toptal/davinci-github-actions/pull/265) [`b590eac`](https://github.com/toptal/davinci-github-actions/commit/b590eac9b1ae494ddb22cc80fa2b42f90ccbea53) Thanks [@TomasSlama](https://github.com/TomasSlama)!
+- add safeguard to not send empty title to github api
+
 ## 12.7.0
 
 ### Minor Changes
