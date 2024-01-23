@@ -17,5 +17,5 @@ outputs:
     description: Packages that have changed but are missing in changesets || Array<string>
 
 runs:
-  using: node18
+  using: node20
   main: dist/index.js
