@@ -1,5 +1,17 @@
 # davinci-github-actions
 
+## 12.7.2
+
+### Patch Changes
+
+- [#267](https://github.com/toptal/davinci-github-actions/pull/267) [`d9a483a`](https://github.com/toptal/davinci-github-actions/commit/d9a483a1fceb54be93aeb7bb3985c70d0904a0b1) Thanks [@Achillefs](https://github.com/Achillefs)!
+
+---
+
+### Node version bumps
+
+- upgrade Node to V20 for create-matrix and get-changeset-info actions
+
 ## 12.7.1
 
 ### Patch Changes
