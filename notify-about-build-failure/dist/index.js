@@ -2944,9 +2944,12 @@ const getCommunicationChannelsRequest = https.request(
           text: message,
           channel: privateMessageChannelId,
         })
-      }
 
-      if (slackIdentifier) {
+        sendSlackMessage({
+          text: getSlackMessage(slackIdentifier, githubActionRunUrl),
+          channel: slackChannelName,
+        })
+      } else if (fallbackSlackTeamId) {
         sendSlackMessage({
           text: getSlackMessage(slackIdentifier, githubActionRunUrl),
           channel: slackChannelName,
