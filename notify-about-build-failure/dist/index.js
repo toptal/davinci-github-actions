@@ -2823,7 +2823,7 @@ const https = __nccwpck_require__(687)
 const slackBotToken = core.getInput('slack-bot-token')
 const topTeamApiKey = core.getInput('top-team-api-key')
 const slackChannelName = core.getInput('slack-channel-name')
-const fallbackSlackTeamName = core.getInput('fallback-slack-team-name')
+const fallbackSlackTeamId = core.getInput('fallback-slack-team-id')
 const githubCommitAuthorName = core.getInput('github-commit-author-name')
 const githubActionRunUrl = core.getInput('github-action-run-url')
 
@@ -2852,7 +2852,7 @@ const SLACK_API_OPTIONS = {
 const getSlackMessage = (
   slackHandle,
   githubActionRunUrl
-) => `Hello <@${slackHandle}>!
+) => `Hello <${slackHandle}>!
 Build ${githubActionRunUrl} is currently failing on master, please fix it to unblock the release candidate or let the proper team know.`
 
 const sendSlackMessage = body => {
@@ -2917,7 +2917,7 @@ const getCommunicationChannelsRequest = https.request(
       }
 
       const teams = parsedResult.data.orgUnits.nodes
-      let slackIdentifier = fallbackSlackTeamName
+      let slackIdentifier = `!subteam^${fallbackSlackTeamId}`
 
       const member = teams
         .flatMap(team => team.directRoles.map(role => role.member))
@@ -2934,7 +2934,7 @@ const getCommunicationChannelsRequest = https.request(
           channel => channel.kind === 'SLACK'
         )
 
-        slackIdentifier = slack.value
+        slackIdentifier = `@${slack.value}`
         const message = getSlackMessage(slackIdentifier, githubActionRunUrl)
         const privateMessageChannelId = new URLSearchParams(slack.link).get(
           'id'
