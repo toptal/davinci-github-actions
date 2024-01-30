@@ -2820,9 +2820,9 @@ var __webpack_exports__ = {};
 const core = __nccwpck_require__(186)
 const https = __nccwpck_require__(687)
 
-// const slackBotToken = core.getInput('slack-bot-token')
+const slackBotToken = core.getInput('slack-bot-token')
 const topTeamApiKey = core.getInput('top-team-api-key')
-// const slackChannelName = core.getInput('slack-channel-name')
+const slackChannelName = core.getInput('slack-channel-name')
 const fallbackSlackTeamName = core.getInput('fallback-slack-team-name')
 const githubCommitAuthorName = core.getInput('github-commit-author-name')
 const githubActionRunUrl = core.getInput('github-action-run-url')
@@ -2839,15 +2839,15 @@ const TOP_TEAM_API_OPTIONS = {
 }
 
 // Configuration for Slack API access
-// const SLACK_API_OPTIONS = {
-//   hostname: 'slack.com',
-//   path: '/api/chat.postMessage',
-//   method: 'POST',
-//   headers: {
-//     'Content-Type': 'application/json',
-//     Authorization: `Bearer ${slackBotToken}`,
-//   },
-// }
+const SLACK_API_OPTIONS = {
+  hostname: 'slack.com',
+  path: '/api/chat.postMessage',
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${slackBotToken}`,
+  },
+}
 
 const getSlackMessage = (
   slackHandle,
@@ -2855,25 +2855,25 @@ const getSlackMessage = (
 ) => `Hello <@${slackHandle}>!
 Build ${githubActionRunUrl} is currently failing on master, please fix it to unblock the release candidate or let the proper team know.`
 
-// const sendSlackMessage = body => {
-//   const slackRequest = https.request(SLACK_API_OPTIONS, slackResponse => {
-//     slackResponse.on('data', slackResult => {
-//       const result = JSON.parse(slackResult)
+const sendSlackMessage = body => {
+  const slackRequest = https.request(SLACK_API_OPTIONS, slackResponse => {
+    slackResponse.on('data', slackResult => {
+      const result = JSON.parse(slackResult)
 
-//       if (!result.ok) {
-//         console.error(result)
-//       }
-//     })
-//   })
+      if (!result.ok) {
+        console.error(result)
+      }
+    })
+  })
 
-//   slackRequest.write(JSON.stringify(body))
+  slackRequest.write(JSON.stringify(body))
 
-//   slackRequest.on('error', error => {
-//     console.error(error)
-//   })
+  slackRequest.on('error', error => {
+    console.error(error)
+  })
 
-//   slackRequest.end()
-// }
+  slackRequest.end()
+}
 
 const communicationChannelsBody = JSON.stringify({
   query: `
@@ -2928,8 +2928,6 @@ const getCommunicationChannelsRequest = https.request(
               channel.value === githubCommitAuthorName
           )
         })
-      
-      console.log('member: ', member)
 
       if (member) {
         const slack = member.communicationChannels.find(
@@ -2937,29 +2935,22 @@ const getCommunicationChannelsRequest = https.request(
         )
 
         slackIdentifier = slack.value
-        const message = getSlackMessage(slack.value, githubActionRunUrl)
+        const message = getSlackMessage(slackIdentifier, githubActionRunUrl)
         const privateMessageChannelId = new URLSearchParams(slack.link).get(
           'id'
         )
 
-        console.log('message: ', message)
-        console.log('privateMessageChannelId: ', privateMessageChannelId)
-
-        // sendSlackMessage({
-        //   text: message,
-        //   channel: privateMessageChannelId,
-        // })
+        sendSlackMessage({
+          text: message,
+          channel: privateMessageChannelId,
+        })
       }
 
       if (slackIdentifier) {
-        console.log(
-          'message: ',
-          getSlackMessage(slackIdentifier, githubActionRunUrl)
-        )
-        // sendSlackMessage({
-        //   text: getSlackMessage(slackIdentifier, githubActionRunUrl),
-        //   channel: slackChannelName,
-        // })
+        sendSlackMessage({
+          text: getSlackMessage(slackIdentifier, githubActionRunUrl),
+          channel: slackChannelName,
+        })
       } else {
         throw new Error('No slack identifier found')
       }
