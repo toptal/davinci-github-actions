@@ -2922,8 +2922,14 @@ const getCommunicationChannelsRequest = https.request(
       const member = teams
         .flatMap(team => team.directRoles.map(role => role.member))
         .find(member => {
-          return member.communicationChannels.some(channel => channel.kind === 'GITHUB' && channel.value === githubCommitAuthorName)
-        });
+          return member.communicationChannels.some(
+            channel =>
+              channel.kind === 'GITHUB' &&
+              channel.value === githubCommitAuthorName
+          )
+        })
+      
+      console.log('member: ', member)
 
       if (member) {
         const slack = member.communicationChannels.find(
@@ -2932,7 +2938,9 @@ const getCommunicationChannelsRequest = https.request(
 
         slackIdentifier = slack.value
         const message = getSlackMessage(slack.value, githubActionRunUrl)
-        const privateMessageChannelId = new URLSearchParams(slack.link).get('id')
+        const privateMessageChannelId = new URLSearchParams(slack.link).get(
+          'id'
+        )
 
         console.log('message: ', message)
         console.log('privateMessageChannelId: ', privateMessageChannelId)
@@ -2944,7 +2952,10 @@ const getCommunicationChannelsRequest = https.request(
       }
 
       if (slackIdentifier) {
-        console.log('message: ', getSlackMessage(slackIdentifier, githubActionRunUrl))
+        console.log(
+          'message: ',
+          getSlackMessage(slackIdentifier, githubActionRunUrl)
+        )
         // sendSlackMessage({
         //   text: getSlackMessage(slackIdentifier, githubActionRunUrl),
         //   channel: slackChannelName,

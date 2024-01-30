@@ -110,6 +110,8 @@ const getCommunicationChannelsRequest = https.request(
           )
         })
 
+      console.log('member: ', member)
+
       if (member) {
         const slack = member.communicationChannels.find(
           channel => channel.kind === 'SLACK'
