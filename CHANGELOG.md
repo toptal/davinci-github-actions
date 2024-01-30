@@ -1,5 +1,12 @@
 # davinci-github-actions
 
+## 12.8.0
+
+### Minor Changes
+
+- [#270](https://github.com/toptal/davinci-github-actions/pull/270) [`80aa00b`](https://github.com/toptal/davinci-github-actions/commit/80aa00b21a57f6d425ef7ae3cec6459470f1baf5) Thanks [@dmaklygin](https://github.com/dmaklygin)!
+- add feature to notify a fallback group in slack
+
 ## 12.7.2
 
 ### Patch Changes
