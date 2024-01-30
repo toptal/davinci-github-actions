@@ -98,9 +98,7 @@ const getCommunicationChannelsRequest = https.request(
       }
 
       const teams = parsedResult.data.orgUnits.nodes
-      let slackIdentifier = `!subteam^${fallbackSlackTeamId}`
-
-      const member = teams
+      const teamMember = teams
         .flatMap(team => team.directRoles.map(role => role.member))
         .find(member => {
           return member.communicationChannels.some(
@@ -110,13 +108,12 @@ const getCommunicationChannelsRequest = https.request(
           )
         })
 
-      if (member) {
-        const slack = member.communicationChannels.find(
+      if (teamMember) {
+        const slack = teamMember.communicationChannels.find(
           channel => channel.kind === 'SLACK'
         )
 
-        slackIdentifier = `@${slack.value}`
-        const message = getSlackMessage(slackIdentifier, githubActionRunUrl)
+        const message = getSlackMessage(`@${slack.value}`, githubActionRunUrl)
         const privateMessageChannelId = new URLSearchParams(slack.link).get(
           'id'
         )
@@ -127,12 +124,15 @@ const getCommunicationChannelsRequest = https.request(
         })
 
         sendSlackMessage({
-          text: getSlackMessage(slackIdentifier, githubActionRunUrl),
+          text: message,
           channel: slackChannelName,
         })
       } else if (fallbackSlackTeamId) {
         sendSlackMessage({
-          text: getSlackMessage(slackIdentifier, githubActionRunUrl),
+          text: getSlackMessage(
+            `!subteam^${fallbackSlackTeamId}`,
+            githubActionRunUrl
+          ),
           channel: slackChannelName,
         })
       } else {
