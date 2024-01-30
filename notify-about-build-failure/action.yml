@@ -17,7 +17,7 @@ inputs:
     description: Failing GitHub Acton run URL (for example, `https://github.com/toptal/staff-portal/actions/runs/123`), needed for the notification message
     required: true
   fallback-slack-team-id:
-    description: Fallback Slack team ID, needed for the notification message if the commit author is not found
+    description: team ID to use when commit author is not found
     required: false
   
 runs:

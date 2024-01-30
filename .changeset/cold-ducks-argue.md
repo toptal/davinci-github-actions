@@ -6,4 +6,4 @@
 
 ### Notify about build failure
 
-- add opportunity to notify a fallback group in slack
+- add feature to notify a fallback group in slack
