@@ -17,6 +17,7 @@ The list of arguments, that are used in GH Action:
 | `slack-channel-name`        | string | ✅        |         | Slack channel name (for example, `#-test-channel`)                                                                                         |
 | `github-commit-author-name` | string | ✅        |         | GitHub name of commit author, needed for finding the Slack handle of commit author                                                         |
 | `github-action-run-url`     | string | ✅        |         | Failing GitHub Acton run URL (for example, `https://github.com/toptal/staff-portal/actions/runs/123`), needed for the notification message |
+| `fallback-slack-team-id`    | string |          |         | team ID to use when commit author is not found                                                                                             |
 
 ### Outputs
 
