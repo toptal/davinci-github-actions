@@ -1,5 +1,12 @@
 # davinci-github-actions
 
+## 12.8.1
+
+### Patch Changes
+
+- [#274](https://github.com/toptal/davinci-github-actions/pull/274) [`6e4d78e`](https://github.com/toptal/davinci-github-actions/commit/6e4d78e9345c87e83660f00e4014c2cbcc1aa4e4) Thanks [@dkezele-t](https://github.com/dkezele-t)!
+- add workaround for NPM registry in `yarn-install` action
+
 ## 12.8.0
 
 ### Minor Changes
