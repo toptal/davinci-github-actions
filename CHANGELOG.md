@@ -1,5 +1,12 @@
 # davinci-github-actions
 
+## 12.9.1
+
+### Patch Changes
+
+- [#278](https://github.com/toptal/davinci-github-actions/pull/278) [`ea567d2`](https://github.com/toptal/davinci-github-actions/commit/ea567d2b8ddddf37c4577022f038e1166078fa29) Thanks [@sashuk](https://github.com/sashuk)!
+- fix logic and step names in `notify-jira-about-contribution` action
+
 ## 12.9.0
 
 ### Minor Changes
