@@ -51,9 +51,7 @@ runs:
 
     - name: Check if PR comes fron dependabot
       env:
-        # TODO: revert before merge
-        # IS_DEPENDABOT: ${{ fromJson(steps.get-pr.outputs.data).user.login == 'dependabot[bot]' }}
-        IS_DEPENDABOT: ${{ fromJson(steps.get-pr.outputs.data).user.login == 'sashuk' }}
+        IS_DEPENDABOT: ${{ fromJson(steps.get-pr.outputs.data).user.login == 'dependabot[bot]' }}
       id: is-dependabot
       shell: bash
       run: |
@@ -70,11 +68,7 @@ runs:
       env:
         IS_TEAM_MEMBER: ${{ fromJson(steps.is-team-member.outputs.result) }}
         IS_DEPENDABOT: ${{ steps.is-dependabot.outputs.result }}
-
-        # TODO: revert before merge
-        # IS_DRAFT: ${{ fromJson(steps.get-pr.outputs.data).draft }}
-        IS_DRAFT: false
-
+        IS_DRAFT: ${{ fromJson(steps.get-pr.outputs.data).draft }}
         NOTIFY_ABOUT_MAJOR_DEPENDABOT_UPDATES: ${{ inputs.notify-about-major-dependabot-updates }}
         JIRA_ISSUE_ALREADY_EXISTS: ${{ steps.jira-issue-already-exists.outputs.result }}
         PR_TITLE: ${{ fromJson(steps.get-pr.outputs.data).title }}
@@ -82,7 +76,7 @@ runs:
       run: |
         echo "Checking if Jira ticket already exists or PR is a draft"
         if [[ ${{ env.JIRA_ISSUE_ALREADY_EXISTS }} == "true" || ${{ env.IS_DRAFT }} == "true" ]]; then
-          echo "result=true" >> $GITHUB_OUTPUT
+          echo "result=false" >> $GITHUB_OUTPUT
           exit
         fi
 
@@ -120,14 +114,6 @@ runs:
 
         echo "result=false" >> $GITHUB_OUTPUT
 
-    # TODO: remove before merge
-    - name: Debug output
-      shell: bash
-      env:
-        PREVIOUS_STEP_RESULT: ${{ steps.is-pr-eligible.outputs.result }}
-      run: |
-        echo "Previous step result: ${{ env.PREVIOUS_STEP_RESULT }}"
-
     # Create JIRA issue
     - name: Add label - JIRA issue created - for non-Draft PR
       if: ${{ steps.is-pr-eligible.outputs.result == true }}
@@ -141,19 +127,18 @@ runs:
       with:
         add-labels: ${{ inputs.dependabot-ticket-jira-label }}
 
-    # TODO: uncomment to create actual ticket before the merge
-    # - name: Create JIRA ticket
-    #   if: ${{ steps.jira-issue-can-be-created.outputs.result == true }}
-    #   shell: bash
-    #   env:
-    #     JIRA_HOOK: ${{ inputs.jira-hook }}
-    #     REPO: ${{ inputs.repo }}
-    #     TITLE: ${{ fromJson(steps.get-pr.outputs.data).title }}
-    #     AUTHOR: ${{ fromJson(steps.get-pr.outputs.data).user.login }}
-    #     AUTHOR_URL: ${{ fromJson(steps.get-pr.outputs.data).user.html_url }}
-    #     NUMBER: ${{ fromJson(steps.get-pr.outputs.data).number }}
-    #     URL: ${{ fromJson(steps.get-pr.outputs.data).html_url }}
-    #   run: bash ${{ github.action_path }}/notify-jira.sh
+    - name: Create JIRA ticket
+      if: ${{ steps.jira-issue-can-be-created.outputs.result == true }}
+      shell: bash
+      env:
+        JIRA_HOOK: ${{ inputs.jira-hook }}
+        REPO: ${{ inputs.repo }}
+        TITLE: ${{ fromJson(steps.get-pr.outputs.data).title }}
+        AUTHOR: ${{ fromJson(steps.get-pr.outputs.data).user.login }}
+        AUTHOR_URL: ${{ fromJson(steps.get-pr.outputs.data).user.html_url }}
+        NUMBER: ${{ fromJson(steps.get-pr.outputs.data).number }}
+        URL: ${{ fromJson(steps.get-pr.outputs.data).html_url }}
+      run: bash ${{ github.action_path }}/notify-jira.sh
 
     - name: Greet author
       if: ${{ steps.jira-issue-can-be-created.outputs.result == true && steps.is-dependabot.outputs.result == false }}
