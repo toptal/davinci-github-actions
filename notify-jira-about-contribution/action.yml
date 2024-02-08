@@ -63,8 +63,8 @@ runs:
       run: |
         echo "result=${{ contains(github.event.pull_request.labels.*.name, 'contribution') }}" >> $GITHUB_OUTPUT
 
-    - name: Decide if Jira ticket needs to be created
-      id: is-pr-eligible
+    - name: Decide if Jira ticket should be created
+      id: create-jira-issue
       env:
         IS_TEAM_MEMBER: ${{ fromJson(steps.is-team-member.outputs.result) }}
         IS_DEPENDABOT: ${{ steps.is-dependabot.outputs.result }}
@@ -116,19 +116,21 @@ runs:
 
     # Create JIRA issue
     - name: Add label - JIRA issue created - for non-Draft PR
-      if: ${{ steps.is-pr-eligible.outputs.result == true }}
+      if: ${{ fromJson(steps.create-jira-issue.outputs.result) == true }}
       uses: andymckay/labeler@1.0.4
       with:
+        repo-token: ${{ inputs.github-token }}
         add-labels: "contribution"
 
     - name: Add label for dependabot pull requests
-      if: ${{ steps.is-pr-eligible.outputs.result == true && steps.is-dependabot.outputs.result == true }}
+      if: ${{ fromJson(steps.create-jira-issue.outputs.result) == true && fromJson(steps.is-dependabot.outputs.result) == true }}
       uses: andymckay/labeler@1.0.4
       with:
+        repo-token: ${{ inputs.github-token }}
         add-labels: ${{ inputs.dependabot-ticket-jira-label }}
 
     - name: Create JIRA ticket
-      if: ${{ steps.jira-issue-can-be-created.outputs.result == true }}
+      if: ${{ fromJson(steps.create-jira-issue.outputs.result) == true }}
       shell: bash
       env:
         JIRA_HOOK: ${{ inputs.jira-hook }}
@@ -141,7 +143,7 @@ runs:
       run: bash ${{ github.action_path }}/notify-jira.sh
 
     - name: Greet author
-      if: ${{ steps.jira-issue-can-be-created.outputs.result == true && steps.is-dependabot.outputs.result == false }}
+      if: ${{ fromJson(steps.create-jira-issue.outputs.result) == true && fromJson(steps.is-dependabot.outputs.result) == false }}
       uses: actions/github-script@v6
       with:
         github-token: ${{ inputs.github-token }}
