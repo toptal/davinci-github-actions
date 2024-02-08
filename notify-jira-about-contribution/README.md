@@ -10,13 +10,15 @@ Notifies JIRA about external contribution. Draft and dependabot PRs are ignored.
 
 The list of arguments, that are used in GH Action:
 
-| name           | type   | required | default | description                           |
-| -------------- | ------ | -------- | ------- | ------------------------------------- |
-| `team`         | string | ✅        |         | Team that we are checking against     |
-| `repo`         | string | ✅        |         | Repository name                       |
-| `pull-number`  | string | ✅        |         | Nth pull request                      |
-| `jira-hook`    | string | ✅        |         | JIRA automation hook for contribution |
-| `github-token` | string | ✅        |         | Token for authorization               |
+| name                                    | type   | required | default              | description                           |
+| --------------------------------------- | ------ | -------- | -------------------- | ------------------------------------- |
+| `team`                                  | string | ✅        |                      | Team that we are checking against     |
+| `repo`                                  | string | ✅        |                      | Repository name                       |
+| `pull-number`                           | string | ✅        |                      | Nth pull request                      |
+| `jira-hook`                             | string | ✅        |                      | JIRA automation hook for contribution |
+| `github-token`                          | string | ✅        |                      | Token for authorization               |
+| `notify-about-major-dependabot-updates` | string |          |                      | Notify about major dependabot updates |
+| `dependabot-ticket-jira-label`          | string |          | ready-for-refinement | Label for dependabot ticket in JIRA   |
 
 ### Outputs
 
