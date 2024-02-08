@@ -1,5 +1,12 @@
 # davinci-github-actions
 
+## 12.9.0
+
+### Minor Changes
+
+- [#272](https://github.com/toptal/davinci-github-actions/pull/272) [`9a2ad2f`](https://github.com/toptal/davinci-github-actions/commit/9a2ad2f2f1417716e461aab5cd7edcfddaded5da) Thanks [@sashuk](https://github.com/sashuk)!
+- enable notify-jira-about-contribution action to create tickets for major dependabot pull requests
+
 ## 12.8.1
 
 ### Patch Changes
