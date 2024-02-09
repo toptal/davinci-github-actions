@@ -1,5 +1,12 @@
 # davinci-github-actions
 
+## 12.9.2
+
+### Patch Changes
+
+- [#281](https://github.com/toptal/davinci-github-actions/pull/281) [`e935a35`](https://github.com/toptal/davinci-github-actions/commit/e935a357703d7558c7a32662b53b283d01e68aa1) Thanks [@Jakub-Kwak](https://github.com/Jakub-Kwak)!
+- make build-publish-alpha-package action work with custom runners
+
 ## 12.9.1
 
 ### Patch Changes
