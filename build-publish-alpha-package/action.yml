@@ -23,6 +23,11 @@ inputs:
 runs:
   using: composite
   steps:
+    - name: Set up node
+      uses: actions/setup-node@v3.2.0
+      with:
+        node-version: ${{ inputs.node-version }}
+
     - name: Setup npm # Add our registry to npm config
       shell: bash
       env:
@@ -30,12 +35,7 @@ runs:
       run: |
         npm set "//registry.npmjs.org/:_authToken=$NPM_TOKEN"
 
-    - name: Set up node
-      uses: actions/setup-node@v3.2.0
-      with:
-        node-version: ${{ inputs.node-version }}
-
-    - uses: toptal/davinci-github-actions/yarn-install@v6.0.0
+    - uses: toptal/davinci-github-actions/yarn-install@v12.8.1
 
     - name: Build package
       shell: bash
