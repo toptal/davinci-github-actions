@@ -118,8 +118,10 @@ runs:
 
         isDependabot=${{ env.IS_DEPENDABOT }}
         isMajorUpdate=false
+        # TODO: REVERT IT TO TRUE
         if [[ $isDependabot == "false" ]]
         then
+          echo "It is dependabot PR"
           pr_title="${{ env.PR_TITLE }}"
           extractMajorVersions "$pr_title"
 
