@@ -80,20 +80,48 @@ runs:
           exit
         fi
 
+        # Define function to extract major versions from PR title
+        old_major=""
+        new_major=""
+        extractMajorVersions() {
+          echo "Checking if PR is a major update, PR title: $pr_title"
+
+          # Assign function parameter to a variable
+          pr_title=$1
+
+          # Extract number version using grep utility
+          #   - "--only-matching" prints only the matched (non-empty) parts of a matching line
+          #   - "--extended-regexp" allows to use extended regular expressions
+          #   - "cut -d' ' -f2" extracts the second word from the matched line
+          #   - "cut -d'.' -f1" extracts the first part of the version number
+          old_major_value=$(echo "$pr_title" | grep --only-matching --extended-regexp 'from [0-9]+(\.[0-9]+)?' | cut -d' ' -f2 | cut -d'.' -f1)
+
+          # Check if the variable is empty
+          if [ -z "$old_major_value" ]; then
+              echo "Error: Unable to extract old major version." >&2
+          else
+              echo "Old major: $old_major_value"
+              old_major=$old_major_value
+          fi
+
+          # Extracting the new major version using grep
+          new_major_value=$(echo "$pr_title" | grep --only-matching --extended-regexp 'to [0-9]+(\.[0-9]+)?' | cut -d' ' -f2 | cut -d'.' -f1)
+          
+          # Check if the variable is empty
+          if [ -z "$new_major_value" ]; then
+              echo "Error: Unable to extract new major version." >&2
+          else
+              echo "New major: $new_major_value"
+              new_major=$new_major_value
+          fi
+        }
+
         isDependabot=${{ env.IS_DEPENDABOT }}
         isMajorUpdate=false
-        if [[ $isDependabot == "true" ]]
+        if [[ $isDependabot == "false" ]]
         then
-          update_string="${{ env.PR_TITLE }}"
-
-          old_version=$(echo "$update_string" | awk '{match($0, /[0-9]+(\.[0-9]+)*/, arr); print arr[0]}')
-          new_version=$(echo "$update_string" | awk '{match($0, /to [0-9]+(\.[0-9]+)*/, arr); gsub("to ", "", arr[0]); print arr[0]}')
-
-          old_major=$(echo "$old_version" | cut -d. -f1)
-          new_major=$(echo "$new_version" | cut -d. -f1)
-
-          echo "Old major: $old_major"
-          echo "New major: $new_major"
+          pr_title="${{ env.PR_TITLE }}"
+          extractMajorVersions "$pr_title"
 
           if [ "$old_major" != "$new_major" ]; then
             isMajorUpdate=true
