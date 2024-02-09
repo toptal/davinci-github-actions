@@ -80,21 +80,29 @@ runs:
           exit
         fi
 
-        update_string="${{ env.PR_TITLE }}"
-
-        old_version=$(echo "$update_string" | awk '{match($0, /[0-9]+(\.[0-9]+)*/, arr); print arr[0]}')
-        new_version=$(echo "$update_string" | awk '{match($0, /to [0-9]+(\.[0-9]+)*/, arr); gsub("to ", "", arr[0]); print arr[0]}')
-
-        old_major=$(echo "$old_version" | cut -d. -f1)
-        new_major=$(echo "$new_version" | cut -d. -f1)
-
+        isDependabot=${{ env.IS_DEPENDABOT }}
         isMajorUpdate=false
-        if [ "$old_major" != "$new_major" ]; then
-          isMajorUpdate=true
+        if [[ $isDependabot == "true" ]]
+        then
+          update_string="${{ env.PR_TITLE }}"
+
+          old_version=$(echo "$update_string" | awk '{match($0, /[0-9]+(\.[0-9]+)*/, arr); print arr[0]}')
+          new_version=$(echo "$update_string" | awk '{match($0, /to [0-9]+(\.[0-9]+)*/, arr); gsub("to ", "", arr[0]); print arr[0]}')
+
+          old_major=$(echo "$old_version" | cut -d. -f1)
+          new_major=$(echo "$new_version" | cut -d. -f1)
+
+          echo "Old major: $old_major"
+          echo "New major: $new_major"
+
+          if [ "$old_major" != "$new_major" ]; then
+            isMajorUpdate=true
+          fi
+
+          echo "Major update: $isMajorUpdate"
         fi
 
         isTeamMember=${{ env.IS_TEAM_MEMBER }}
-        isDependabot=${{ env.IS_DEPENDABOT }}
         notifyAboutMajorDependabotUpdates=${{ env.NOTIFY_ABOUT_MAJOR_DEPENDABOT_UPDATES }}
         if [[ $notifyAboutMajorDependabotUpdates == "true" && $isDependabot == "true" ]]; then
           if [[ $isMajorUpdate == "true" ]]; then
