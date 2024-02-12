@@ -116,10 +116,12 @@ runs:
           fi
         }
 
-        isDependabot=${{ env.IS_DEPENDABOT }}
+        # TODO: Revert it to getting value from env.IS_DEPENDABOT before merge
+        # isDependabot=${{ env.IS_DEPENDABOT }}
+        isDependabot=true
+
         isMajorUpdate=false
-        # TODO: REVERT IT TO TRUE
-        if [[ $isDependabot == "false" ]]; then
+        if [[ $isDependabot == "true" ]]; then
           echo "It is dependabot PR"
           pr_title="${{ env.PR_TITLE }}"
           extractMajorVersions "$pr_title"
