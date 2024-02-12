@@ -93,6 +93,7 @@ runs:
     # This step creates .npmrc file that references to npm registry in GAR (Google Artifact Registry)
     # The npm registry works as a proxy-cache, downloading and storing the public npm packages
     - name: Test org env
+      shell: bash
       run: |
         echo "${{ vars.NPM_PROXY_RUNNER_NAME }}"
     - name: Create .npmrc file using npm Artifact Registry
