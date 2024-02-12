@@ -119,8 +119,7 @@ runs:
         isDependabot=${{ env.IS_DEPENDABOT }}
         isMajorUpdate=false
         # TODO: REVERT IT TO TRUE
-        if [[ $isDependabot == "false" ]]
-        then
+        if [[ $isDependabot == "false" ]]; then
           echo "It is dependabot PR"
           pr_title="${{ env.PR_TITLE }}"
           extractMajorVersions "$pr_title"
@@ -134,16 +133,22 @@ runs:
 
         isTeamMember=${{ env.IS_TEAM_MEMBER }}
         notifyAboutMajorDependabotUpdates=${{ env.NOTIFY_ABOUT_MAJOR_DEPENDABOT_UPDATES }}
-        if [[ $notifyAboutMajorDependabotUpdates == "true" && $isDependabot == "true" ]]; then
-          if [[ $isMajorUpdate == "true" ]]; then
-            echo "Major dependabot update, exiting"
-            echo "result=true" >> $GITHUB_OUTPUT
-          else
-            echo "Non-major dependabot update"
-            echo "result=false" >> $GITHUB_OUTPUT
-          fi
+        if [[ $isDependabot == "true" ]]; then
+          if [[ $notifyAboutMajorDependabotUpdates == "true" ]]; then
+            if [[ $isMajorUpdate == "true" ]]; then
+              echo "Major dependabot update, exiting"
+              echo "result=true" >> $GITHUB_OUTPUT
+            else
+              echo "Non-major dependabot update"
+              echo "result=false" >> $GITHUB_OUTPUT
+            fi
 
-          exit
+            exit
+          else
+            echo "No notifications for dependabot updates"
+            echo "result=false" >> $GITHUB_OUTPUT
+            exit
+          fi
         fi
 
         if [[ $isTeamMember == "false" ]]; then
