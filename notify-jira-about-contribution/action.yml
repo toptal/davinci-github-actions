@@ -18,9 +18,9 @@ inputs:
   github-token:
     required: true
     description: Token for authorization
-  notify-about-major-dependabot-updates:
+  should-notify-about-major-dependabot-updates:
     required: false
-    description: Notify about major dependabot updates
+    description: Specifies if action should create Jira issues for major dependency update pull requests from dependabot
     type: boolean
     default: false
 
@@ -47,130 +47,114 @@ runs:
 
     - name: Check if PR comes fron dependabot
       env:
-        IS_DEPENDABOT: ${{ fromJson(steps.get-pr.outputs.data).user.login == 'dependabot[bot]' }}
-      id: is-dependabot
+        IS_DEPENDABOT_PULL_REQUEST: ${{ fromJson(steps.get-pr.outputs.data).user.login == 'dependabot[bot]' }}
+      id: is-dependabot-pull-request
       shell: bash
       run: |
-        echo "result=${{ env.IS_DEPENDABOT }}" >> $GITHUB_OUTPUT
+        echo "result=${{ env.IS_DEPENDABOT_PULL_REQUEST }}" >> $GITHUB_OUTPUT
 
     - name: Check if Jira issue already exists
-      id: jira-issue-already-exists
+      id: jira-ticket-already-exists
       shell: bash
       run: |
         echo "result=${{ contains(github.event.pull_request.labels.*.name, 'contribution') }}" >> $GITHUB_OUTPUT
 
     - name: Decide if Jira ticket should be created
-      id: create-jira-issue
+      id: should-create-jira-issue
       env:
         IS_TEAM_MEMBER: ${{ fromJson(steps.is-team-member.outputs.result) }}
-        IS_DEPENDABOT: ${{ steps.is-dependabot.outputs.result }}
+        IS_DEPENDABOT_PULL_REQUEST: ${{ steps.is-dependabot-pull-request.outputs.result }}
         IS_DRAFT: ${{ fromJson(steps.get-pr.outputs.data).draft }}
-        NOTIFY_ABOUT_MAJOR_DEPENDABOT_UPDATES: ${{ inputs.notify-about-major-dependabot-updates }}
-        JIRA_ISSUE_ALREADY_EXISTS: ${{ steps.jira-issue-already-exists.outputs.result }}
+        SHOULD_NOTIFY_ABOUT_MAJOR_DEPENDABOT_UPDATES: ${{ inputs.should-notify-about-major-dependabot-updates }}
+        JIRA_ISSUE_ALREADY_EXISTS: ${{ steps.jira-ticket-already-exists.outputs.result }}
         PR_TITLE: ${{ fromJson(steps.get-pr.outputs.data).title }}
       shell: bash
       run: |
-        echo "Checking if Jira ticket already exists or PR is a draft"
+        # No need to create Jira issue if it already exists
         jiraIssueAlreadyExists=${{ env.JIRA_ISSUE_ALREADY_EXISTS }}
-        isDraft=${{ env.IS_DRAFT }}
-        if [[ jiraIssueAlreadyExists == "true" || isDraft == "true" ]]
-        then
-          echo "Jira ticket already exists or PR is a draft, exiting"
+        if [[ jiraIssueAlreadyExists == "true" ]]; then
+          echo "Jira issue already exists"
           echo "result=false" >> $GITHUB_OUTPUT
           exit
         fi
 
-        # Define function to extract major versions from PR title
-        old_major=""
-        new_major=""
-        extractMajorVersions() {
-          echo "Checking if PR is a major update, PR title: $pr_title"
-
-          # Assign function parameter to a variable
-          pr_title=$1
-
-          # Extract number version using grep utility
-          #   - "--only-matching" prints only the matched (non-empty) parts of a matching line
-          #   - "--extended-regexp" allows to use extended regular expressions
-          #   - "cut -d' ' -f2" extracts the second word from the matched line
-          #   - "cut -d'.' -f1" extracts the first part of the version number
-          old_major_value=$(echo "$pr_title" | grep --only-matching --extended-regexp 'from [0-9]+(\.[0-9]+)?' | cut -d' ' -f2 | cut -d'.' -f1)
-
-          # Check if the variable is empty
-          if [ -z "$old_major_value" ]; then
-              echo "Error: Unable to extract old major version." >&2
-          else
-              echo "Old major: $old_major_value"
-              old_major=$old_major_value
-          fi
-
-          # Extracting the new major version using grep
-          new_major_value=$(echo "$pr_title" | grep --only-matching --extended-regexp 'to [0-9]+(\.[0-9]+)?' | cut -d' ' -f2 | cut -d'.' -f1)
-          
-          # Check if the variable is empty
-          if [ -z "$new_major_value" ]; then
-              echo "Error: Unable to extract new major version." >&2
-          else
-              echo "New major: $new_major_value"
-              new_major=$new_major_value
-          fi
-        }
-
-        # TODO: Revert it to getting value from env.IS_DEPENDABOT before merge
-        # isDependabot=${{ env.IS_DEPENDABOT }}
-        isDependabot=true
-
-        isMajorUpdate=false
-        if [[ $isDependabot == "true" ]]; then
-          echo "It is dependabot PR"
-          pr_title="${{ env.PR_TITLE }}"
-          extractMajorVersions "$pr_title"
-
-          if [ "$old_major" != "$new_major" ]; then
-            isMajorUpdate=true
-          fi
-
-          echo "Major update: $isMajorUpdate"
-        fi
-
-        isTeamMember=${{ env.IS_TEAM_MEMBER }}
-        notifyAboutMajorDependabotUpdates=${{ env.NOTIFY_ABOUT_MAJOR_DEPENDABOT_UPDATES }}
-        if [[ $isDependabot == "true" ]]; then
-          if [[ $notifyAboutMajorDependabotUpdates == "true" ]]; then
-            if [[ $isMajorUpdate == "true" ]]; then
-              echo "Major dependabot update, exiting"
-              echo "result=true" >> $GITHUB_OUTPUT
-            else
-              echo "Non-major dependabot update (create-jira-issue: false), exiting"
-              echo "result=false" >> $GITHUB_OUTPUT
-            fi
-          else
-            echo "No notifications for dependabot updates (create-jira-issue: false), exiting"
-            echo "result=false" >> $GITHUB_OUTPUT
-          fi
-
+        # No need to create Jira issue if pull request is a draft
+        isDraft=${{ env.IS_DRAFT }}
+        if [[ jiraIssueAlreadyExists == "true" || isDraft == "true" ]]; then
+          echo "Pull request is a draft"
+          echo "result=false" >> $GITHUB_OUTPUT
           exit
         fi
 
-        if [[ $isTeamMember == "false" ]]; then
-          echo "Author is not a member of the team (create-jira-issue: true), exiting"
+
+        # TODO: Revert it to getting value from env.IS_DEPENDABOT_PULL_REQUEST before merge
+        # isDependabotPullRequest=${{ env.IS_DEPENDABOT_PULL_REQUEST }}
+        isDependabotPullRequest=true
+
+
+        isTeamMember=${{ env.IS_TEAM_MEMBER }}
+        if [[ $isDependabotPullRequest == "false" ]]; then
+          if [[ $isTeamMember == "true" ]]; then
+            echo "Pull request author is member of the team"
+            echo "result=false" >> $GITHUB_OUTPUT
+            exit
+          fi
+
+          echo "Pull request author is not a member of the team"
           echo "result=true" >> $GITHUB_OUTPUT
           exit
         fi
 
-        echo "Exiting (create-jira-issue: false)"
-        echo "result=false" >> $GITHUB_OUTPUT
+        shouldNotifyAboutMajorDependabotUpdates=${{ env.SHOULD_NOTIFY_ABOUT_MAJOR_DEPENDABOT_UPDATES }}
+        if [[ $shouldNotifyAboutMajorDependabotUpdates == "false" ]]; then
+          echo "No need to notify about dependabot pull requests, exiting"
+          echo "result=false" >> $GITHUB_OUTPUT
+          exit
+        fi
+
+        oldMajor=""
+        newMajor=""
+        extractMajorVersionsFromTitle() {
+          pullRequestTitle=$1
+          echo "Checking if PR is a major update, PR title: $pullRequestTitle"
+
+          # Extract number version using grep utility
+          # For "Bump @cypress/webpack-preprocessor from 5.17.1 to 6.0.1" it returns "5"
+          oldMajor=$(echo "$pullRequestTitle" | grep --only-matching --extended-regexp 'from [0-9]+(\.[0-9]+)?' | cut -d' ' -f2 | cut -d'.' -f1)
+          if [ -z "$oldMajor" ]; then
+            echo "Error: Unable to extract old major version" >&2
+            exit 1
+          fi
+
+          # For "Bump @cypress/webpack-preprocessor from 5.17.1 to 6.0.1" it returns "5"
+          newMajor=$(echo "$pullRequestTitle" | grep --only-matching --extended-regexp 'to [0-9]+(\.[0-9]+)?' | cut -d' ' -f2 | cut -d'.' -f1)
+          if [ -z "$newMajor_value" ]; then
+            echo "Error: Unable to extract new major version" >&2
+            exit 1
+          fi
+        }
+
+        pullRequestTitle="${{ env.PR_TITLE }}"
+        extractMajorVersionsFromTitle "$pullRequestTitle"
+        if [ "$oldMajor" == "$newMajor" ]; then
+          echo "Is not a major update"
+          echo "result=false" >> $GITHUB_OUTPUT
+          exit
+        fi
+
+        echo "Is major dependabot pull request"
+        echo "result=true" >> $GITHUB_OUTPUT
 
     # Create JIRA issue
     - name: Add label - JIRA issue created - for non-Draft PR
-      if: ${{ fromJson(steps.create-jira-issue.outputs.result) == true }}
+      if: ${{ fromJson(steps.should-create-jira-issue.outputs.result) == true }}
       uses: andymckay/labeler@1.0.4
       with:
         repo-token: ${{ inputs.github-token }}
         add-labels: "contribution"
 
     - name: Create JIRA ticket
-      if: ${{ fromJson(steps.create-jira-issue.outputs.result) == true }}
+      if: ${{ fromJson(steps.should-create-jira-issue.outputs.result) == true }}
       shell: bash
       env:
         JIRA_HOOK: ${{ inputs.jira-hook }}
@@ -183,7 +167,7 @@ runs:
       run: bash ${{ github.action_path }}/notify-jira.sh
 
     - name: Greet author
-      if: ${{ fromJson(steps.create-jira-issue.outputs.result) == true && fromJson(steps.is-dependabot.outputs.result) == false }}
+      if: ${{ fromJson(steps.should-create-jira-issue.outputs.result) == true && fromJson(steps.is-dependabot-pull-request.outputs.result) == false }}
       uses: actions/github-script@v6
       with:
         github-token: ${{ inputs.github-token }}
