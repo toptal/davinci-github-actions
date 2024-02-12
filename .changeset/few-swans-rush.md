@@ -2,4 +2,4 @@
 'davinci-github-actions': patch
 ---
 
-Add switch to disable NPM proxy trough organisational variable
+- add switch to disable NPM proxy through organisational variable
