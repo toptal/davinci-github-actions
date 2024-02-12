@@ -1,5 +1,12 @@
 # davinci-github-actions
 
+## 12.9.3
+
+### Patch Changes
+
+- [#282](https://github.com/toptal/davinci-github-actions/pull/282) [`abe350f`](https://github.com/toptal/davinci-github-actions/commit/abe350fe099a43d2763175c300fb4b88f20bf13f) Thanks [@dkezele-t](https://github.com/dkezele-t)!
+- add switch to disable NPM proxy through organisational variable
+
 ## 12.9.2
 
 ### Patch Changes
