@@ -18,9 +18,9 @@ inputs:
   github-token:
     required: true
     description: Token for authorization
-  should-notify-about-major-dependabot-updates:
+  should-notify-about-major-dependency-updates:
     required: false
-    description: Specifies if action should create Jira issues for major dependency update pull requests from dependabot
+    description: Specifies if action should create Jira issues for major dependency updates (authored by dependabot)
     type: boolean
     default: false
 
@@ -65,12 +65,11 @@ runs:
         IS_TEAM_MEMBER: ${{ fromJson(steps.is-team-member.outputs.result) }}
         IS_DEPENDABOT_PULL_REQUEST: ${{ steps.is-dependabot-pull-request.outputs.result }}
         IS_DRAFT: ${{ fromJson(steps.get-pr.outputs.data).draft }}
-        SHOULD_NOTIFY_ABOUT_MAJOR_DEPENDABOT_UPDATES: ${{ inputs.should-notify-about-major-dependabot-updates }}
+        SHOULD_NOTIFY_ABOUT_MAJOR_DEPENDENCY_UPDATES: ${{ inputs.should-notify-about-major-dependency-updates }}
         JIRA_ISSUE_ALREADY_EXISTS: ${{ steps.jira-issue-already-exists.outputs.result }}
         PR_TITLE: ${{ fromJson(steps.get-pr.outputs.data).title }}
       shell: bash
       run: |
-        # No need to create Jira issue if it already exists
         jiraIssueAlreadyExists=${{ env.JIRA_ISSUE_ALREADY_EXISTS }}
         if [[ jiraIssueAlreadyExists == "true" ]]; then
           echo "Jira issue already exists"
@@ -78,9 +77,8 @@ runs:
           exit
         fi
 
-        # No need to create Jira issue if pull request is a draft
         isDraft=${{ env.IS_DRAFT }}
-        if [[ jiraIssueAlreadyExists == "true" || isDraft == "true" ]]; then
+        if [[ isDraft == "true" ]]; then
           echo "Pull request is a draft"
           echo "result=false" >> $GITHUB_OUTPUT
           exit
@@ -96,48 +94,48 @@ runs:
         if [[ $isDependabotPullRequest == "false" ]]; then
           isTeamMember=${{ env.IS_TEAM_MEMBER }}
           if [[ $isTeamMember == "true" ]]; then
-            echo "Pull request author is member of the team"
+            echo "Pull request author is member of ${{ inputs.team }}"
             echo "result=false" >> $GITHUB_OUTPUT
             exit
           fi
 
-          echo "Pull request author is not a member of the team"
+          echo "Pull request author is not a member of ${{ inputs.team }}"
           echo "result=true" >> $GITHUB_OUTPUT
           exit
         fi
 
-        shouldNotifyAboutMajorDependabotUpdates=${{ env.SHOULD_NOTIFY_ABOUT_MAJOR_DEPENDABOT_UPDATES }}
-        if [[ $shouldNotifyAboutMajorDependabotUpdates == "false" ]]; then
-          echo "No need to notify about dependabot pull requests, exiting"
+        shouldNotifyAboutMajorDependencyUpdates=${{ env.SHOULD_NOTIFY_ABOUT_MAJOR_DEPENDENCY_UPDATES }}
+        if [[ $shouldNotifyAboutMajorDependencyUpdates == "false" ]]; then
+          echo "No need to notify about dependency updates"
           echo "result=false" >> $GITHUB_OUTPUT
           exit
         fi
 
         pullRequestTitle="${{ env.PR_TITLE }}"
 
-        # Extract major version using grep utility
+        # Extract major versions using grep utility
+
         # For "Bump @cypress/webpack-preprocessor from 5.17.1 to 6.0.1" it returns "5"
-        oldMajorVersion=$(echo "$pullRequestTitle" | grep --only-matching --extended-regexp 'from [0-9]+(\.[0-9]+)?' | cut -d' ' -f2 | cut -d'.' -f1)
-        if [ -z "$oldMajorVersion" ]; then
-          echo "Error: Unable to extract old major version" >&2
+        currentMajorVersion=$(echo "$pullRequestTitle" | grep --only-matching --extended-regexp 'from [0-9]+(\.[0-9]+)?' | cut -d' ' -f2 | cut -d'.' -f1)
+        if [ -z "$currentMajorVersion" ]; then
+          echo "Error: Unable to extract current major version" >&2
           exit 1
         fi
 
-        # Extract major version using grep utility
-        # For "Bump @cypress/webpack-preprocessor from 5.17.1 to 6.0.1" it returns "5"
+        # For "Bump @cypress/webpack-preprocessor from 5.17.1 to 6.0.1" it returns "6"
         newMajorVersion=$(echo "$pullRequestTitle" | grep --only-matching --extended-regexp 'to [0-9]+(\.[0-9]+)?' | cut -d' ' -f2 | cut -d'.' -f1)
         if [ -z "$newMajorVersion" ]; then
           echo "Error: Unable to extract new major version" >&2
           exit 1
         fi
 
-        if [ "$oldMajorVersion" == "$newMajorVersion" ]; then
-          echo "Is not a major dependency update pull request"
+        if [ "$currentMajorVersion" == "$newMajorVersion" ]; then
+          echo "Is not a major dependency update"
           echo "result=false" >> $GITHUB_OUTPUT
           exit
         fi
 
-        echo "Is major dependency update pull request"
+        echo "Is major dependency update"
         echo "result=true" >> $GITHUB_OUTPUT
 
     # Create JIRA issue

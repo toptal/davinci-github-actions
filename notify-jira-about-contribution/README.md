@@ -10,14 +10,14 @@ Notifies JIRA about external contribution. Draft and dependabot PRs are ignored.
 
 The list of arguments, that are used in GH Action:
 
-| name                                           | type   | required | default | description                                                                                             |
-| ---------------------------------------------- | ------ | -------- | ------- | ------------------------------------------------------------------------------------------------------- |
-| `team`                                         | string | ✅        |         | Team that we are checking against                                                                       |
-| `repo`                                         | string | ✅        |         | Repository name                                                                                         |
-| `pull-number`                                  | string | ✅        |         | Nth pull request                                                                                        |
-| `jira-hook`                                    | string | ✅        |         | JIRA automation hook for contribution                                                                   |
-| `github-token`                                 | string | ✅        |         | Token for authorization                                                                                 |
-| `should-notify-about-major-dependabot-updates` | string |          |         | Specifies if action should create Jira issues for major dependency update pull requests from dependabot |
+| name                                           | type   | required | default | description                                                                                         |
+| ---------------------------------------------- | ------ | -------- | ------- | --------------------------------------------------------------------------------------------------- |
+| `team`                                         | string | ✅        |         | Team that we are checking against                                                                   |
+| `repo`                                         | string | ✅        |         | Repository name                                                                                     |
+| `pull-number`                                  | string | ✅        |         | Nth pull request                                                                                    |
+| `jira-hook`                                    | string | ✅        |         | JIRA automation hook for contribution                                                               |
+| `github-token`                                 | string | ✅        |         | Token for authorization                                                                             |
+| `should-notify-about-major-dependency-updates` | string |          |         | Specifies if action should create Jira issues for major dependency updates (authored by dependabot) |
 
 ### Outputs
 
