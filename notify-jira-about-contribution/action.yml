@@ -84,13 +84,8 @@ runs:
           exit
         fi
 
-
-        # TODO: Revert it to getting value from env.IS_DEPENDABOT_PULL_REQUEST before merge
-        # isDependabotPullRequest=${{ env.IS_DEPENDABOT_PULL_REQUEST }}
-        isDependabotPullRequest=true
-
-
         # Exit early if pull request is not from dependabot
+        isDependabotPullRequest=${{ env.IS_DEPENDABOT_PULL_REQUEST }}
         if [[ $isDependabotPullRequest == "false" ]]; then
           isTeamMember=${{ env.IS_TEAM_MEMBER }}
           if [[ $isTeamMember == "true" ]]; then
