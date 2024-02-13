@@ -71,14 +71,14 @@ runs:
       shell: bash
       run: |
         jiraIssueAlreadyExists=${{ env.JIRA_ISSUE_ALREADY_EXISTS }}
-        if [[ jiraIssueAlreadyExists == "true" ]]; then
+        if [[ $jiraIssueAlreadyExists == "true" ]]; then
           echo "Jira issue already exists"
           echo "result=false" >> $GITHUB_OUTPUT
           exit
         fi
 
         isDraft=${{ env.IS_DRAFT }}
-        if [[ isDraft == "true" ]]; then
+        if [[ $isDraft == "true" ]]; then
           echo "Pull request is a draft"
           echo "result=false" >> $GITHUB_OUTPUT
           exit
@@ -114,7 +114,6 @@ runs:
         pullRequestTitle="${{ env.PR_TITLE }}"
 
         # Extract major versions using grep utility
-
         # For "Bump @cypress/webpack-preprocessor from 5.17.1 to 6.0.1" it returns "5"
         currentMajorVersion=$(echo "$pullRequestTitle" | grep --only-matching --extended-regexp 'from [0-9]+(\.[0-9]+)?' | cut -d' ' -f2 | cut -d'.' -f1)
         if [ -z "$currentMajorVersion" ]; then
