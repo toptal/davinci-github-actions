@@ -18,9 +18,9 @@ inputs:
   github-token:
     required: true
     description: Token for authorization
-  notify-about-major-dependabot-updates:
+  should-notify-about-major-dependency-updates:
     required: false
-    description: Notify about major dependabot updates
+    description: Specifies if action should create Jira issues for major dependency updates (authored by dependabot, minor and patch versions are ignored)
     type: boolean
     default: false
 
@@ -47,11 +47,11 @@ runs:
 
     - name: Check if PR comes fron dependabot
       env:
-        IS_DEPENDABOT: ${{ fromJson(steps.get-pr.outputs.data).user.login == 'dependabot[bot]' }}
-      id: is-dependabot
+        IS_DEPENDABOT_PULL_REQUEST: ${{ fromJson(steps.get-pr.outputs.data).user.login == 'dependabot[bot]' }}
+      id: is-dependabot-pull-request
       shell: bash
       run: |
-        echo "result=${{ env.IS_DEPENDABOT }}" >> $GITHUB_OUTPUT
+        echo "result=${{ env.IS_DEPENDABOT_PULL_REQUEST }}" >> $GITHUB_OUTPUT
 
     - name: Check if Jira issue already exists
       id: jira-issue-already-exists
@@ -59,73 +59,27 @@ runs:
       run: |
         echo "result=${{ contains(github.event.pull_request.labels.*.name, 'contribution') }}" >> $GITHUB_OUTPUT
 
-    - name: Decide if Jira ticket should be created
-      id: create-jira-issue
+    - name: Decide if Jira issue should be created
+      id: should-create-jira-issue
       env:
         IS_TEAM_MEMBER: ${{ fromJson(steps.is-team-member.outputs.result) }}
-        IS_DEPENDABOT: ${{ steps.is-dependabot.outputs.result }}
+        IS_DEPENDABOT_PULL_REQUEST: ${{ steps.is-dependabot-pull-request.outputs.result }}
         IS_DRAFT: ${{ fromJson(steps.get-pr.outputs.data).draft }}
-        NOTIFY_ABOUT_MAJOR_DEPENDABOT_UPDATES: ${{ inputs.notify-about-major-dependabot-updates }}
+        SHOULD_NOTIFY_ABOUT_MAJOR_DEPENDENCY_UPDATES: ${{ inputs.should-notify-about-major-dependency-updates }}
         JIRA_ISSUE_ALREADY_EXISTS: ${{ steps.jira-issue-already-exists.outputs.result }}
         PR_TITLE: ${{ fromJson(steps.get-pr.outputs.data).title }}
       shell: bash
-      run: |
-        echo "Checking if Jira ticket already exists or PR is a draft"
-        jiraIssueAlreadyExists=${{ env.JIRA_ISSUE_ALREADY_EXISTS }}
-        isDraft=${{ env.IS_DRAFT }}
-        if [[ jiraIssueAlreadyExists == "true" || isDraft == "true" ]]
-        then
-          echo "Jira ticket already exists or PR is a draft, exiting"
-          echo "result=false" >> $GITHUB_OUTPUT
-          exit
-        fi
+      run: bash ${{ github.action_path }}/should-create-jira-issue.sh
 
-        update_string="${{ env.PR_TITLE }}"
-
-        old_version=$(echo "$update_string" | awk '{match($0, /[0-9]+(\.[0-9]+)*/, arr); print arr[0]}')
-        new_version=$(echo "$update_string" | awk '{match($0, /to [0-9]+(\.[0-9]+)*/, arr); gsub("to ", "", arr[0]); print arr[0]}')
-
-        old_major=$(echo "$old_version" | cut -d. -f1)
-        new_major=$(echo "$new_version" | cut -d. -f1)
-
-        isMajorUpdate=false
-        if [ "$old_major" != "$new_major" ]; then
-          isMajorUpdate=true
-        fi
-
-        isTeamMember=${{ env.IS_TEAM_MEMBER }}
-        isDependabot=${{ env.IS_DEPENDABOT }}
-        notifyAboutMajorDependabotUpdates=${{ env.NOTIFY_ABOUT_MAJOR_DEPENDABOT_UPDATES }}
-        if [[ $notifyAboutMajorDependabotUpdates == "true" && $isDependabot == "true" ]]; then
-          if [[ $isMajorUpdate == "true" ]]; then
-            echo "Major dependabot update, exiting"
-            echo "result=true" >> $GITHUB_OUTPUT
-          else
-            echo "Non-major dependabot update"
-            echo "result=false" >> $GITHUB_OUTPUT
-          fi
-
-          exit
-        fi
-
-        if [[ $isTeamMember == "false" ]]; then
-          echo "Author is not a member of the team, exiting"
-          echo "result=true" >> $GITHUB_OUTPUT
-          exit
-        fi
-
-        echo "result=false" >> $GITHUB_OUTPUT
-
-    # Create JIRA issue
-    - name: Add label - JIRA issue created - for non-Draft PR
-      if: ${{ fromJson(steps.create-jira-issue.outputs.result) == true }}
+    - name: Add contribution label to pull request
+      if: ${{ fromJson(steps.should-create-jira-issue.outputs.result) == true }}
       uses: andymckay/labeler@1.0.4
       with:
         repo-token: ${{ inputs.github-token }}
         add-labels: "contribution"
 
-    - name: Create JIRA ticket
-      if: ${{ fromJson(steps.create-jira-issue.outputs.result) == true }}
+    - name: Create JIRA issue
+      if: ${{ fromJson(steps.should-create-jira-issue.outputs.result) == true }}
       shell: bash
       env:
         JIRA_HOOK: ${{ inputs.jira-hook }}
@@ -138,7 +92,7 @@ runs:
       run: bash ${{ github.action_path }}/notify-jira.sh
 
     - name: Greet author
-      if: ${{ fromJson(steps.create-jira-issue.outputs.result) == true && fromJson(steps.is-dependabot.outputs.result) == false }}
+      if: ${{ fromJson(steps.should-create-jira-issue.outputs.result) == true && fromJson(steps.is-dependabot-pull-request.outputs.result) == false }}
       uses: actions/github-script@v6
       with:
         github-token: ${{ inputs.github-token }}
