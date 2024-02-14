@@ -69,68 +69,7 @@ runs:
         JIRA_ISSUE_ALREADY_EXISTS: ${{ steps.jira-issue-already-exists.outputs.result }}
         PR_TITLE: ${{ fromJson(steps.get-pr.outputs.data).title }}
       shell: bash
-      run: |
-        jiraIssueAlreadyExists=${{ env.JIRA_ISSUE_ALREADY_EXISTS }}
-        if [[ $jiraIssueAlreadyExists == "true" ]]; then
-          echo "Jira issue already exists"
-          echo "result=false" >> $GITHUB_OUTPUT
-          exit
-        fi
-
-        isDraft=${{ env.IS_DRAFT }}
-        if [[ $isDraft == "true" ]]; then
-          echo "Pull request is a draft"
-          echo "result=false" >> $GITHUB_OUTPUT
-          exit
-        fi
-
-        # Exit early if pull request is not from dependabot
-        isDependabotPullRequest=${{ env.IS_DEPENDABOT_PULL_REQUEST }}
-        if [[ $isDependabotPullRequest == "false" ]]; then
-          isTeamMember=${{ env.IS_TEAM_MEMBER }}
-          if [[ $isTeamMember == "true" ]]; then
-            echo "Pull request author is member of ${{ inputs.team }}"
-            echo "result=false" >> $GITHUB_OUTPUT
-            exit
-          fi
-
-          echo "Pull request author is not a member of ${{ inputs.team }}"
-          echo "result=true" >> $GITHUB_OUTPUT
-          exit
-        fi
-
-        shouldNotifyAboutMajorDependencyUpdates=${{ env.SHOULD_NOTIFY_ABOUT_MAJOR_DEPENDENCY_UPDATES }}
-        if [[ $shouldNotifyAboutMajorDependencyUpdates == "false" ]]; then
-          echo "No need to notify about dependency updates"
-          echo "result=false" >> $GITHUB_OUTPUT
-          exit
-        fi
-
-        pullRequestTitle="${{ env.PR_TITLE }}"
-
-        # Extract major versions using grep utility
-        # For "Bump @cypress/webpack-preprocessor from 5.17.1 to 6.0.1" it returns "5"
-        currentMajorVersion=$(echo "$pullRequestTitle" | grep --only-matching --extended-regexp 'from [0-9]+(\.[0-9]+)?' | cut -d' ' -f2 | cut -d'.' -f1)
-        if [ -z "$currentMajorVersion" ]; then
-          echo "Error: Unable to extract current major version" >&2
-          exit 1
-        fi
-
-        # For "Bump @cypress/webpack-preprocessor from 5.17.1 to 6.0.1" it returns "6"
-        newMajorVersion=$(echo "$pullRequestTitle" | grep --only-matching --extended-regexp 'to [0-9]+(\.[0-9]+)?' | cut -d' ' -f2 | cut -d'.' -f1)
-        if [ -z "$newMajorVersion" ]; then
-          echo "Error: Unable to extract new major version" >&2
-          exit 1
-        fi
-
-        if [ "$currentMajorVersion" == "$newMajorVersion" ]; then
-          echo "Is not a major dependency update"
-          echo "result=false" >> $GITHUB_OUTPUT
-          exit
-        fi
-
-        echo "Is major dependency update"
-        echo "result=true" >> $GITHUB_OUTPUT
+      run: bash ${{ github.action_path }}/should-create-jira-issue.sh
 
     - name: Add contribution label to pull request
       if: ${{ fromJson(steps.should-create-jira-issue.outputs.result) == true }}
