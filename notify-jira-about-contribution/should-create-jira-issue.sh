@@ -42,24 +42,24 @@ if [[ $isDraft == "true" ]]; then
   exit
 fi
 
+isTeamMember=$IS_TEAM_MEMBER
+if [[ $isTeamMember == "true" ]]; then
+  echo "Pull request author is member of specified team"
+  echo "result=false" >> $GITHUB_OUTPUT
+  exit
+fi
+
 # Exit early if pull request is not from dependabot
 isDependabotPullRequest=$IS_DEPENDABOT_PULL_REQUEST
 if [[ $isDependabotPullRequest == "false" ]]; then
-  isTeamMember=$IS_TEAM_MEMBER
-  if [[ $isTeamMember == "true" ]]; then
-    echo "Pull request author is member of specified team"
-    echo "result=false" >> $GITHUB_OUTPUT
-    exit
-  fi
-
-  echo "Pull request author is not a member of specified team"
+  echo "Pull request author is not a dependabot and not a member of specified team"
   echo "result=true" >> $GITHUB_OUTPUT
   exit
 fi
 
 shouldNotifyAboutMajorDependencyUpdates=$SHOULD_NOTIFY_ABOUT_MAJOR_DEPENDENCY_UPDATES
 if [[ $shouldNotifyAboutMajorDependencyUpdates == "false" ]]; then
-  echo "No need to notify about dependency updates"
+  echo "Although ths is dependency update, notifying about major dependency updates is turned off"
   echo "result=false" >> $GITHUB_OUTPUT
   exit
 fi
@@ -82,7 +82,7 @@ if [ -z "$newMajorVersion" ]; then
 fi
 
 if [ "$currentMajorVersion" == "$newMajorVersion" ]; then
-  echo "Is not a major dependency update"
+  echo "It is minor or patch dependency update, no ticket is created"
   echo "result=false" >> $GITHUB_OUTPUT
   exit
 fi

@@ -20,7 +20,7 @@ inputs:
     description: Token for authorization
   should-notify-about-major-dependency-updates:
     required: false
-    description: Specifies if action should create Jira issues for major dependency updates (authored by dependabot)
+    description: Specifies if action should create Jira issues for major dependency updates (authored by dependabot, minor and patch versions are ignored)
     type: boolean
     default: false
 

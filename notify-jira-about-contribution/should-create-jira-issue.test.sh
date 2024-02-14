@@ -50,14 +50,14 @@ export IS_DEPENDABOT_PULL_REQUEST=true
 export PR_TITLE="Bump lodash from 4.17.20 to 4.17.21"
 export SHOULD_NOTIFY_ABOUT_MAJOR_DEPENDENCY_UPDATES=false
 echo "=== Case: non-major dependabot pull request, dependabot notifications disabled"
-test "No need to notify about dependency updates" "false"
+test "Although ths is dependency update, notifying about major dependency updates is turned off" "false"
 
 beforeEach
 export IS_DEPENDABOT_PULL_REQUEST=true
 export PR_TITLE="Bump lodash from 4.17.20 to 4.17.21"
 export SHOULD_NOTIFY_ABOUT_MAJOR_DEPENDENCY_UPDATES=true
 echo "=== Case: non-major dependabot pull request, dependabot notifications enabled"
-test "Is not a major dependency update" "false"
+test "It is minor or patch dependency update, no ticket is created" "false"
 
 beforeEach
 versionBump="from 4.17.20 to 5.17.21"
@@ -78,7 +78,7 @@ test "Is major dependency update" "true"
 beforeEach
 export IS_TEAM_MEMBER=false
 echo "=== Case: pull request author is not a member of the team"
-test "Pull request author is not a member of specified team" "true"
+test "Pull request author is not a dependabot and not a member of specified team" "true"
 
 beforeEach
 export IS_TEAM_MEMBER=true
