@@ -1,5 +1,12 @@
 # davinci-github-actions
 
+## 12.9.4
+
+### Patch Changes
+
+- [#280](https://github.com/toptal/davinci-github-actions/pull/280) [`4d54b62`](https://github.com/toptal/davinci-github-actions/commit/4d54b62ccde2c0173029deae695906636e15eed7) Thanks [@sashuk](https://github.com/sashuk)!
+- fix major version detection in `notify-jira-about-contribution` action
+
 ## 12.9.3
 
 ### Patch Changes
