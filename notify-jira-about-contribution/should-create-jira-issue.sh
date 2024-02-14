@@ -47,12 +47,12 @@ isDependabotPullRequest=$IS_DEPENDABOT_PULL_REQUEST
 if [[ $isDependabotPullRequest == "false" ]]; then
   isTeamMember=$IS_TEAM_MEMBER
   if [[ $isTeamMember == "true" ]]; then
-    echo "Pull request author is member of ${{ inputs.team }}"
+    echo "Pull request author is member of specified team"
     echo "result=false" >> $GITHUB_OUTPUT
     exit
   fi
 
-  echo "Pull request author is not a member of ${{ inputs.team }}"
+  echo "Pull request author is not a member of specified team"
   echo "result=true" >> $GITHUB_OUTPUT
   exit
 fi
