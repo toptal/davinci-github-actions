@@ -62,11 +62,8 @@ runs:
     - name: Decide if Jira issue should be created
       id: should-create-jira-issue
       env:
-        # TODO: revert before merge
-        #IS_TEAM_MEMBER: ${{ fromJson(steps.is-team-member.outputs.result) }}
-        IS_TEAM_MEMBER: false
-        #IS_DEPENDABOT_PULL_REQUEST: ${{ steps.is-dependabot-pull-request.outputs.result }}
-        IS_DEPENDABOT_PULL_REQUEST: true
+        IS_TEAM_MEMBER: ${{ fromJson(steps.is-team-member.outputs.result) }}
+        IS_DEPENDABOT_PULL_REQUEST: ${{ steps.is-dependabot-pull-request.outputs.result }}
         IS_DRAFT: ${{ fromJson(steps.get-pr.outputs.data).draft }}
         SHOULD_NOTIFY_ABOUT_MAJOR_DEPENDENCY_UPDATES: ${{ inputs.should-notify-about-major-dependency-updates }}
         JIRA_ISSUE_ALREADY_EXISTS: ${{ steps.jira-issue-already-exists.outputs.result }}
