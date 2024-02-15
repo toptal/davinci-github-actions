@@ -130,3 +130,12 @@ runs:
           yarn install --frozen-lockfile --non-interactive && break
           sleep 10 # 10s wait time
         done
+
+    - name: Revert changes in yarn.lock file
+      if: "inputs.checkout-token && inputs.npm-gar-token && contains(runner.name, 'inf-gha-runners-ci')"
+      run: |
+        sed -i -e "s#https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/#https://registry.yarnpkg.com/#g" ${{ inputs.path }}/yarn.lock
+        sed -i -e "s#https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/#https://registry.npmjs.org/#g" ${{ inputs.path }}/yarn.lock
+        sed -i -e "s#https://registry.npmjs.org/@toptal/#https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/@toptal/#g" ${{ inputs.path }}/yarn.lock
+        sed -i -e "s#https://registry.npmjs.org/@topkit/#https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/@topkit/#g" ${{ inputs.path }}/yarn.lock
+      shell: bash
