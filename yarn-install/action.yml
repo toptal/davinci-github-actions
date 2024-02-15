@@ -112,10 +112,10 @@ runs:
     - name: Change registry in yarn.lock file to npm Artifact Registry
       if: "inputs.checkout-token && inputs.npm-gar-token && contains(runner.name, 'inf-gha-runners-ci')"
       run: |
-        sed -e --debug "s#https://registry.yarnpkg.com/#https://us-central1-npm.pkg.dev./toptal-ci/npm-registry/#g" ${{ inputs.path }}/yarn.lock
-        sed -e --debug "s#https://registry.npmjs.org/#https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/#g" ${{ inputs.path }}/yarn.lock
-        sed -e --debug "s#https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/@toptal/#https://registry.npmjs.org/@toptal/#g" ${{ inputs.path }}/yarn.lock
-        sed -e --debug "s#https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/@topkit/#https://registry.npmjs.org/@topkit/#g" ${{ inputs.path }}/yarn.lock
+        sed --debug -e "s#https://registry.yarnpkg.com/#https://us-central1-npm.pkg.dev./toptal-ci/npm-registry/#g" ${{ inputs.path }}/yarn.lock
+        sed --debug -e "s#https://registry.npmjs.org/#https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/#g" ${{ inputs.path }}/yarn.lock
+        sed --debug -e "s#https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/@toptal/#https://registry.npmjs.org/@toptal/#g" ${{ inputs.path }}/yarn.lock
+        sed --debug -e "s#https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/@topkit/#https://registry.npmjs.org/@topkit/#g" ${{ inputs.path }}/yarn.lock
       shell: bash
 
     - name: yarn install
@@ -134,8 +134,8 @@ runs:
     - name: Revert changes in yarn.lock file
       if: "inputs.checkout-token && inputs.npm-gar-token && contains(runner.name, 'inf-gha-runners-ci')"
       run: |
-        sed -e --debug "s#https://us-central1-npm.pkg.dev./toptal-ci/npm-registry/#https://registry.yarnpkg.com/#g" ${{ inputs.path }}/yarn.lock
-        sed -e --debug "s#https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/#https://registry.npmjs.org/#g" ${{ inputs.path }}/yarn.lock
-        sed -e --debug "s#https://registry.npmjs.org/@toptal/#https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/@toptal/#g" ${{ inputs.path }}/yarn.lock
-        sed -e --debug "s#https://registry.npmjs.org/@topkit/#https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/@topkit/#g" ${{ inputs.path }}/yarn.lock
+        sed --debug -e "s#https://us-central1-npm.pkg.dev./toptal-ci/npm-registry/#https://registry.yarnpkg.com/#g" ${{ inputs.path }}/yarn.lock
+        sed --debug -e "s#https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/#https://registry.npmjs.org/#g" ${{ inputs.path }}/yarn.lock
+        sed --debug -e "s#https://registry.npmjs.org/@toptal/#https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/@toptal/#g" ${{ inputs.path }}/yarn.lock
+        sed --debug -e "s#https://registry.npmjs.org/@topkit/#https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/@topkit/#g" ${{ inputs.path }}/yarn.lock
       shell: bash
