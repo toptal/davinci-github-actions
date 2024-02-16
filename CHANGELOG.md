@@ -1,5 +1,12 @@
 # davinci-github-actions
 
+## 12.9.5
+
+### Patch Changes
+
+- [#289](https://github.com/toptal/davinci-github-actions/pull/289) [`51eb4ab`](https://github.com/toptal/davinci-github-actions/commit/51eb4ab67044b36dde17e63cb137dcf5e4f715b0) Thanks [@dkezele-t](https://github.com/dkezele-t)!
+- remove NPM proxy variable which does not work in composite actions
+
 ## 12.9.4
 
 ### Patch Changes
