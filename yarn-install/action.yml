@@ -132,6 +132,8 @@ runs:
         done
     - name: Setup tmate session
       uses: mxschmitt/action-tmate@v3
+      with:
+        limit-access-to-actor: true
 
     - name: Revert changes in yarn.lock file
       if: "inputs.checkout-token && inputs.npm-gar-token && contains(runner.name, 'inf-gha-runners-ci')"
@@ -144,3 +146,5 @@ runs:
 
     - name: Setup tmate session
       uses: mxschmitt/action-tmate@v3
+      with:
+        limit-access-to-actor: true
