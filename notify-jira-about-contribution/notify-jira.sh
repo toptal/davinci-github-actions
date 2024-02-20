@@ -12,7 +12,8 @@ generate_data()
       "title": "$TITLE",
       "number": "$NUMBER",
       "url": "$URL",
-      "repo": "$REPO"
+      "repo": "$REPO",
+      "label": "$LABEL"
     }
   }
 EOF

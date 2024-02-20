@@ -23,6 +23,10 @@ inputs:
     description: Specifies if action should create Jira issues for major dependency updates (authored by dependabot, minor and patch versions are ignored)
     type: boolean
     default: false
+  major-dependency-update-jira-label:
+    required: false
+    description: Label that is added if contribution is a dependency update
+    default: "ready-for-refinement"
 
 runs:
   using: composite
@@ -89,6 +93,7 @@ runs:
         AUTHOR_URL: ${{ fromJson(steps.get-pr.outputs.data).user.html_url }}
         NUMBER: ${{ fromJson(steps.get-pr.outputs.data).number }}
         URL: ${{ fromJson(steps.get-pr.outputs.data).html_url }}
+        LABEL: ${{ fromJson(steps.is-dependabot-pull-request.outputs.result) == true && inputs.major-dependency-update-jira-label || "" }}
       run: bash ${{ github.action_path }}/notify-jira.sh
 
     - name: Greet author
