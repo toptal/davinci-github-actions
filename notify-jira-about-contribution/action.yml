@@ -93,7 +93,7 @@ runs:
         AUTHOR_URL: ${{ fromJson(steps.get-pr.outputs.data).user.html_url }}
         NUMBER: ${{ fromJson(steps.get-pr.outputs.data).number }}
         URL: ${{ fromJson(steps.get-pr.outputs.data).html_url }}
-        LABEL: ${{ fromJson(steps.is-dependabot-pull-request.outputs.result) == true && inputs.major-dependency-update-jira-label || "" }}
+        LABEL: ${{ fromJson(steps.is-dependabot-pull-request.outputs.result) == true && inputs.major-dependency-update-jira-label || '' }}
       run: bash ${{ github.action_path }}/notify-jira.sh
 
     - name: Greet author
