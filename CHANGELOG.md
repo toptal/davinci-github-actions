@@ -1,5 +1,12 @@
 # davinci-github-actions
 
+## 12.10.0
+
+### Minor Changes
+
+- [#291](https://github.com/toptal/davinci-github-actions/pull/291) [`3f0e5e8`](https://github.com/toptal/davinci-github-actions/commit/3f0e5e8709485dba11f409e1eb4b74c69dcfce5b) Thanks [@sashuk](https://github.com/sashuk)!
+- add `major-dependency-update-jira-label` parameter to `notify-jira-about-contribution` action
+
 ## 12.9.5
 
 ### Patch Changes
