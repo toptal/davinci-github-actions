@@ -93,8 +93,9 @@ runs:
     # This step creates .npmrc file that references to npm registry in GAR (Google Artifact Registry)
     # The npm registry works as a proxy-cache, downloading and storing the public npm packages
     - name: Create .npmrc file using npm Artifact Registry
-      if: "inputs.checkout-token && inputs.npm-gar-token && contains(runner.name, 'DISABLED')"
+      if: "inputs.checkout-token && inputs.npm-gar-token && contains(runner.name, 'inf-gha-runners-ci')"
       run: |
+        cp ${{ inputs.path }}/.npmrc ${{ inputs.path }}/.npmrc-copy
         echo "registry=https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/" > ${{ inputs.path }}/.npmrc &&
         echo "//us-central1-npm.pkg.dev/toptal-ci/npm-registry/:username=_json_key_base64" >> ${{ inputs.path }}/.npmrc &&
         echo "//us-central1-npm.pkg.dev/toptal-ci/npm-registry/:_password=${{ inputs.npm-gar-token }}" >> ${{ inputs.path }}/.npmrc &&
@@ -110,8 +111,9 @@ runs:
     # This step changes the public npm registry in yarn.lock file to npm in AR
     # We still use the public npm registry to our private packages
     - name: Change registry in yarn.lock file to npm Artifact Registry
-      if: "inputs.checkout-token && inputs.npm-gar-token && contains(runner.name, 'DISABLED')"
+      if: "inputs.checkout-token && inputs.npm-gar-token && contains(runner.name, 'inf-gha-runners-ci')"
       run: |
+        cp ${{ inputs.path }}/yarn.lock ${{ inputs.path }}/yarn.lock-copy
         sed -i -e "s#https://registry.yarnpkg.com/#https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/#g" ${{ inputs.path }}/yarn.lock
         sed -i -e "s#https://registry.npmjs.org/#https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/#g" ${{ inputs.path }}/yarn.lock
         sed -i -e "s#https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/@toptal/#https://registry.npmjs.org/@toptal/#g" ${{ inputs.path }}/yarn.lock
@@ -130,3 +132,10 @@ runs:
           yarn install --frozen-lockfile --non-interactive && break
           sleep 10 # 10s wait time
         done
+
+    - name: Restore .npmrc and yarn.lock files
+      if: "inputs.checkout-token && inputs.npm-gar-token && contains(runner.name, 'inf-gha-runners-ci')"
+      shell: bash
+      run: |
+        mv ${{ inputs.path }}/.npmrc-copy ${{ inputs.path }}/.npmrc
+        mv ${{ inputs.path }}/yarn.lock-copy ${{ inputs.path }}/yarn.lock
