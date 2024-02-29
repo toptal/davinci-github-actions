@@ -17,15 +17,31 @@ inputs:
     required: false
     default: staging
     description: Used to determine additional procedures while creating a Docker image || enum<<br/>`temploy`,<br/>`staging`,<br/>`production`,<br/>>
+  dist-folder:
+    required: false
+    default: ./dist
+    description: Path to the folder with the built project
+  scope:
+    required: false
+    default: ''
+    description: Used to determine the scope of the built project. Usefull in multihost monorepo projects to build only one project.
 
 runs:
   using: composite
   steps:
     - uses: toptal/davinci-github-actions/yarn-install@v6.0.0
 
+    # Use yarn lerna run build --scope=${{ inputs.scope}} if the scope is set, otherwise use yarn build
     - name: Build
       shell: bash
-      run: yarn build
+      run: |
+        if [[ -z "${{ inputs.scope }}" ]]; then
+          yarn build
+        else
+          yarn lerna run build --scope=${{ inputs.scope}}
+        fi
+
+
 
     - uses: toptal/davinci-github-actions/build-push-image@v6.0.0
       with:
@@ -35,6 +51,6 @@ runs:
         docker-file: ./davinci/packages/ci/src/configs/docker/Dockerfile.gha-deploy
         build-args: |
           ENV_RUNTIME_ENTRYPOINT=./davinci/packages/ci/src/configs/docker/env-runtime.entrypoint.sh
-          DIST_FOLDER=./dist
+          DIST_FOLDER=${{ inputs.dist-folder }}
           NGINX_CONFIG=./davinci/packages/davinci/docker/nginx-vhost.conf
           VERSION=${{ inputs.sha }}
