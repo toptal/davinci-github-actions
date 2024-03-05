@@ -1,5 +1,12 @@
 # davinci-github-actions
 
+## 12.11.0
+
+### Minor Changes
+
+- [#295](https://github.com/toptal/davinci-github-actions/pull/295) [`a8e9e03`](https://github.com/toptal/davinci-github-actions/commit/a8e9e0379a761da2d996933ac2ed4817b2398042) Thanks [@jcobarreto](https://github.com/jcobarreto)!
+- revert yarn.lock to original registry refs after executing yarn install
+
 ## 12.10.0
 
 ### Minor Changes
