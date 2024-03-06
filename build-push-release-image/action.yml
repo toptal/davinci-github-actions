@@ -31,7 +31,6 @@ runs:
   steps:
     - uses: toptal/davinci-github-actions/yarn-install@v6.0.0
 
-    # Use yarn lerna run build --scope=${{ inputs.scope}} if the scope is set, otherwise use yarn build
     - name: Build
       shell: bash
       run: |
@@ -40,8 +39,6 @@ runs:
         else
           yarn lerna run build --scope=${{ inputs.scope}}
         fi
-
-
 
     - uses: toptal/davinci-github-actions/build-push-image@v6.0.0
       with:
