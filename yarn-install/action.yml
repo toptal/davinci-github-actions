@@ -167,3 +167,8 @@ runs:
 
         # Revert the leftovers URLs to yarnpkg.org registry
         sed -i -e "s#https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/#https://registry.yarnpkg.com/#g" ${{ inputs.path }}/yarn.lock
+
+    - name: Sleep 300
+      shell: bash
+      run: |
+        sleep 300
