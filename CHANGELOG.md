@@ -1,5 +1,12 @@
 # davinci-github-actions
 
+## 12.12.0
+
+### Minor Changes
+
+- [#297](https://github.com/toptal/davinci-github-actions/pull/297) [`bb98d96`](https://github.com/toptal/davinci-github-actions/commit/bb98d96336b94a7db4000295a5554987c00d01fd) Thanks [@TomasSlama](https://github.com/TomasSlama)!
+- add new options to build-push-release-image to support multi hosts in monorepo
+
 ## 12.11.0
 
 ### Minor Changes
