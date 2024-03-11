@@ -33,6 +33,8 @@ runs:
 
     - name: Build
       shell: bash
+      env:
+        DAVINCI_DOCKER_BUILD: true
       run: |
         if [[ -z "${{ inputs.scope }}" ]]; then
           yarn build
