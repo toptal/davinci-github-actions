@@ -1,5 +1,12 @@
 # davinci-github-actions
 
+## 12.12.1
+
+### Patch Changes
+
+- [#300](https://github.com/toptal/davinci-github-actions/pull/300) [`9085b03`](https://github.com/toptal/davinci-github-actions/commit/9085b03792a556e03934ea0cdbe7aa61541c7ad4) Thanks [@dmaklygin](https://github.com/dmaklygin)!
+- add DAVINCI_DOCKER_BUILD env variable to build images
+
 ## 12.12.0
 
 ### Minor Changes
