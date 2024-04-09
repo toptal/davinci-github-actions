@@ -1,5 +1,19 @@
 # davinci-github-actions
 
+## 13.0.0
+
+### Major Changes
+
+- [#304](https://github.com/toptal/davinci-github-actions/pull/304) [`320c1d4`](https://github.com/toptal/davinci-github-actions/commit/320c1d41e9451cad3a26f07d48735be615bc6151) Thanks [@denieler](https://github.com/denieler)!
+
+---
+
+### yarn-install
+
+- fix using single yarn.lock file to detect cache hash in the root folder of the project, so reducing the time for action execution
+
+BREAKING CHANGE: The action now uses a single yarn.lock located in the root of the repository to detect the cache hash. If you have multiple yarn.lock files in your repository, only the root one will be included in cache hash calculations.
+
 ## 12.12.1
 
 ### Patch Changes
