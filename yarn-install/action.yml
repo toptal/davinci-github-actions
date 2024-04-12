@@ -153,10 +153,7 @@ runs:
           sleep 10 # 10s wait time
         done
 
-    - name: Check for changes
-      shell: bash
-      run: |
-        git diff --exit-code yarn.lock || (echo 'yarn.lock changed after yarn install. Please make sure to commit yarn.lock changes.' && exit 1)
+
 
     # Revert the URLs to the original registry
     - name: Revert URLs to original registry
@@ -172,3 +169,8 @@ runs:
 
         # Revert the leftovers URLs to yarnpkg.org registry
         sed -i -e "s#https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/#https://registry.yarnpkg.com/#g" ${{ inputs.path }}/yarn.lock
+
+    - name: Check for changes
+      shell: bash
+      run: |
+        git diff --exit-code yarn.lock || (echo 'yarn.lock changed after yarn install. Please make sure to commit yarn.lock changes.' && exit 1)
