@@ -47,9 +47,10 @@ runs:
         sha: ${{ inputs.sha }}
         image-name: ${{ inputs.repository-name }}-release
         environment: ${{ inputs.environment }}
-        docker-file: ./davinci/packages/ci/src/configs/docker/Dockerfile.gha-deploy
+        docker-file: ./davinci/packages/ci/src/configs/docker/tmp.Dockerfile.gha-deploy
+        davinci-branch: fx-5071-replace-image-build-workflow
         build-args: |
-          ENV_RUNTIME_ENTRYPOINT=./davinci/packages/ci/src/configs/docker/env-runtime.entrypoint.sh
+          ENV_RUNTIME_ENTRYPOINT=./davinci/packages/ci/src/configs/docker/tmp.env-runtime.entrypoint.sh
           DIST_FOLDER=${{ inputs.dist-folder }}
           NGINX_CONFIG=./davinci/packages/davinci/docker/nginx-vhost.conf
           VERSION=${{ inputs.sha }}
