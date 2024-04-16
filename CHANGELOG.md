@@ -1,5 +1,15 @@
 # davinci-github-actions
 
+## 13.0.1
+
+### Patch Changes
+
+- [#308](https://github.com/toptal/davinci-github-actions/pull/308) [`0c60e73`](https://github.com/toptal/davinci-github-actions/commit/0c60e73ec246410de23cae4d98ade8d622e12fc0) Thanks [@TomasSlama](https://github.com/TomasSlama)!
+
+### yarn install action
+
+- throw an error when there is an uncommitted change in the yarn.lock
+
 ## 13.0.0
 
 ### Major Changes
