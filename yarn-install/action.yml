@@ -149,9 +149,11 @@ runs:
       run: |
         for i in {1..$MAX_ATTEMPTS}; do
           printf "Trying to install #%s...\n" "$i"
-          yarn install --frozen-lockfile --non-interactive && break
+          yarn install --non-interactive && break
           sleep 10 # 10s wait time
         done
+
+
 
     # Revert the URLs to the original registry
     - name: Revert URLs to original registry
@@ -167,3 +169,11 @@ runs:
 
         # Revert the leftovers URLs to yarnpkg.org registry
         sed -i -e "s#https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/#https://registry.yarnpkg.com/#g" ${{ inputs.path }}/yarn.lock
+
+      # We are manually checking for the changes in yarn.lock file, because
+      # the `--frozen-lockfile` flag is not working correctly in workspaces with yarn v1
+      # we can remove this step when we upgrade yarn or migrate to other package manager
+    - name: Check for changes
+      shell: bash
+      run: |
+        git diff --exit-code yarn.lock || (echo 'yarn.lock changed after yarn install. Please make sure to commit yarn.lock changes.' && exit 1)
