@@ -171,7 +171,7 @@ runs:
         sed -i -e "s#https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/#https://registry.yarnpkg.com/#g" ${{ inputs.path }}/yarn.lock
 
       # We are manually checking for the changes in yarn.lock file, because
-      # the `--frozen-lockfile` flag is not working in correctly in workspaces with yarn v1
+      # the `--frozen-lockfile` flag is not working correctly in workspaces with yarn v1
       # we can remove this step when we upgrade yarn or migrate to other package manager
     - name: Check for changes
       shell: bash
