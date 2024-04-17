@@ -1,5 +1,15 @@
 # davinci-github-actions
 
+## 13.0.2
+
+### Patch Changes
+
+- [#310](https://github.com/toptal/davinci-github-actions/pull/310) [`fab1446`](https://github.com/toptal/davinci-github-actions/commit/fab14467eff20f152cdb2ec44fcfcffb989d7cf8) Thanks [@TomasSlama](https://github.com/TomasSlama)!
+
+### Yarn install
+
+- run the check for the uncommitted changes in working directory
+
 ## 13.0.1
 
 ### Patch Changes
