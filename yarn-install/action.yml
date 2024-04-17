@@ -175,5 +175,6 @@ runs:
       # we can remove this step when we upgrade yarn or migrate to other package manager
     - name: Check for changes
       shell: bash
+      working-directory: ${{ inputs.path }}
       run: |
         git diff --exit-code yarn.lock || (echo 'yarn.lock changed after yarn install. Please make sure to commit yarn.lock changes.' && exit 1)
