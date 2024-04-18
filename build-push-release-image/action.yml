@@ -48,6 +48,7 @@ runs:
         image-name: ${{ inputs.repository-name }}-release
         environment: ${{ inputs.environment }}
         docker-file: ./davinci/packages/ci/src/configs/docker/Dockerfile.gha-deploy
+        davinci-branch: FX-NULL-merge-entrypoint-script
         build-args: |
           ENV_RUNTIME_ENTRYPOINT=./davinci/packages/ci/src/configs/docker/env-runtime.entrypoint.sh
           DIST_FOLDER=${{ inputs.dist-folder }}
