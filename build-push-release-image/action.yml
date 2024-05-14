@@ -25,11 +25,15 @@ inputs:
     required: false
     default: ''
     description: Used to determine the scope of the built project. Usefull in multihost monorepo projects to build only one project.
+  node-version:
+    required: false
+    default: 20
+    description: 'Node.js version used. The action is guaranteed to work only with Node.js@18 (default value)'
 
 runs:
   using: composite
   steps:
-    - uses: toptal/davinci-github-actions/yarn-install@v6.0.0
+    - uses: toptal/davinci-github-actions/yarn-install@v13.0.2
 
     - name: Build
       shell: bash
@@ -42,11 +46,12 @@ runs:
           yarn lerna run build --scope=${{ inputs.scope}}
         fi
 
-    - uses: toptal/davinci-github-actions/build-push-image@v6.0.0
+    - uses: toptal/davinci-github-actions/build-push-image@fx-5294-fix-gh-actions
       with:
         sha: ${{ inputs.sha }}
         image-name: ${{ inputs.repository-name }}-release
         environment: ${{ inputs.environment }}
+        node-version: ${{ inputs.node-version }}
         docker-file: ./davinci/packages/ci/src/configs/docker/Dockerfile.gha-deploy
         build-args: |
           ENV_RUNTIME_ENTRYPOINT=./davinci/packages/ci/src/configs/docker/env-runtime.entrypoint.sh

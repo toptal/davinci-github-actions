@@ -20,7 +20,7 @@ The list of arguments, that are used in GH Action:
 | `build-args`     | string                                                      | ✅        |                                                                | Multiline string to describe build arguments that will be used during dockerization         |
 | `docker-file`    | string                                                      |          | ./davinci/packages/ci/src/configs/docker/Dockerfile.gha-deploy | pathname to Docker file                                                                     |
 | `davinci-branch` | string                                                      |          | master                                                         | Custom davinci branch                                                                       |
-| `node-version`   | string                                                      |          | 18                                                             | Node.js version used. The action is guaranteed to work only with Node.js@18 (default value) |
+| `node-version`   | string                                                      |          | 20                                                             | Node.js version used. The action is guaranteed to work only with Node.js@18 (default value) |
 
 ### Outputs
 
