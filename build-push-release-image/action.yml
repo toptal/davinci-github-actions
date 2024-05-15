@@ -46,7 +46,7 @@ runs:
           yarn lerna run build --scope=${{ inputs.scope}}
         fi
 
-    - uses: toptal/davinci-github-actions/build-push-image@fx-5294-fix-gh-actions
+    - uses: toptal/davinci-github-actions/build-push-image@v14.0.0
       with:
         sha: ${{ inputs.sha }}
         image-name: ${{ inputs.repository-name }}-release
