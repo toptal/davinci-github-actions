@@ -17,7 +17,7 @@ The list of arguments, that are used in GH Action:
 | `environment`     | enum<<br/>`temploy`,<br/>`staging`,<br/>`production`,<br/>> |          | staging | Used to determine additional procedures while creating a Docker image                                               |
 | `dist-folder`     | string                                                      |          | ./dist  | Path to the folder with the built project                                                                           |
 | `scope`           | string                                                      |          |         | Used to determine the scope of the built project. Usefull in multihost monorepo projects to build only one project. |
-| `node-version`    | string                                                      |          | 20      | Node.js version used. The action is guaranteed to work only with Node.js@18 (default value)                         |
+| `node-version`    | string                                                      |          | 20      | Node.js version used. The action is guaranteed to work only with Node.js@20 (default value)                         |
 
 ### Outputs
 
