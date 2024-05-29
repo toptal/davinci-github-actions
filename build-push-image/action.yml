@@ -53,6 +53,7 @@ inputs:
   target:
     required: false
     description: 'Sets the target stage to build'
+  # Set checkout davinci to true if you want to checkout davinci repository files
   checkout-davinci:
     required: false
     description: 'Checkout davinci repository'

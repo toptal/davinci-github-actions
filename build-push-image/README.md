@@ -48,11 +48,11 @@ This is a list of ENV Variables that are used in GH Action:
 ### Usage
 
 ```yaml
-  - uses: toptal/davinci-github-actions/build-push-image@v4.4.2
+  - uses: toptal/davinci-github-actions/build-push-image@v15.0.0
     with:
-      sha: 7042976bc3db21012fe38602bb643618a95aa2d0
       image-name: my-image-name
       environment: staging
+      checkout-davinci: true
       docker-file: ./davinci/packages/ci/src/configs/docker/Dockerfile.gha-deploy
       build-args: |
         ENV_RUNTIME_ENTRYPOINT=./davinci/packages/ci/src/configs/docker/env-runtime.entrypoint.sh
