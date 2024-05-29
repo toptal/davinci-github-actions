@@ -56,14 +56,14 @@ inputs:
     required: false
   node-version:
     required: false
-    default: 18
-    description: 'Node.js version used. The action is guaranteed to work only with Node.js@18 (default value)'
+    default: 20
+    description: 'Node.js version used. The action is guaranteed to work only with Node.js@20 (default value)'
 
 runs:
   using: composite
   steps:
     - name: Set up node
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4.0.0
       with:
         node-version: ${{ inputs.node-version }}
 
@@ -107,10 +107,11 @@ runs:
         echo "pr_number=${{ inputs.pr-number }}" >> $GITHUB_OUTPUT
         
     - name: Build and Push Storybook Image
-      uses: toptal/davinci-github-actions/build-push-image@v6.0.0
+      uses: toptal/davinci-github-actions/build-push-image@v14.0.0
       if: ${{ inputs.use-prebuilt-image == 'false' }}
       with:
         sha: ${{ inputs.sha }}
+        node-version: ${{ inputs.node-version }}
         image-name: ${{ steps.repo.outputs.repository_name }}-storybook-release
         build-args: |
           DIST_FOLDER=${{ inputs.dist-folder }}

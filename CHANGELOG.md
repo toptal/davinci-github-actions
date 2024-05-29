@@ -1,5 +1,12 @@
 # davinci-github-actions
 
+## 14.0.0
+
+### Major Changes
+
+- [#316](https://github.com/toptal/davinci-github-actions/pull/316) [`8661845`](https://github.com/toptal/davinci-github-actions/commit/86618455dbab6c34c7c1296e03e73a15e62a0cea) Thanks [@dmaklygin](https://github.com/dmaklygin)!
+- drop support for Node.js@18; set Node.js@20 as the default version for all GitHub Actions.
+
 ## 13.0.2
 
 ### Patch Changes

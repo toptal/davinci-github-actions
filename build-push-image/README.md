@@ -12,6 +12,7 @@ This GH Action builds a Docker image and pushes to google cloud.
 
 The list of arguments, that are used in GH Action:
 
+<<<<<<< ci-3516-change-build-push-image-action
 | name               | type                                                        | required | default                                          | description                                                                                |
 | ------------------ | ----------------------------------------------------------- | -------- | ------------------------------------------------ | ------------------------------------------------------------------------------------------ |
 | `sha`              | string                                                      |          | ${{ github.sha }}                                | Commit hash that will be used as a tag for the Docker image                                |
@@ -28,6 +29,17 @@ The list of arguments, that are used in GH Action:
 | `target`           | string                                                      |          |                                                  | Sets the target stage to build                                                             |
 | `checkout-davinci` | string                                                      |          | false                                            | Checkout davinci repository                                                                |
 | `registry-name`    | string                                                      |          | us-central1-docker.pkg.dev/toptal-hub/containers | Registry to push the builded image                                                         |
+=======
+| name             | type                                                        | required | default                                                        | description                                                                                 |
+| ---------------- | ----------------------------------------------------------- | -------- | -------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| `sha`            | string                                                      | ✅        |                                                                | Commit hash that will be used as a tag for the Docker image                                 |
+| `image-name`     | string                                                      | ✅        |                                                                | Name of the Docker image. Might be used in the next steps (for ex.: deploy a Docker image)  |
+| `environment`    | enum<<br/>`temploy`,<br/>`staging`,<br/>`production`,<br/>> |          | staging                                                        | Determines additional procedures while creating a Docker image.                             |
+| `build-args`     | string                                                      | ✅        |                                                                | Multiline string to describe build arguments that will be used during dockerization         |
+| `docker-file`    | string                                                      |          | ./davinci/packages/ci/src/configs/docker/Dockerfile.gha-deploy | pathname to Docker file                                                                     |
+| `davinci-branch` | string                                                      |          | master                                                         | Custom davinci branch                                                                       |
+| `node-versionв`  | string                                                      |          | 20                                                             | Node.js version used. The action is guaranteed to work only with Node.js@20 (default value) |
+>>>>>>> master
 
 ### Outputs
 

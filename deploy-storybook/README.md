@@ -24,7 +24,7 @@ The list of arguments, that are used in GH Action:
 | `generate-types-command` | string                                     |          | false              | Command to generate gql types                                                               |
 | `pr-number`              | string                                     |          |                    | Event number of the original pr, in case event number or issue number is not present. .     |
 | `checkout-token`         | string                                     |          |                    | Repository checkout access token `GITHUB_TOKEN`. Required for self hosted runners           |
-| `node-version`           | string                                     |          | 18                 | Node.js version used. The action is guaranteed to work only with Node.js@18 (default value) |
+| `node-version`           | string                                     |          | 20                 | Node.js version used. The action is guaranteed to work only with Node.js@20 (default value) |
 
 ### Outputs
 

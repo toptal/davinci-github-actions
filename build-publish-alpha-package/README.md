@@ -19,7 +19,7 @@ The list of arguments, that are used in GH Action:
 | `npm-token`    | string | ✅        |         | NPM token used for publishing. Has to be type Publish                                       |
 | `branch`       | string | ✅        |         | Name of the branch that will be published                                                   |
 | `root-folder`  | string |          |         | Root folder of a package to be published                                                    |
-| `node-version` | string |          | 18      | Node.js version used. The action is guaranteed to work only with Node.js@18 (default value) |
+| `node-version` | string |          | 20      | Node.js version used. The action is guaranteed to work only with Node.js@20 (default value) |
 
 ### Outputs
 
