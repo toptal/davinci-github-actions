@@ -3,7 +3,7 @@ description: |
   Builds release image of a project and pushes to cloud
   ****
   envInputs:
-    DOCKER_BUILDX_ENDPOINT: Docker buildx endpoint
+    DOCKER_BUILDX_ENDPOINT: Docker buildx endpoint (Optional if using for GH runners)
     GCR_ACCOUNT_KEY: Necessary token to push image to Google cloud
     GITHUB_TOKEN: GitHub token. Is used to checkout `davinci` branch
     TOPTAL_BUILD_BOT_SSH_KEY: SSH key to access Google cloud
@@ -42,7 +42,7 @@ inputs:
   push:
     required: false
     description: 'Push the image to the registry'
-    default: 'false'
+    default: 'true'
   platforms:
     required: false
     description: 'List of target platforms for build'
@@ -59,9 +59,8 @@ inputs:
     description: 'Checkout davinci repository'
     default: 'false'
   registry-name:
-    required: false
+    required: true
     description: 'Registry to push the builded image'
-    default: 'us-central1-docker.pkg.dev/toptal-hub/containers'
 
 runs:
   using: composite
