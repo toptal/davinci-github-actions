@@ -1,5 +1,18 @@
 # davinci-github-actions
 
+## 15.0.0
+
+### Major Changes
+
+- [#315](https://github.com/toptal/davinci-github-actions/pull/315) [`fc0a39d`](https://github.com/toptal/davinci-github-actions/commit/fc0a39dd7497bc406e0126b6d289289d253475da) Thanks [@jcobarreto](https://github.com/jcobarreto)!
+- change build-push-image action to encapsulate steps needed to use CI buildx instance when using custom runners.
+
+  - by using the CI buildx we can cache the intermediate docker image layers, saving time for the next runs, and also
+    saving with Cloud NAT, since we don't need to download packages for each run.
+
+  Breaking changes:
+  We added some new inputs and also removed the node-version input.
+
 ## 14.0.0
 
 ### Major Changes
