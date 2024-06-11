@@ -1,5 +1,12 @@
 # davinci-github-actions
 
+## 15.1.0
+
+### Minor Changes
+
+- [#321](https://github.com/toptal/davinci-github-actions/pull/321) [`11b0379`](https://github.com/toptal/davinci-github-actions/commit/11b037976336f8148006309c394914ad4327afa4) Thanks [@serbantarmure](https://github.com/serbantarmure)!
+- bump google-github-actions/get-secretmanager-secrets to @v2
+
 ## 15.0.0
 
 ### Major Changes
