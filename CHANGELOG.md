@@ -1,5 +1,12 @@
 # davinci-github-actions
 
+## 15.2.0
+
+### Minor Changes
+
+- [#324](https://github.com/toptal/davinci-github-actions/pull/324) [`f8cc820`](https://github.com/toptal/davinci-github-actions/commit/f8cc8200e431db0b62c469eeca59c681ab17f996) Thanks [@serbantarmure](https://github.com/serbantarmure)!
+- make @yarn-install && @build-push-action to work with runner-sets
+
 ## 15.1.0
 
 ### Minor Changes
