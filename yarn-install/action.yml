@@ -73,7 +73,7 @@ runs:
         key: ${{ runner.os }}-${{ runner.arch }}-node-${{ steps.set-node-version.outputs.version }}-yarn-node_modules-${{ hashFiles('yarn.lock', 'tmp-workspaces.json') }}-${{ inputs.cache-version }}
 
     - name: Cache yarn and node_modules folder
-      if: "!contains(runner.name, 'inf-gha-runners') || !inputs.checkout-token || !contains(runner.name, 'ubuntu2204')"
+      if: "!(inputs.checkout-token && (contains(runner.name, 'inf-gha-runners') || contains(runner.name, 'ubuntu2204')))"
       uses: actions/cache@v3
       id: node-modules-cache
       with:
