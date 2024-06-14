@@ -52,7 +52,7 @@ runs:
       shell: bash
 
     - name: Checkout `cache action` from actions repository
-      if: "inputs.checkout-token && (contains(runner.name, 'inf-gha-runners-ci') || contains(runner.name, 'ubuntu2204'))"
+      if: "inputs.checkout-token && (contains(runner.name, 'inf-gha-runners') || contains(runner.name, 'ubuntu2204'))"
       uses: actions/checkout@v3
       with:
         repository: toptal/actions
@@ -60,7 +60,7 @@ runs:
         path: ./.github/cache_action/
 
     - name: Cache yarn and node_modules folder
-      if: "inputs.checkout-token && (contains(runner.name, 'inf-gha-runners-ci') || contains(runner.name, 'ubuntu2204'))"
+      if: "inputs.checkout-token && (contains(runner.name, 'inf-gha-runners') || contains(runner.name, 'ubuntu2204'))"
       uses: ./.github/cache_action/cache/
       id: node-modules-cache-custom
       with:
@@ -73,7 +73,7 @@ runs:
         key: ${{ runner.os }}-${{ runner.arch }}-node-${{ steps.set-node-version.outputs.version }}-yarn-node_modules-${{ hashFiles('yarn.lock', 'tmp-workspaces.json') }}-${{ inputs.cache-version }}
 
     - name: Cache yarn and node_modules folder
-      if: "!contains(runner.name, 'inf-gha-runners-ci') || !inputs.checkout-token || !contains(runner.name, 'ubuntu2204')"
+      if: "!contains(runner.name, 'inf-gha-runners') || !inputs.checkout-token || !contains(runner.name, 'ubuntu2204')"
       uses: actions/cache@v3
       id: node-modules-cache
       with:
@@ -93,7 +93,7 @@ runs:
     # This step creates .npmrc file that references to npm registry in GAR (Google Artifact Registry)
     # The npm registry works as a proxy-cache, downloading and storing the public npm packages
     - name: Create .npmrc file using npm Artifact Registry
-      if: "inputs.checkout-token && inputs.npm-gar-token && (contains(runner.name, 'inf-gha-runners-ci') || contains(runner.name, 'ubuntu2204'))"
+      if: "inputs.checkout-token && inputs.npm-gar-token && (contains(runner.name, 'inf-gha-runners') || contains(runner.name, 'ubuntu2204'))"
       run: |
         echo "registry=https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/" > ${{ inputs.path }}/.npmrc &&
         echo "//us-central1-npm.pkg.dev/toptal-ci/npm-registry/:username=_json_key_base64" >> ${{ inputs.path }}/.npmrc &&
@@ -110,7 +110,7 @@ runs:
     # This step changes the public npm registry in yarn.lock file to npm in AR
     # We still use the public npm registry to our private packages
     - name: Change registry in yarn.lock file to npm Artifact Registry
-      if: "inputs.checkout-token && inputs.npm-gar-token && (contains(runner.name, 'inf-gha-runners-ci') || contains(runner.name, 'ubuntu2204'))"
+      if: "inputs.checkout-token && inputs.npm-gar-token && (contains(runner.name, 'inf-gha-runners') || contains(runner.name, 'ubuntu2204'))"
       shell: bash
       run: |
         # Create a copy of specific URLs (npmjs.org, @toptal and @topkit) and since they are fewer to restore them back at later steps
@@ -157,7 +157,7 @@ runs:
 
     # Revert the URLs to the original registry
     - name: Revert URLs to original registry
-      if: "inputs.checkout-token && inputs.npm-gar-token && (contains(runner.name, 'inf-gha-runners-ci') || contains(runner.name, 'ubuntu2204'))"
+      if: "inputs.checkout-token && inputs.npm-gar-token && (contains(runner.name, 'inf-gha-runners') || contains(runner.name, 'ubuntu2204'))"
       shell: bash
       run: |
         # Revert specific URLs to npmjs.org
