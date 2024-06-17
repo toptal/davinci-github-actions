@@ -114,14 +114,14 @@ runs:
         password: ${{ env.GCR_ACCOUNT_KEY }}
 
     - name: Set up Docker Buildx - CI custom runners
-      if: "contains(runner.name, 'inf-gha-runners-runners') || contains(runner.name, 'ubuntu2204')"
+      if: "contains(runner.name, 'inf-gha-runners') || contains(runner.name, 'ubuntu2204')"
       uses: docker/setup-buildx-action@v3
       with:
         driver: remote
         endpoint: ${{ env.DOCKER_BUILDX_ENDPOINT }}
 
     - name: Set up Docker Buildx - GH runners
-      if: "!(contains(runner.name, 'inf-gha-runners-runners') && contains(runner.name, 'ubuntu2204'))"
+      if: "!(contains(runner.name, 'inf-gha-runners') && contains(runner.name, 'ubuntu2204'))"
       uses: docker/setup-buildx-action@v3
 
     - name: Build and push release image
