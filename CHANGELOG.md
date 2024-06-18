@@ -1,5 +1,12 @@
 # davinci-github-actions
 
+## 15.2.1
+
+### Patch Changes
+
+- [#326](https://github.com/toptal/davinci-github-actions/pull/326) [`20ea651`](https://github.com/toptal/davinci-github-actions/commit/20ea6513c39a6c3bf92a79909da5b67297456ebb) Thanks [@serbantarmure](https://github.com/serbantarmure)!
+- fixup naming for custom runners for @yarn-install
+
 ## 15.2.0
 
 ### Minor Changes
