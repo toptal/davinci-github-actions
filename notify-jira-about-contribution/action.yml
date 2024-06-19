@@ -26,7 +26,7 @@ inputs:
   ignore-major-dependency-update-packages:
     required: false
     description: Regular expression for packages that should be ignored when creating Jira issues for major dependency updates
-    default: ""
+    default: "/@toptal/"
   major-dependency-update-jira-label:
     required: false
     description: Label that is added if contribution is a dependency update
