@@ -23,6 +23,10 @@ inputs:
     description: Specifies if action should create Jira issues for major dependency updates (authored by dependabot, minor and patch versions are ignored)
     type: boolean
     default: false
+  ignore-major-dependency-update-packages:
+    required: false
+    description: Regular expression for packages that should be ignored when creating Jira issues for major dependency updates
+    default: ""
   major-dependency-update-jira-label:
     required: false
     description: Label that is added if contribution is a dependency update
@@ -70,6 +74,7 @@ runs:
         IS_DEPENDABOT_PULL_REQUEST: ${{ steps.is-dependabot-pull-request.outputs.result }}
         IS_DRAFT: ${{ fromJson(steps.get-pr.outputs.data).draft }}
         SHOULD_NOTIFY_ABOUT_MAJOR_DEPENDENCY_UPDATES: ${{ inputs.should-notify-about-major-dependency-updates }}
+        IGNORE_MAJOR_DEPENDENCY_UPDATE_PACKAGES: ${{ inputs.ignore-major-dependency-update-packages || '/@toptal/' }}
         JIRA_ISSUE_ALREADY_EXISTS: ${{ steps.jira-issue-already-exists.outputs.result }}
         PR_TITLE: ${{ fromJson(steps.get-pr.outputs.data).title }}
       shell: bash
