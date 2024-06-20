@@ -4,7 +4,7 @@ Notifies JIRA about external contribution
 
 ### Description
 
-Notifies JIRA about external contribution. Draft and dependabot PRs are ignored.
+Notifies JIRA about external contribution. Draft and dependabot PRs are ignored (unless `should-notify-about-major-dependency-updates` is set).
 
 ### Inputs
 
@@ -18,6 +18,7 @@ The list of arguments, that are used in GH Action:
 | `jira-hook`                                    | string | ✅        |                      | JIRA automation hook for contribution                                                                                                     |
 | `github-token`                                 | string | ✅        |                      | Token for authorization                                                                                                                   |
 | `should-notify-about-major-dependency-updates` | string |          |                      | Specifies if action should create Jira issues for major dependency updates (authored by dependabot, minor and patch versions are ignored) |
+| `ignore-major-dependency-update-packages`      | string |          | /@toptal/            | Regular expression for packages that should be ignored when creating Jira issues for major dependency updates                             |
 | `major-dependency-update-jira-label`           | string |          | ready-for-refinement | Label that is added if contribution is a dependency update                                                                                |
 
 ### Outputs

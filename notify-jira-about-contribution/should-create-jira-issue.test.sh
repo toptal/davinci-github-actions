@@ -13,6 +13,7 @@ function beforeEach {
   export IS_TEAM_MEMBER=false
   export IS_DEPENDABOT_PULL_REQUEST=false
   export SHOULD_NOTIFY_ABOUT_MAJOR_DEPENDENCY_UPDATES=false
+  export IGNORE_MAJOR_DEPENDENCY_UPDATE_PACKAGES=""
   export PR_TITLE="Test value"
 }
 
@@ -66,6 +67,15 @@ export PR_TITLE="Bump lodash $versionBump"
 export SHOULD_NOTIFY_ABOUT_MAJOR_DEPENDENCY_UPDATES=true
 echo "=== Case: major dependabot pull request ($versionBump), dependabot notifications enabled"
 test "Is major dependency update" "true"
+
+beforeEach
+versionBump="from 4.17.20 to 5.17.21"
+export IS_DEPENDABOT_PULL_REQUEST=true
+export PR_TITLE="Bump @toptal/davinci-github-actions $versionBump"
+export SHOULD_NOTIFY_ABOUT_MAJOR_DEPENDENCY_UPDATES=true
+export IGNORE_MAJOR_DEPENDENCY_UPDATE_PACKAGES="@toptal"
+echo "=== Case: major dependabot pull request ($versionBump), dependabot notifications enabled, package is ignored"
+test "Although ths is dependency update and notifying about major dependency updates is turned on, the package is ignored" "false"
 
 beforeEach
 versionBump="from 4.4 to 7363638339"

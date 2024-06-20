@@ -66,6 +66,15 @@ fi
 
 pullRequestTitle=$PR_TITLE
 
+ignoreMajorDependencyUpdatePackages=$IGNORE_MAJOR_DEPENDENCY_UPDATE_PACKAGES
+if [[ -n "$IGNORE_MAJOR_DEPENDENCY_UPDATE_PACKAGES" ]]; then
+  if [[ "$pullRequestTitle" =~ $IGNORE_MAJOR_DEPENDENCY_UPDATE_PACKAGES ]]; then
+    echo "Although ths is dependency update and notifying about major dependency updates is turned on, the package is ignored"
+    echo "result=false" >> $GITHUB_OUTPUT
+    exit
+  fi
+fi
+
 # Extract major versions using grep utility
 # For "Bump @cypress/webpack-preprocessor from 5.17.1 to 6.0.1" it returns "5"
 currentMajorVersion=$(echo "$pullRequestTitle" | grep --only-matching --extended-regexp 'from [0-9]+(\.[0-9]+)?' | cut -d' ' -f2 | cut -d'.' -f1)
