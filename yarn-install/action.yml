@@ -53,7 +53,7 @@ runs:
 
     - name: Checkout `cache action` from actions repository
       if: "inputs.checkout-token && (contains(runner.name, 'inf-gha-runners') || contains(runner.name, 'ubuntu2204'))"
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         repository: toptal/actions
         token: ${{ inputs.checkout-token }}
@@ -74,7 +74,7 @@ runs:
 
     - name: Cache yarn and node_modules folder
       if: "!(inputs.checkout-token && (contains(runner.name, 'inf-gha-runners') || contains(runner.name, 'ubuntu2204')))"
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       id: node-modules-cache
       with:
         # Do not change the order of the values because if something goes wrong with the network or node_modules during
