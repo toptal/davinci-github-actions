@@ -1,5 +1,12 @@
 # davinci-github-actions
 
+## 15.3.0
+
+### Minor Changes
+
+- [#331](https://github.com/toptal/davinci-github-actions/pull/331) [`7e8fb48`](https://github.com/toptal/davinci-github-actions/commit/7e8fb487c86fb48601f6cfd197cfd423cc37903a) Thanks [@sashuk](https://github.com/sashuk)!
+- do not create contribution tickets for major dependency updates that match the pattern
+
 ## 15.2.1
 
 ### Patch Changes
