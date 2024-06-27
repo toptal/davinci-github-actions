@@ -102,7 +102,7 @@ runs:
           latest=${{ steps.meta-build.outputs.latest }}
 
     - name: Use SSH key
-      uses: toptal/ssh-agent@v0.4.1
+      uses: webfactory/ssh-agent@v0.9.0
       with:
         ssh-private-key: ${{ env.TOPTAL_BUILD_BOT_SSH_KEY }}
 
