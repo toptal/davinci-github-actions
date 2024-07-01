@@ -1,5 +1,13 @@
 # davinci-github-actions
 
+## 15.3.1
+
+### Patch Changes
+
+- [#335](https://github.com/toptal/davinci-github-actions/pull/335) [`c380f36`](https://github.com/toptal/davinci-github-actions/commit/c380f36707a8024a2cc713e096bb28dcd1398edc) Thanks [@MarianoSalerno](https://github.com/MarianoSalerno)!
+- update `ssh-agent` action version used in build-push-image
+  - update `github-script` action version used in extract-env-variables
+
 ## 15.3.0
 
 ### Minor Changes
