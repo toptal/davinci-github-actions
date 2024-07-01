@@ -18,7 +18,7 @@ runs:
   steps:
     - name: Extract Env variables
       id: env-variables
-      uses: actions/github-script@v6.3.3
+      uses: actions/github-script@v7
       with:
         github-token: ${{ inputs.github-token }}
         result-encoding: string
