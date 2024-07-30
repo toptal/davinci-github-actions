@@ -2409,10 +2409,10 @@
     globby "^11.0.1"
     lodash.kebabcase "^4.1.1"
 
-"@toptal/davinci-qa@^17.0.4":
-  version "17.0.4"
-  resolved "https://registry.yarnpkg.com/@toptal/davinci-qa/-/davinci-qa-17.0.4.tgz#3d8b77b12c9190c25038fc979eaa47efc2debb6c"
-  integrity sha512-TRhsIcBttAcc9yKooBzbI2N9lhtfQr27pdlXCrf+visfja5SLGhqqiW3A4epUEZC1vzPovuwt5Qjx0+JedFTiQ==
+"@toptal/davinci-qa@^17.0.5":
+  version "17.0.5"
+  resolved "https://registry.yarnpkg.com/@toptal/davinci-qa/-/davinci-qa-17.0.5.tgz#67e0881e1c8706cd7cfb5e5a0286de7a5ad8dd21"
+  integrity sha512-o3a72gU/rYGsJeqSpNlT+l4A/NFWxp8VBy+iMjRa0EPvF7dC/JKEaw8ZWBg7PeI7Y1+Jyk7UHac1DOlgQOyi3Q==
   dependencies:
     "@babel/core" "^7.23.3"
     "@babel/preset-env" "^7.21.4"
@@ -2442,6 +2442,7 @@
     jsdom "^24.0.0"
     matchmedia-polyfill "^0.3.2"
     semver "^7.5.3"
+    ws "^7.5.10"
 
 "@toptal/davinci-syntax@^23.0.0":
   version "23.0.0"
@@ -10688,7 +10689,7 @@ write-file-atomic@^5.0.1:
     imurmurhash "^0.1.4"
     signal-exit "^4.0.1"
 
-ws@^7.4.6:
+ws@^7.4.6, ws@^7.5.10:
   version "7.5.10"
   resolved "https://registry.yarnpkg.com/ws/-/ws-7.5.10.tgz#58b5c20dc281633f6c19113f39b349bd8bd558d9"
   integrity sha512-+dbF1tHwZpXcbOJdVOkzLDxZP1ailvSxM6ZweXTegylPny803bFhA+vqBYw4s31NSAk4S2Qz+AKXK9a4wkdjcQ==
