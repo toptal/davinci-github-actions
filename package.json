@@ -24,7 +24,7 @@
     "@changesets/get-release-plan": "^3.0.16",
     "@changesets/git": "^1.5.0",
     "@toptal/browserslist-config": "^1.2.0",
-    "@toptal/davinci-qa": "^12.1.0",
+    "@toptal/davinci-qa": "^17.0.4",
     "@toptal/davinci-syntax": "^23.0.0",
     "@types/js-yaml": "^4.0.5",
     "@types/marked": "^4.0.3",
