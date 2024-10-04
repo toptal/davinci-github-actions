@@ -16,6 +16,7 @@ runs:
       uses: actions/github-script@v7
       with:
         github-token: ${{ inputs.github-token }}
+        pr-number-text:
         script: |
           console.log(`The pull request number is: ${{ inputs.pr-number-text }}`)
           console.log(${{ inputs.pr-number-text }})
