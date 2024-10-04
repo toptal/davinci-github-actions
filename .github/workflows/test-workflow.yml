@@ -1,0 +1,19 @@
+name: 'Reuse Composite Action Workflow'
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  reuse-action-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v3
+
+      - name: Reuse my composite action
+        uses: ./github/actions/test-action
+        with:
+          pr-number-text: '123'
+          pr-number-integer: 456
