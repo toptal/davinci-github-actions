@@ -39,5 +39,5 @@ jobs:
         uses: ./.github/actions/test-action
         with:
           github-token: ${{ steps.parse_secrets.outputs.TOPTAL_DEVBOT_TOKEN }}
-          pr-number-text: '123'
-          pr-number-integer: 456
+          pr-number-text: '349'
+          pr-number-integer: 943
