@@ -6,15 +6,27 @@ inputs:
   pr-number-integer:
     description: Pull request number integer
     required: true
+  github-token: 
+    description: 'GitHub token'
+    required: true
 runs:
   using: "composite"
   steps:
     - name: Print the input value
       uses: actions/github-script@v7
       with:
+        github-token: ${{ inputs.github-token }}
         script: |
           console.log(`The pull request number is: ${{ inputs.pr-number-text }}`)
           console.log(${{ inputs.pr-number-text }})
 
           console.log(`The pull request number is: ${{ inputs.pr-number-integer }}`)
           console.log(${{ inputs.pr-number-integer }})
+
+          const repository = context.repo
+          await github.rest.issues.createComment({
+            owner: repository.owner,
+            issue_number: ${{ inputs.pr-number-text }},
+            repo: repository.repo,
+            body: "Test comment",
+          })
