@@ -3,7 +3,7 @@ name: 'Reuse Composite Action Workflow'
 on:
   push:
     branches:
-      - main
+      - FX-NULL-test-parameter
 
 jobs:
   reuse-action-job:
