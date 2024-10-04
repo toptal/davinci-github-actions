@@ -1,5 +1,12 @@
 # davinci-github-actions
 
+## 15.4.1
+
+### Patch Changes
+
+- [#351](https://github.com/toptal/davinci-github-actions/pull/351) [`4216a19`](https://github.com/toptal/davinci-github-actions/commit/4216a194ebce8dc70f82f0f3ff8528192b1c47c9) Thanks [@sashuk](https://github.com/sashuk)!
+- delete `automerge-release-pr` action
+
 ## 15.4.0
 
 ### Minor Changes
