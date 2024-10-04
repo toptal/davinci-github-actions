@@ -15,7 +15,7 @@ jobs:
           ref: FX-NULL-test-parameter
 
       - name: Reuse my composite action
-        uses: ./github/actions/test-action
+        uses: ./.github/actions/test-action
         with:
           pr-number-text: '123'
           pr-number-integer: 456
