@@ -1,5 +1,12 @@
 # davinci-github-actions
 
+## 15.6.0
+
+### Minor Changes
+
+- [#359](https://github.com/toptal/davinci-github-actions/pull/359) [`206ecb0`](https://github.com/toptal/davinci-github-actions/commit/206ecb0811e752e112de3deb7bdddfaf622e3f62) Thanks [@sashuk](https://github.com/sashuk)!
+- add `gh-runner-driver-opts` parameter to `build-push-release-image` action
+
 ## 15.5.0
 
 ### Minor Changes
