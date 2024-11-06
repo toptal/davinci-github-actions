@@ -29,6 +29,9 @@ inputs:
     required: false
     default: 20
     description: 'Node.js version used. The action is guaranteed to work only with Node.js@20 (default value)'
+  gh-runner-driver-opts:
+    required: false
+    description: 'Driver options for GH Runners'
 
 runs:
   using: composite
@@ -46,13 +49,14 @@ runs:
           yarn lerna run build --scope=${{ inputs.scope}}
         fi
 
-    - uses: toptal/davinci-github-actions/build-push-image@v14.0.0
+    - uses: toptal/davinci-github-actions/build-push-image@v15.5.0
       with:
         sha: ${{ inputs.sha }}
         image-name: ${{ inputs.repository-name }}-release
         environment: ${{ inputs.environment }}
         node-version: ${{ inputs.node-version }}
         docker-file: ./davinci/packages/ci/src/configs/docker/Dockerfile.gha-deploy
+        gh-runner-driver-opts: ${{ inputs.gh-runner-driver-opts }}
         build-args: |
           ENV_RUNTIME_ENTRYPOINT=./davinci/packages/ci/src/configs/docker/env-runtime.entrypoint.sh
           DIST_FOLDER=${{ inputs.dist-folder }}
