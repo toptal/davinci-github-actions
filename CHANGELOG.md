@@ -1,5 +1,12 @@
 # davinci-github-actions
 
+## 15.5.0
+
+### Minor Changes
+
+- [#356](https://github.com/toptal/davinci-github-actions/pull/356) [`5f88bee`](https://github.com/toptal/davinci-github-actions/commit/5f88bee8653c2774690d6e7b0e3877786ec84c2d) Thanks [@catks](https://github.com/catks)!
+- add `gh-runners-driver-opts` option to `build-push-image` action to allow using custom image for `buildx`
+
 ## 15.4.1
 
 ### Patch Changes
