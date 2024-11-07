@@ -10,6 +10,9 @@ inputs:
   sha:
     required: true
     description: Commit hash that will be used as a tag for the Docker image
+  registry-name:
+    required: true
+    description: Name of registry
   repository-name:
     required: true
     description: Name of repository. It's used to determine an image name
@@ -52,6 +55,7 @@ runs:
     - uses: toptal/davinci-github-actions/build-push-image@v15.5.0
       with:
         sha: ${{ inputs.sha }}
+        registry-name: ${{ inputs.registry-name }}
         image-name: ${{ inputs.repository-name }}-release
         environment: ${{ inputs.environment }}
         node-version: ${{ inputs.node-version }}
