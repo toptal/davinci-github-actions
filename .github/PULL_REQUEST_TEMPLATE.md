@@ -18,6 +18,6 @@ Describe the changes and motivations for the pull request, unless evident from t
 
 List of available commands:
 
-- `@toptal-anvil ping reviewers` - Ping FX team for review
+- `@toptal-anvil ping reviewers` - Ping teams for review
 
 </details>
