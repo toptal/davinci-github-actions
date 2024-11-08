@@ -1,5 +1,12 @@
 # davinci-github-actions
 
+## 16.0.0
+
+### Major Changes
+
+- [#361](https://github.com/toptal/davinci-github-actions/pull/361) [`807f43f`](https://github.com/toptal/davinci-github-actions/commit/807f43f70287c7797f5c84afea0e6da6668058a9) Thanks [@sashuk](https://github.com/sashuk)!
+- add `registry-name` mandatory parameter to `build-push-release-image` action
+
 ## 15.6.0
 
 ### Minor Changes
