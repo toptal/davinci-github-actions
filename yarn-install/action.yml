@@ -70,7 +70,7 @@ runs:
         path: |
           ${{ steps.yarn-cache.outputs.dir }}
           **/node_modules
-        key: ${{ runner.os }}-${{ runner.arch }}-node-${{ steps.set-node-version.outputs.version }}-yarn-node_modules-${{ hashFiles('yarn.lock', 'tmp-workspaces.json') }}-${{ inputs.cache-version }}
+        key: ${{ runner.os }}-${{ runner.arch }}-node-${{ steps.set-node-version.outputs.version }}-yarn-node_modules-${{ hashFiles(format('{0}/yarn.lock', inputs.path), format('{0}/tmp-workspaces.json', inputs.path)) }}-${{ inputs.cache-version }}
 
     - name: Cache yarn and node_modules folder
       if: "!(inputs.checkout-token && (contains(runner.name, 'inf-gha-runners') || contains(runner.name, 'ubuntu2204')))"
@@ -83,7 +83,7 @@ runs:
         path: |
           ${{ steps.yarn-cache.outputs.dir }}
           **/node_modules
-        key: ${{ runner.os }}-${{ runner.arch }}-node-${{ steps.set-node-version.outputs.version }}-yarn-node_modules-${{ hashFiles('yarn.lock', 'tmp-workspaces.json') }}-${{ inputs.cache-version }}
+        key: ${{ runner.os }}-${{ runner.arch }}-node-${{ steps.set-node-version.outputs.version }}-yarn-node_modules-${{ hashFiles(format('{0}/yarn.lock', inputs.path), format('{0}/tmp-workspaces.json', inputs.path)) }}-${{ inputs.cache-version }}
 
     - name: Delete temporary tmp-workspaces.json
       shell: bash
