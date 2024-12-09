@@ -1,5 +1,17 @@
 # davinci-github-actions
 
+## 16.0.1
+
+### Patch Changes
+
+- [#364](https://github.com/toptal/davinci-github-actions/pull/364) [`524ad91`](https://github.com/toptal/davinci-github-actions/commit/524ad9168c1bbe6a48ad687996f55bc803c96364) Thanks [@denieler](https://github.com/denieler)!
+
+---
+
+### yarn-install
+
+- fix for custom usage of path parameter. If path input parameter is used - use `yarn.lock` file from that path to generate cache hash.
+
 ## 16.0.0
 
 ### Major Changes
