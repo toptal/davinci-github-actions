@@ -22,10 +22,14 @@ inputs:
     description: How many times to retry installing. This is specially useful if the building of packages might fail because of network connections
     default: "1"
     required: false
+  skip-cache:
+    description: Skip cache and always install dependencies
+    default: "false"
+    required: false
 outputs:
   cache-hit:
     description: "Indicates an exact match was found for `node_modules` || boolean"
-    value: ${{ steps.node-modules-cache.outputs.cache-hit || steps.node-modules-cache-custom.outputs.cache-hit }}
+    value: "false"
 runs:
   using: composite
   steps:
@@ -33,13 +37,6 @@ runs:
       id: set-node-version
       run: echo version=$(node -v) >> $GITHUB_OUTPUT
       shell: bash
-
-    - name: Get yarn cache
-      id: yarn-cache
-      run: echo dir=$(yarn cache dir) >> $GITHUB_OUTPUT
-      shell: bash
-      env:
-        NPM_TOKEN: ${{ inputs.npm-token || env.NPM_TOKEN }}
 
     # This step is needed only because we want to update the cache when a new workspace
     # package has been added and we want symlinks to be presented in ./node_modules folder
@@ -50,40 +47,6 @@ runs:
           yarn --no-default-rc workspaces --json info > tmp-workspaces.json
         fi
       shell: bash
-
-    - name: Checkout `cache action` from actions repository
-      if: "inputs.checkout-token && (contains(runner.name, 'inf-gha-runners') || contains(runner.name, 'ubuntu2204'))"
-      uses: actions/checkout@v4
-      with:
-        repository: toptal/actions
-        token: ${{ inputs.checkout-token }}
-        path: ./.github/cache_action/
-
-    - name: Cache yarn and node_modules folder
-      if: "inputs.checkout-token && (contains(runner.name, 'inf-gha-runners') || contains(runner.name, 'ubuntu2204'))"
-      uses: ./.github/cache_action/cache/
-      id: node-modules-cache-custom
-      with:
-        # Do not change the order of the values because if something goes wrong with the network or node_modules during
-        # the caching process, GitHub can still end up creating a valid cache entry.
-        # The cache from yarn is smaller and of higher priority for us
-        path: |
-          ${{ steps.yarn-cache.outputs.dir }}
-          **/node_modules
-        key: ${{ runner.os }}-${{ runner.arch }}-node-${{ steps.set-node-version.outputs.version }}-yarn-node_modules-${{ hashFiles(format('{0}/yarn.lock', inputs.path), format('{0}/tmp-workspaces.json', inputs.path)) }}-${{ inputs.cache-version }}
-
-    - name: Cache yarn and node_modules folder
-      if: "!(inputs.checkout-token && (contains(runner.name, 'inf-gha-runners') || contains(runner.name, 'ubuntu2204')))"
-      uses: actions/cache@v4
-      id: node-modules-cache
-      with:
-        # Do not change the order of the values because if something goes wrong with the network or node_modules during
-        # the caching process, GitHub can still end up creating a valid cache entry.
-        # The cache from yarn is smaller and of higher priority for us
-        path: |
-          ${{ steps.yarn-cache.outputs.dir }}
-          **/node_modules
-        key: ${{ runner.os }}-${{ runner.arch }}-node-${{ steps.set-node-version.outputs.version }}-yarn-node_modules-${{ hashFiles(format('{0}/yarn.lock', inputs.path), format('{0}/tmp-workspaces.json', inputs.path)) }}-${{ inputs.cache-version }}
 
     - name: Delete temporary tmp-workspaces.json
       shell: bash
