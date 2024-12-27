@@ -114,7 +114,7 @@ runs:
       shell: bash
       run: |
         # Create a copy of specific URLs (npmjs.org, @toptal and @topkit) and since they are fewer to restore them back at later steps
-        grep registry.npmjs.org ${{ inputs.path }}/yarn.lock | grep -v '/@toptal\|/@topkit' | awk '{print $2 " " $2}' > ${{ inputs.path }}/yarn.lock.tmp
+        grep 'registry.npmjs.org\|registry.yarnpkg.com' ${{ inputs.path }}/yarn.lock | grep -v '/@toptal\|/@topkit' | awk '{print $2 " " $2}' > ${{ inputs.path }}/yarn.lock.tmp
         grep '/@toptal\|/@topkit' ${{ inputs.path }}/yarn.lock | awk '{print $2 " " $2}' >> ${{ inputs.path }}/yarn.lock.toptal
 
         # Change the URLs to the new registry for files created in the previous steps
