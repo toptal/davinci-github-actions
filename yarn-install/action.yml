@@ -112,41 +112,41 @@ runs:
     - name: Change registry in yarn.lock file to npm Artifact Registry
       if: "inputs.checkout-token && inputs.npm-gar-token && (contains(runner.name, 'inf-gha-runners') || contains(runner.name, 'ubuntu2204'))"
       shell: bash
+      working-directory: ${{ inputs.path }}
       run: |
-        echo "Creating temporary files for processing"
-        touch ${{ inputs.path }}/yarn.lock.tmp
-        touch ${{ inputs.path }}/yarn.lock.toptal
-
-        echo "Extracting npmjs.org entries (excluding @toptal/@topkit)"
-        if grep -q 'registry.npmjs.org' ${{ inputs.path }}/yarn.lock; then
-          grep 'registry.npmjs.org' ${{ inputs.path }}/yarn.lock | grep -v '/@toptal\|/@topkit' | awk '{print $2 " " $2}' > ${{ inputs.path }}/yarn.lock.tmp
-        fi
+        echo "Snapshot original yarn.lock file to restore it later"
+        cp yarn.lock yarn.lock.original
 
         echo "Extracting @toptal and @topkit entries"
-        if grep -q '/@toptal\|/@topkit' ${{ inputs.path }}/yarn.lock; then
-          grep '/@toptal\|/@topkit' ${{ inputs.path }}/yarn.lock | awk '{print $2 " " $2}' > ${{ inputs.path }}/yarn.lock.toptal
+        touch yarn.lock.toptal
+        if grep -q '/@toptal\|/@topkit' yarn.lock; then
+          grep '/@toptal\|/@topkit' yarn.lock | awk '{print $2 " " $2}' > yarn.lock.toptal
         fi
 
-        echo "Changing the URLs to the new registry for files created in the previous steps, creating a TO/FROM list to be used when reverting back the URLs to the original registry"
-        sed -i -e "s#https://registry.yarnpkg.com/#https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/#" ${{ inputs.path }}/yarn.lock.tmp
-        sed -i -e "s#https://registry.npmjs.org/#https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/#" ${{ inputs.path }}/yarn.lock.tmp
-        sed -i -e "s#https://registry.yarnpkg.com/#https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/#" ${{ inputs.path }}/yarn.lock.toptal
-        sed -i -e "s#https://registry.npmjs.org/#https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/#" ${{ inputs.path }}/yarn.lock.toptal
+        echo "Changing the URLs to the new registry for @toptal and @topkit entries, creating a TO/FROM list to be used when reverting back the URLs to the original registry"
+        sed -i -e "s#https://registry.yarnpkg.com/#https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/#" yarn.lock.toptal
+        sed -i -e "s#https://registry.npmjs.org/#https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/#" yarn.lock.toptal
 
-        echo "Changing the URLs to AR registry for all ocurrences"
-        sed -i -e "s#https://registry.yarnpkg.com/#https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/#g" ${{ inputs.path }}/yarn.lock
-        sed -i -e "s#https://registry.npmjs.org/#https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/#g" ${{ inputs.path }}/yarn.lock
+        echo "Changing the URLs to AR registry for all occurrences"
+        sed -i -e "s#https://registry.yarnpkg.com/#https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/#g" yarn.lock
+        sed -i -e "s#https://registry.npmjs.org/#https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/#g" yarn.lock
 
         echo "Removing double quotes from the URLs"
-        sed -i -e "s/\"//g" ${{ inputs.path }}/yarn.lock.tmp
-        sed -i -e "s/\"//g" ${{ inputs.path }}/yarn.lock.toptal
+        sed -i -e "s/\"//g" yarn.lock.toptal
 
         echo "Reverting the @toptal and @topkit packages to the original registry, working on revert fewer ocurrences (specific list) is faster than loop all the file"
         while read -r line; do
           url1="$(awk '{ print $1 }' <<<"$line")"
           url2="$(awk '{ print $2 }' <<<"$line")"
-          sed -i -e "s~${url1}~${url2}~" ${{ inputs.path }}/yarn.lock
-        done < ${{ inputs.path }}/yarn.lock.toptal
+          sed -i -e "s~${url1}~${url2}~" yarn.lock
+        done < yarn.lock.toptal
+
+    - name: Capture yarn.lock file checksum
+      id: yarn-lock-checksum
+      shell: bash
+      working-directory: ${{ inputs.path }}
+      run: |
+        echo "checksum=$(cksum yarn.lock)" >> $GITHUB_OUTPUT
 
     - name: yarn install
       shell: bash
@@ -161,26 +161,22 @@ runs:
           sleep 10 # 10s wait time
         done
 
-    # Revert the URLs to the original registry
-    - name: Revert URLs to original registry
-      if: "inputs.checkout-token && inputs.npm-gar-token && (contains(runner.name, 'inf-gha-runners') || contains(runner.name, 'ubuntu2204'))"
-      shell: bash
-      run: |
-        echo "Reverting specific URLs to npmjs.org"
-        while read -r line; do
-          url1="$(awk '{ print $1 }' <<<"$line")"
-          url2="$(awk '{ print $2 }' <<<"$line")"
-          sed -i -e "s~${url1}~${url2}~" ${{ inputs.path }}/yarn.lock
-        done < ${{ inputs.path }}/yarn.lock.tmp
-
-        echo "Reverting the leftovers URLs to yarnpkg.org registry"
-        sed -i -e "s#https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/#https://registry.yarnpkg.com/#g" ${{ inputs.path }}/yarn.lock
-
       # We are manually checking for the changes in yarn.lock file, because
       # the `--frozen-lockfile` flag is not working correctly in workspaces with yarn v1
       # we can remove this step when we upgrade yarn or migrate to other package manager
-    - name: Check for changes
+    - name: Verify yarn.lock is unchanged
       shell: bash
       working-directory: ${{ inputs.path }}
       run: |
-        git diff --exit-code yarn.lock || (echo 'yarn.lock changed after yarn install. Please make sure to commit yarn.lock changes.' && exit 1)
+        [ "${{ steps.yarn-lock-checksum.outputs.checksum }}" = "$(cksum yarn.lock)" ] || (echo 'yarn.lock changed after yarn install. Please make sure to commit yarn.lock changes.' && exit 1)
+
+      # Undo any modifications to yarn.lock we might have done to leave
+      # repo in the same state as it was before running yarn-install action
+    - name: Restore original yarn.lock
+      shell: bash
+      working-directory: ${{ inputs.path }}
+      run: |
+        if [ -f yarn.lock.original ]; then
+          cp yarn.lock.original yarn.lock
+          rm yarn.lock.original
+        fi
