@@ -113,27 +113,35 @@ runs:
       if: "inputs.checkout-token && inputs.npm-gar-token && (contains(runner.name, 'inf-gha-runners') || contains(runner.name, 'ubuntu2204'))"
       shell: bash
       run: |
-        # Create a copy of specific URLs (npmjs.org, @toptal and @topkit) and since they are fewer to restore them back at later steps
-        grep registry.npmjs.org ${{ inputs.path }}/yarn.lock | grep -v '/@toptal\|/@topkit' | awk '{print $2 " " $2}' > ${{ inputs.path }}/yarn.lock.tmp
-        grep '/@toptal\|/@topkit' ${{ inputs.path }}/yarn.lock | awk '{print $2 " " $2}' >> ${{ inputs.path }}/yarn.lock.toptal
+        echo "Creating temporary files for processing"
+        touch ${{ inputs.path }}/yarn.lock.tmp
+        touch ${{ inputs.path }}/yarn.lock.toptal
 
-        # Change the URLs to the new registry for files created in the previous steps
-        # Creates a TO/FROM list to be used when reverting back the URLs to the original registry
+        echo "Extracting npmjs.org entries (excluding @toptal/@topkit)"
+        if grep -q 'registry.npmjs.org' ${{ inputs.path }}/yarn.lock; then
+          grep 'registry.npmjs.org' ${{ inputs.path }}/yarn.lock | grep -v '/@toptal\|/@topkit' | awk '{print $2 " " $2}' > ${{ inputs.path }}/yarn.lock.tmp
+        fi
+
+        echo "Extracting @toptal and @topkit entries"
+        if grep -q '/@toptal\|/@topkit' ${{ inputs.path }}/yarn.lock; then
+          grep '/@toptal\|/@topkit' ${{ inputs.path }}/yarn.lock | awk '{print $2 " " $2}' > ${{ inputs.path }}/yarn.lock.toptal
+        fi
+
+        echo "Changing the URLs to the new registry for files created in the previous steps, creating a TO/FROM list to be used when reverting back the URLs to the original registry"
         sed -i -e "s#https://registry.yarnpkg.com/#https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/#" ${{ inputs.path }}/yarn.lock.tmp
         sed -i -e "s#https://registry.npmjs.org/#https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/#" ${{ inputs.path }}/yarn.lock.tmp
         sed -i -e "s#https://registry.yarnpkg.com/#https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/#" ${{ inputs.path }}/yarn.lock.toptal
         sed -i -e "s#https://registry.npmjs.org/#https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/#" ${{ inputs.path }}/yarn.lock.toptal
 
-        # Change the URLs to AR registry for all ocurrences
+        echo "Changing the URLs to AR registry for all ocurrences"
         sed -i -e "s#https://registry.yarnpkg.com/#https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/#g" ${{ inputs.path }}/yarn.lock
         sed -i -e "s#https://registry.npmjs.org/#https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/#g" ${{ inputs.path }}/yarn.lock
 
-        # Remove double quotes from the URLs
+        echo "Removing double quotes from the URLs"
         sed -i -e "s/\"//g" ${{ inputs.path }}/yarn.lock.tmp
         sed -i -e "s/\"//g" ${{ inputs.path }}/yarn.lock.toptal
 
-        # Revert the @toptal and @topkit packages to the original registry
-        # Working on revert fewer ocurrences (specific list) is faster than loop all the file
+        echo "Revering the @toptal and @topkit packages to the original registry, working on revert fewer ocurrences (specific list) is faster than loop all the file"
         while read -r line; do
           url1="$(awk '{ print $1 }' <<<"$line")"
           url2="$(awk '{ print $2 }' <<<"$line")"
@@ -153,21 +161,19 @@ runs:
           sleep 10 # 10s wait time
         done
 
-
-
     # Revert the URLs to the original registry
     - name: Revert URLs to original registry
       if: "inputs.checkout-token && inputs.npm-gar-token && (contains(runner.name, 'inf-gha-runners') || contains(runner.name, 'ubuntu2204'))"
       shell: bash
       run: |
-        # Revert specific URLs to npmjs.org
+        echo "Reverting specific URLs to npmjs.org"
         while read -r line; do
           url1="$(awk '{ print $1 }' <<<"$line")"
           url2="$(awk '{ print $2 }' <<<"$line")"
           sed -i -e "s~${url1}~${url2}~" ${{ inputs.path }}/yarn.lock
         done < ${{ inputs.path }}/yarn.lock.tmp
 
-        # Revert the leftovers URLs to yarnpkg.org registry
+        echo "Reverting the leftovers URLs to yarnpkg.org registry"
         sed -i -e "s#https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/#https://registry.yarnpkg.com/#g" ${{ inputs.path }}/yarn.lock
 
       # We are manually checking for the changes in yarn.lock file, because
