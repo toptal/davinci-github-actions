@@ -1,5 +1,15 @@
 # davinci-github-actions
 
+## 16.0.2
+
+### Patch Changes
+
+- [#370](https://github.com/toptal/davinci-github-actions/pull/370) [`ea00828`](https://github.com/toptal/davinci-github-actions/commit/ea00828c85a4291c6f24c9f1785d9a53cd8e6a72) Thanks [@pudek357](https://github.com/pudek357)!
+
+### yarn-install
+
+- improve `yarn-install` action for scenario when there is no occurrence of `registry.npmjs.org` inside `yarn.lock`
+
 ## 16.0.1
 
 ### Patch Changes
