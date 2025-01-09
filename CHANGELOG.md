@@ -1,5 +1,12 @@
 # davinci-github-actions
 
+## 16.0.3
+
+### Patch Changes
+
+- [#369](https://github.com/toptal/davinci-github-actions/pull/369) [`3687c4d`](https://github.com/toptal/davinci-github-actions/commit/3687c4ddce02306aee15be4d2241c56d41d597e5) Thanks [@ascrazy](https://github.com/ascrazy)!
+  Simplify the way yarn-install action ensures yarn.lock is unchanged after `yarn install`
+
 ## 16.0.2
 
 ### Patch Changes
