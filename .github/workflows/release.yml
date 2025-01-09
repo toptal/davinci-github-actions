@@ -101,8 +101,8 @@ jobs:
         if: ${{ failure() }}
         uses: slackapi/slack-github-action@v1.27.0
         with:
-          channel-id: '-frontend-exp-team-notifications'
-          slack-message: ":x: <!here> Current master version of davinci-github-actions is <${{ env.GITHUB_WORKFLOW_URL }}|broken>."
+          channel-id: 'frontend-notifications'
+          slack-message: ':x: <!here> Current master version of davinci-github-actions is <${{ env.GITHUB_WORKFLOW_URL }}|broken>.'
         env:
           SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
 
@@ -110,8 +110,8 @@ jobs:
         if: ${{ success() && steps.changesets.outputs.published == 'true' }}
         uses: slackapi/slack-github-action@v1.27.0
         with:
-          channel-id: '-frontend-exp-team-notifications'
-          slack-message: "Current master version of davinci-github-actions successfully released :green_heart:"
+          channel-id: 'frontend-notifications'
+          slack-message: 'Current master version of davinci-github-actions successfully released :green_heart:'
         env:
           SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
 
@@ -119,8 +119,8 @@ jobs:
         if: ${{ success() && steps.changesets.outputs.published != 'true'}}
         uses: slackapi/slack-github-action@v1.27.0
         with:
-          channel-id: '-frontend-exp-team-notifications'
-          slack-message: "A new PR was merged to davinci-github-actions :parrotspin:"
+          channel-id: 'frontend-notifications'
+          slack-message: 'A new PR was merged to davinci-github-actions :parrotspin:'
         env:
           SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
 
