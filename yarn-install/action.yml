@@ -117,29 +117,31 @@ runs:
         echo "Snapshot original yarn.lock file to restore it later"
         cp yarn.lock yarn.lock.original
 
-        echo "Extracting @toptal and @topkit entries"
-        touch yarn.lock.toptal
-        if grep -q '/@toptal\|/@topkit' yarn.lock; then
-          grep '/@toptal\|/@topkit' yarn.lock | awk '{print $2 " " $2}' > yarn.lock.toptal
-        fi
+        PUBLIC_YARN_REGISTRY="https://registry.yarnpkg.com/"
+        PUBLIC_NPM_REGISTRY="https://registry.npmjs.org/"
+        TOPTAL_NPM_REGISTRY="https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/"
 
-        echo "Changing the URLs to the new registry for @toptal and @topkit entries, creating a TO/FROM list to be used when reverting back the URLs to the original registry"
-        sed -i -e "s#https://registry.yarnpkg.com/#https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/#" yarn.lock.toptal
-        sed -i -e "s#https://registry.npmjs.org/#https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/#" yarn.lock.toptal
+        echo "Updating registry URLs in yarn.lock file and writing output to yarn.lock.temp"
+        # NOTE: setting IFS= (empty) for `read -r line` ensures that:
+        #  1. Leading and trailing whitespace in each line is preserved
+        #  2. The line is read exactly as-is, without any field splitting
+        #  3. Any whitespace characters within the line remain untouched
+        while IFS= read -r line; do
+            if [[ $line =~ /@toptal|/@topkit ]]; then
+                # For @toptal and @topkit packages, keep the original registry
+                echo "$line" >> yarn.lock.temp
+            else
+                # For all other packages, replace with new registry
+                modified_line="${line//$PUBLIC_YARN_REGISTRY/$TOPTAL_NPM_REGISTRY}"
+                modified_line="${modified_line//$PUBLIC_NPM_REGISTRY/$TOPTAL_NPM_REGISTRY}"
+                echo "$modified_line" >> yarn.lock.temp
+            fi
+        done < yarn.lock
 
-        echo "Changing the URLs to AR registry for all occurrences"
-        sed -i -e "s#https://registry.yarnpkg.com/#https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/#g" yarn.lock
-        sed -i -e "s#https://registry.npmjs.org/#https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/#g" yarn.lock
+        echo "Replacing yarn.lock file with yarn.lock.temp"
+        mv yarn.lock.temp yarn.lock
 
-        echo "Removing double quotes from the URLs"
-        sed -i -e "s/\"//g" yarn.lock.toptal
-
-        echo "Reverting the @toptal and @topkit packages to the original registry, working on revert fewer ocurrences (specific list) is faster than loop all the file"
-        while read -r line; do
-          url1="$(awk '{ print $1 }' <<<"$line")"
-          url2="$(awk '{ print $2 }' <<<"$line")"
-          sed -i -e "s~${url1}~${url2}~" yarn.lock
-        done < yarn.lock.toptal
+        echo "Registry URLs updated while preserving @toptal and @topkit package sources"
 
     - name: Capture yarn.lock file checksum
       id: yarn-lock-checksum
