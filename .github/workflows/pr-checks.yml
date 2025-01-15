@@ -59,4 +59,4 @@ jobs:
           ref: ${{ github.head_ref }}
 
       - name: trufflehog-actions-scan
-        uses: edplato/trufflehog-actions-scan@v0.9l-beta
+        uses: edplato/trufflehog-actions-scan@v0.9m-beta
