@@ -1,5 +1,24 @@
 # davinci-github-actions
 
+## 16.0.4
+
+### Patch Changes
+
+- [#373](https://github.com/toptal/davinci-github-actions/pull/373) [`c8e402a`](https://github.com/toptal/davinci-github-actions/commit/c8e402a1268381f7f23673bdba356fd656eb210b) Thanks [@ascrazy](https://github.com/ascrazy)!
+  Improve efficiency of yarn-install's registry overrride step
+
+- [#377](https://github.com/toptal/davinci-github-actions/pull/377) [`913c8cb`](https://github.com/toptal/davinci-github-actions/commit/913c8cb0e66ba99538f76c43d2a3ab5580a7240a) Thanks [@denieler](https://github.com/denieler)!
+
+---
+
+### integration-tests
+
+- update github actions from v3 to v4
+
+### generate-gql-types
+
+- update github actions from v3 to v4
+
 ## 16.0.3
 
 ### Patch Changes
