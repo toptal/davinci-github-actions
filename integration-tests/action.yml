@@ -12,7 +12,7 @@ runs:
   steps:
     - name: Cache Cypress folder
       id: cache
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: '~/.cache/Cypress'
         key: cypress-${{ hashFiles('**/yarn.lock') }}
@@ -36,7 +36,7 @@ runs:
       run: yarn $COMMAND
 
     - name: Store Cypress Screenshots Artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       if: failure()
       with:
         name: cypress-screenshots
