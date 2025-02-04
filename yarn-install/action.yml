@@ -182,3 +182,11 @@ runs:
           cp yarn.lock.original yarn.lock
           rm yarn.lock.original
         fi
+
+    - name: Revert .npmrc changes
+      working-directory: ${{ inputs.path }}
+      run: |
+        if [ -f .npmrc ]; then
+          git checkout -- .npmrc
+        fi
+      shell: bash
