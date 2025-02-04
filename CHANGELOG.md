@@ -1,5 +1,15 @@
 # davinci-github-actions
 
+## 16.0.5
+
+### Patch Changes
+
+- [#379](https://github.com/toptal/davinci-github-actions/pull/379) [`109242f`](https://github.com/toptal/davinci-github-actions/commit/109242f3720cf0e954785bb37f9ae7be07cd3888) Thanks [@pudek357](https://github.com/pudek357)!
+
+### yarn-install
+
+- fix `yarn-install` action for scenario when `.npmrc` file was changed
+
 ## 16.0.4
 
 ### Patch Changes
