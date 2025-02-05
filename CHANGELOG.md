@@ -1,5 +1,22 @@
 # davinci-github-actions
 
+## 16.0.6
+
+### Patch Changes
+
+- [#381](https://github.com/toptal/davinci-github-actions/pull/381) [`111ce23`](https://github.com/toptal/davinci-github-actions/commit/111ce234f7067704c58bb198fea8a57d6a65dc5d) Thanks [@pudek357](https://github.com/pudek357)!
+
+### yarn-install
+
+- fix `yarn-install` action for scenario when calling `git checkout -- .npmrc`, the example error:
+
+```bash
+fatal: detected dubious ownership in repository at '/__w/talent-portal-frontend/talent-portal-frontend'
+To add an exception for this directory, call:
+
+	git config --global --add safe.directory /__w/talent-portal-frontend/talent-portal-frontend
+```
+
 ## 16.0.5
 
 ### Patch Changes
