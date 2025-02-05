@@ -95,6 +95,10 @@ runs:
     - name: Create .npmrc file using npm Artifact Registry
       if: "inputs.checkout-token && inputs.npm-gar-token && (contains(runner.name, 'inf-gha-runners') || contains(runner.name, 'ubuntu2204'))"
       run: |
+        if [ -f ${{ inputs.path }}/.npmrc ]; then
+          mv ${{ inputs.path }}/.npmrc ${{ inputs.path }}/.npmrc.original
+        fi
+
         echo "registry=https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/" > ${{ inputs.path }}/.npmrc &&
         echo "//us-central1-npm.pkg.dev/toptal-ci/npm-registry/:username=_json_key_base64" >> ${{ inputs.path }}/.npmrc &&
         echo "//us-central1-npm.pkg.dev/toptal-ci/npm-registry/:_password=${{ inputs.npm-gar-token }}" >> ${{ inputs.path }}/.npmrc &&
@@ -183,10 +187,11 @@ runs:
           rm yarn.lock.original
         fi
 
-    - name: Revert .npmrc changes
+    - name: Restore original .npmrc
       working-directory: ${{ inputs.path }}
       run: |
-        if [ -f .npmrc ]; then
-          git checkout -- .npmrc
+        if [ -f .npmrc.original ]; then
+          cp .npmrc.original .npmrc
+          rm .npmrc.original
         fi
       shell: bash
