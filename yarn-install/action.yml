@@ -41,6 +41,14 @@ runs:
       env:
         NPM_TOKEN: ${{ inputs.npm-token || env.NPM_TOKEN }}
 
+    - name: Detect caching strategy
+      id: caching-strategy
+      shell: bash
+      run: |
+        echo "Check if we can cache deps on Toptal's infrastructure by using toptal/actions/cache"
+        echo "use_toptal_cache=${{inputs.checkout-token && inputs.npm-gar-token && (contains(runner.name, 'inf-gha-runners') || contains(runner.name, 'ubuntu2204'))}}" >> $GITHUB_OUTPUT
+
+
     # This step is needed only because we want to update the cache when a new workspace
     # package has been added and we want symlinks to be presented in ./node_modules folder
     - name: Generate workspaces info
@@ -52,7 +60,7 @@ runs:
       shell: bash
 
     - name: Checkout `cache action` from actions repository
-      if: "inputs.checkout-token && (contains(runner.name, 'inf-gha-runners') || contains(runner.name, 'ubuntu2204'))"
+      if: steps.caching-strategy.outputs.use_toptal_cache == 'true'
       uses: actions/checkout@v4
       with:
         repository: toptal/actions
@@ -61,6 +69,7 @@ runs:
 
     - name: Decode Service Account JSON
       id: decode-sa
+      if: steps.caching-strategy.outputs.use_toptal_cache == 'true'
       run: |
         DECODED_JSON=$(echo "${{ inputs.npm-gar-token }}" | base64 -d | tr -d '\n' | base64 -d)
         EOF=$(openssl rand -base64 12 | tr -d '\n') # Unique delimiter
@@ -70,13 +79,14 @@ runs:
       shell: bash
 
     - name: Authenticate to Google Cloud
+      if: steps.caching-strategy.outputs.use_toptal_cache == 'true'
       uses: google-github-actions/auth@v2
       with:
         credentials_json: ${{ steps.decode-sa.outputs.credentials_json }}
         project_id: toptal-production
 
     - name: Cache yarn and node_modules folder
-      if: "inputs.checkout-token && (contains(runner.name, 'inf-gha-runners') || contains(runner.name, 'ubuntu2204'))"
+      if: steps.caching-strategy.outputs.use_toptal_cache == 'true'
       uses: ./.github/cache_action/cache/
       id: node-modules-cache-custom
       with:
@@ -89,7 +99,7 @@ runs:
         key: ${{ runner.os }}-${{ runner.arch }}-node-${{ steps.set-node-version.outputs.version }}-yarn-node_modules-${{ hashFiles(format('{0}/yarn.lock', inputs.path), format('{0}/tmp-workspaces.json', inputs.path)) }}-${{ inputs.cache-version }}
 
     - name: Cache yarn and node_modules folder
-      if: "!(inputs.checkout-token && (contains(runner.name, 'inf-gha-runners') || contains(runner.name, 'ubuntu2204')))"
+      if: steps.caching-strategy.outputs.use_toptal_cache != 'true'
       uses: actions/cache@v4
       id: node-modules-cache
       with:
@@ -109,7 +119,7 @@ runs:
     # This step creates .npmrc file that references to npm registry in GAR (Google Artifact Registry)
     # The npm registry works as a proxy-cache, downloading and storing the public npm packages
     - name: Create .npmrc file using npm Artifact Registry
-      if: "inputs.checkout-token && inputs.npm-gar-token && (contains(runner.name, 'inf-gha-runners') || contains(runner.name, 'ubuntu2204'))"
+      if: steps.caching-strategy.outputs.use_toptal_cache == 'true'
       run: |
         if [ -f ${{ inputs.path }}/.npmrc ]; then
           mv ${{ inputs.path }}/.npmrc ${{ inputs.path }}/.npmrc.original
@@ -130,7 +140,7 @@ runs:
     # This step changes the public npm registry in yarn.lock file to npm in AR
     # We still use the public npm registry to our private packages
     - name: Change registry in yarn.lock file to npm Artifact Registry
-      if: "inputs.checkout-token && inputs.npm-gar-token && (contains(runner.name, 'inf-gha-runners') || contains(runner.name, 'ubuntu2204'))"
+      if: steps.caching-strategy.outputs.use_toptal_cache == 'true'
       shell: bash
       working-directory: ${{ inputs.path }}
       run: |
