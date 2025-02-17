@@ -64,6 +64,8 @@ runs:
       uses: actions/checkout@v4
       with:
         repository: toptal/actions
+        # TODO: reset to specific version
+        ref: explicit-auth-for-cache-action
         token: ${{ inputs.checkout-token }}
         path: ./.github/cache_action/
 
@@ -78,13 +80,6 @@ runs:
         echo "$EOF" >> $GITHUB_OUTPUT
       shell: bash
 
-    - name: Authenticate to Google Cloud
-      if: steps.caching-strategy.outputs.use_toptal_cache == 'true'
-      uses: google-github-actions/auth@v2
-      with:
-        credentials_json: ${{ steps.decode-sa.outputs.credentials_json }}
-        project_id: toptal-production
-
     - name: Cache yarn and node_modules folder
       if: steps.caching-strategy.outputs.use_toptal_cache == 'true'
       uses: ./.github/cache_action/cache/
@@ -97,6 +92,7 @@ runs:
           ${{ steps.yarn-cache.outputs.dir }}
           **/node_modules
         key: ${{ runner.os }}-${{ runner.arch }}-node-${{ steps.set-node-version.outputs.version }}-yarn-node_modules-${{ hashFiles(format('{0}/yarn.lock', inputs.path), format('{0}/tmp-workspaces.json', inputs.path)) }}-${{ inputs.cache-version }}
+        credentials-json: ${{ steps.decode-sa.outputs.credentials_json }}
 
     - name: Cache yarn and node_modules folder
       if: steps.caching-strategy.outputs.use_toptal_cache != 'true'
