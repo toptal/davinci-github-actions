@@ -75,18 +75,12 @@ runs:
       shell: bash
       run: |
         DECODED_JSON=$(echo "${{ inputs.npm-gar-token }}" | base64 -d | tr -d '\n' | base64 -d)
+        # Convert to single line by removing newlines and extra spaces
+        SINGLE_LINE_DECODED_JSON=$(echo "$DECODED_JSON" | tr -d '\n' | tr -s ' ')
 
-        echo "Mask the private key of the service account JSON"
-        echo "$DECODED_JSON" | while IFS= read -r line; do
-          if [[ $line == *"BEGIN PRIVATE KEY"* ]]; then
-            echo "::add-mask::$line"
-          fi
-        done
+        echo "::add-mask::$SINGLE_LINE_DECODED_JSON"
 
-        EOF=$(openssl rand -base64 12 | tr -d '\n') # Unique delimiter
-        echo "credentials_json<<$EOF" >> $GITHUB_OUTPUT
-        echo "$DECODED_JSON" >> $GITHUB_OUTPUT
-        echo "$EOF" >> $GITHUB_OUTPUT
+        echo "credentials_json=$SINGLE_LINE_DECODED_JSON" >> $GITHUB_OUTPUT
 
     - name: Cache yarn and node_modules folder
       if: steps.caching-strategy.outputs.use_toptal_cache == 'true'
