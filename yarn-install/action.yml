@@ -58,6 +58,7 @@ runs:
         repository: toptal/actions
         token: ${{ inputs.checkout-token }}
         path: ./.github/cache_action/
+        ref: fix/gha-azubic
 
     - name: Cache yarn and node_modules folder
       if: "inputs.checkout-token && (contains(runner.name, 'inf-gha-runners') || contains(runner.name, 'ubuntu2204'))"
