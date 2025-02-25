@@ -4,7 +4,9 @@
 
 ### yarn-install
 
-- change authentication with Google Artifacts to use WIF, replace the secret `NPM_GAR_TOKE` with the access token from Workload Identity federation as the example below:
+- change authentication with Google Artifacts to use WIF, replace the secret `NPM_GAR_TOKEN` with the access token from Workload Identity federation as the example below:
+
+Firt get access token for WIF:
 
 ```bash
 - name: Authenticate to Google Cloud using WIF
@@ -29,4 +31,4 @@ and then call the yarn-install action using the `auth_token` from the `gcp-auth`
 
 Please remember to add the nescessary permission to the service account of the repository have access to Google Artifact Registry. Example: https://github.com/toptal/gcp-configuration/pull/149/files
 
-for more informartion please consult: https://toptal-core.atlassian.net/wiki/spaces/CI/pages/1310785878/Technical+documentation#How-to-migrate-service-accounts-on-GHA-to-WIF
+For more informartion please consult: https://toptal-core.atlassian.net/wiki/spaces/CI/pages/1310785878/Technical+documentation#How-to-migrate-service-accounts-on-GHA-to-WIF
