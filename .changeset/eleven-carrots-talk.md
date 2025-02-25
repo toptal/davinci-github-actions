@@ -22,7 +22,7 @@ and then call the yarn-install action using the `auth_token` from the `gcp-auth`
 
 ```bash
 - name: Install dependencies
-  uses: toptal/davinci-github-actions/yarn-install@ops-695-wif-auth-google-artifacts-for-npm
+  uses: toptal/davinci-github-actions/yarn-install@16.0.6
   with:
     checkout-token: ${{ steps.parse_secrets.outputs.TOPTAL_REPOACCESSBOT_TOKEN }}
     npm-gar-token: ${{ steps.gcp-auth.outputs.auth_token }}
