@@ -18,9 +18,6 @@ inputs:
   npm-gar-token:
     description: Repository npm Artifact Registry access token `NPM_GAR_TOKEN`. Required when using self-hosted runners with npm in GAR (Google Artifact Registry, the npm registry works as a proxy-cache, downloading and storing the public npm packages)
     required: false
-  npm-gar-wif-token:
-    description: Repository npm Artifact Registry WIF access token. Required when using self-hosted runners with npm in GAR (Google Artifact Registry, the npm registry works as a proxy-cache, downloading and storing the public npm packages)
-    required: false
   max-attempts:
     description: How many times to retry installing. This is specially useful if the building of packages might fail because of network connections
     default: "1"
@@ -104,13 +101,8 @@ runs:
 
         echo "registry=https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/" > ${{ inputs.path }}/.npmrc
         
-        if [ -n "${{ inputs.npm-gar-wif-token }}" ]; then
-          echo "//us-central1-npm.pkg.dev/toptal-ci/npm-registry/:username=oauth2accesstoken" >> ${{ inputs.path }}/.npmrc
-          echo "//us-central1-npm.pkg.dev/toptal-ci/npm-registry/:_password=${{ inputs.npm-gar-wif-token }}" >> ${{ inputs.path }}/.npmrc
-        else
-          echo "//us-central1-npm.pkg.dev/toptal-ci/npm-registry/:username=_json_key_base64" >> ${{ inputs.path }}/.npmrc
-          echo "//us-central1-npm.pkg.dev/toptal-ci/npm-registry/:_password=${{ inputs.npm-gar-token }}" >> ${{ inputs.path }}/.npmrc 
-        fi
+        echo "//us-central1-npm.pkg.dev/toptal-ci/npm-registry/:username=oauth2accesstoken" >> ${{ inputs.path }}/.npmrc
+        echo "//us-central1-npm.pkg.dev/toptal-ci/npm-registry/:_password=${{ inputs.npm-gar-token }}" >> ${{ inputs.path }}/.npmrc
 
         echo "@toptal:registry=https://registry.npmjs.org/" >> ${{ inputs.path }}/.npmrc &&
         echo "//registry.npmjs.org/:_authToken=${{ inputs.npm-token || env.NPM_TOKEN }}" >> ${{ inputs.path }}/.npmrc &&
