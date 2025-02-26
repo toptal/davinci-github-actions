@@ -6,7 +6,7 @@
 
 - change authentication with Google Artifacts to use WIF, replace the secret `NPM_GAR_TOKEN` with the access token from Workload Identity federation as the example below:
 
-Firt get access token for WIF:
+First get access token for WIF:
 
 ```bash
 - name: Authenticate to Google Cloud using WIF
