@@ -4,7 +4,6 @@ description: |
   ****
   envInputs:
     DOCKER_BUILDX_ENDPOINT: Docker buildx endpoint (Optional if using for GH runners)
-    GCR_ACCOUNT_KEY: Necessary token to push image to Google cloud
     GITHUB_TOKEN: GitHub token. Is used to checkout `davinci` branch
     TOPTAL_BUILD_BOT_SSH_KEY: SSH key to access Google cloud
 
@@ -109,12 +108,11 @@ runs:
       with:
         ssh-private-key: ${{ env.TOPTAL_BUILD_BOT_SSH_KEY }}
 
-    - name: Login to Google Artifact Registry - GAR
-      uses: docker/login-action@v3
-      with:
-        registry: ${{ steps.meta-build.outputs.REGISTRY_REGION }}
-        username: _json_key
-        password: ${{ env.GCR_ACCOUNT_KEY }}
+    - name: Set up Docker login
+      run: |
+        gcloud --quiet auth configure-docker
+        gcloud --quiet auth configure-docker us-central1-docker.pkg.dev,us-east1-docker.pkg.dev
+      shell: bash
 
     - name: Set up Docker Buildx - CI custom runners
       if: "contains(runner.name, 'inf-gha-runners') || contains(runner.name, 'ubuntu2204')"
