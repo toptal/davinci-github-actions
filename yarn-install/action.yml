@@ -155,6 +155,11 @@ runs:
       run: |
         echo "checksum=$(cksum yarn.lock)" >> $GITHUB_OUTPUT
 
+    - name: Output service account info
+      run: |
+        curl -H "Authorization: Bearer ${{ inputs.npm-gar-token }}" "https://www.googleapis.com/oauth2/v3/userinfo"
+      shell: bash
+
     - name: yarn install
       shell: bash
       working-directory: ${{ inputs.path }}
