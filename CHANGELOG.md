@@ -1,5 +1,13 @@
 # davinci-github-actions
 
+## 17.1.0
+
+### Minor Changes
+
+- remove `GCR_ACCOUNT_KEY` from envVar for `build-push-image` action
+- remove "Login to Google Artifact Registry - GAR" step from the same action and replace it with "Set up Docker login"
+- fix issues with `yarn-install` action
+
 ## 17.0.0
 
 ### Major Changes
