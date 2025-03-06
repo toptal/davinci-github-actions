@@ -101,8 +101,7 @@ runs:
 
         echo "registry=https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/" > ${{ inputs.path }}/.npmrc
         
-        echo "//us-central1-npm.pkg.dev/toptal-ci/npm-registry/:username=oauth2accesstoken" >> ${{ inputs.path }}/.npmrc
-        echo "//us-central1-npm.pkg.dev/toptal-ci/npm-registry/:_password=${{ inputs.npm-gar-token }}" >> ${{ inputs.path }}/.npmrc
+        echo "//us-central1-npm.pkg.dev/toptal-ci/npm-registry/:_authToken=${{ inputs.npm-gar-token }}" >> ${{ inputs.path }}/.npmrc
 
         echo "@toptal:registry=https://registry.npmjs.org/" >> ${{ inputs.path }}/.npmrc &&
         echo "//registry.npmjs.org/:_authToken=${{ inputs.npm-token || env.NPM_TOKEN }}" >> ${{ inputs.path }}/.npmrc &&
