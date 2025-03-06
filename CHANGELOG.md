@@ -1,5 +1,14 @@
 # davinci-github-actions
 
+## 17.1.0
+
+### Minor Changes
+
+- [#388](https://github.com/toptal/davinci-github-actions/pull/388) [`3e6ded0`](https://github.com/toptal/davinci-github-actions/commit/3e6ded0acd0d6cd4e54396408062d0a95943c75d) Thanks [@cust0m](https://github.com/cust0m)!
+- fix issues with `yarn-install` action
+  - remove `GCR_ACCOUNT_KEY` from envVar for `build-push-image` action
+  - remove "Login to Google Artifact Registry - GAR" step from the same action and replace it with "Set up Docker login"
+
 ## 17.0.0
 
 ### Major Changes
