@@ -5,8 +5,8 @@ inputs:
     description: Access token type **Read-only**. Required for repository with private dependencies. If undefined, `env.NPM_TOKEN` is used
     required: false
   cache-version:
-    description: "Cache version"
-    default: "0.0"
+    description: 'Cache version'
+    default: '0.0'
     required: false
   path:
     description: Relative path under $GITHUB_WORKSPACE where to run `yarn install` command
@@ -20,11 +20,11 @@ inputs:
     required: false
   max-attempts:
     description: How many times to retry installing. This is specially useful if the building of packages might fail because of network connections
-    default: "1"
+    default: '1'
     required: false
 outputs:
   cache-hit:
-    description: "Indicates an exact match was found for `node_modules` || boolean"
+    description: 'Indicates an exact match was found for `node_modules` || boolean'
     value: ${{ steps.node-modules-cache.outputs.cache-hit || steps.node-modules-cache-custom.outputs.cache-hit }}
 runs:
   using: composite
@@ -61,7 +61,7 @@ runs:
 
     - name: Cache yarn and node_modules folder
       if: "inputs.checkout-token && (contains(runner.name, 'inf-gha-runners') || contains(runner.name, 'ubuntu2204'))"
-      uses: ./.github/cache_action/cache/
+      uses: toptal/actions/cache@main
       id: node-modules-cache-custom
       with:
         # Do not change the order of the values because if something goes wrong with the network or node_modules during
@@ -100,7 +100,7 @@ runs:
         fi
 
         echo "registry=https://us-central1-npm.pkg.dev/toptal-ci/npm-registry/" > ${{ inputs.path }}/.npmrc
-        
+
         echo "//us-central1-npm.pkg.dev/toptal-ci/npm-registry/:_authToken=${{ inputs.npm-gar-token }}" >> ${{ inputs.path }}/.npmrc
 
         echo "@toptal:registry=https://registry.npmjs.org/" >> ${{ inputs.path }}/.npmrc &&
