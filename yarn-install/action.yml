@@ -51,14 +51,6 @@ runs:
         fi
       shell: bash
 
-    - name: Checkout `cache action` from actions repository
-      if: "inputs.checkout-token && (contains(runner.name, 'inf-gha-runners') || contains(runner.name, 'ubuntu2204'))"
-      uses: actions/checkout@v4
-      with:
-        repository: toptal/actions
-        token: ${{ inputs.checkout-token }}
-        path: ./.github/cache_action/
-
     - name: Cache yarn and node_modules folder
       if: "inputs.checkout-token && (contains(runner.name, 'inf-gha-runners') || contains(runner.name, 'ubuntu2204'))"
       uses: toptal/actions/cache@main
@@ -71,6 +63,8 @@ runs:
           ${{ steps.yarn-cache.outputs.dir }}
           **/node_modules
         key: ${{ runner.os }}-${{ runner.arch }}-node-${{ steps.set-node-version.outputs.version }}-yarn-node_modules-${{ hashFiles(format('{0}/yarn.lock', inputs.path), format('{0}/tmp-workspaces.json', inputs.path)) }}-${{ inputs.cache-version }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Cache yarn and node_modules folder
       if: "!(inputs.checkout-token && (contains(runner.name, 'inf-gha-runners') || contains(runner.name, 'ubuntu2204')))"
