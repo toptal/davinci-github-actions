@@ -46,7 +46,8 @@ jobs:
           node-version: 20
 
       - uses: ./yarn-install
-
+        with:
+          checkout-token: ${{ secrets.GITHUB_TOKEN }}
       - uses: ./unit-tests
 
   trufflehog-scan:
