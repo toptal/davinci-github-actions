@@ -1,9 +1,9 @@
 name: 'Access Secrets from GSM'
 description: 'Access secrets from Google Secret Manager using WIF to authenticate to Google Cloud'
 inputs:
-  # The name of the project where the secret is stored
+  # The Workload Identity Provider resource name
   workload_identity_provider:
-    description: 'The name of the project where the secret is stored'
+    description: 'The Workload Identity Provider resource name (format: projects/123456789/locations/global/workloadIdentityPools/pool-name/providers/provider-name)'
     required: true
   # The name of the service account to use to access the secret
   service_account:
@@ -11,33 +11,102 @@ inputs:
     required: true
   # The name of the secret to retrieve
   secrets_name:
-    description: 'The name of the secrets to retrieve'
+    description: 'Comma-separated list of secret names to retrieve (e.g., "secret1,secret2"). Each secret should be in the format "projects/PROJECT_ID/secrets/SECRET_NAME/versions/VERSION" or just "SECRET_NAME" if using the default project.'
     required: true
 outputs:
   secrets:
     description: 'The secrets retrieved from GSM in JSON format'
     value: ${{ toJson(steps.get-secrets.outputs) }}
+  access_token:
+    description: 'The access token used to authenticate to Google Cloud'
+    value: ${{ steps.gcp-auth.outputs.access_token }}
 runs:
   using: 'composite'
   steps:
+    - name: Information message
+      shell: bash
+      run: |
+        echo "::notice::In order to use exported credentials from auth action (like GOOGLE_APPLICATION_CREDENTIALS), you must add the actions/checkout step before calling auth. Meaning that this action 'gsm-secrets' should be preceded with 'actions/checkout' step."
+
     - name: Authenticate to Google Cloud using WIF
-      uses: google-github-actions/auth@v2
+      id: gcp-auth
+      uses: google-github-actions/auth@v2.1.0
       with:
+        # Using access_token format to expose the token for other steps that might need it
+        token_format: access_token
         workload_identity_provider: ${{ inputs.workload_identity_provider }}
         service_account: ${{ inputs.service_account }}
 
+    - name: Configure Google Cloud SDK
+      uses: google-github-actions/setup-gcloud@v2.1.0
+      with:
+        skip_install: true
+
+    - name: Output authenticated account
+      run: 'gcloud auth list --filter=status:ACTIVE --format="value(account)"'
+      shell: bash
+
     - name: Get the secrets from GSM
       id: get-secrets
-      uses: google-github-actions/get-secretmanager-secrets@v2
+      uses: google-github-actions/get-secretmanager-secrets@v2.1.0
       with:
         secrets: ${{ inputs.secrets_name }}
 
+    - name: Verify secrets retrieval
+      shell: bash
+      run: |
+        if [ -z "${{ steps.get-secrets.outputs }}" ]; then
+          echo "::error::No secrets were retrieved from GSM"
+          exit 1
+        fi
+        echo "Successfully retrieved secrets from GSM"
+
+    - name: Catch GSM errors
+      if: ${{ always() }}
+      shell: bash
+      run: |
+        echo "Catch GSM errors:"
+        GET_SECRETS_ACTION_STATUS="${{ steps.get-secrets.outcome }}" 
+        AUTH_ACTION_STATUS="${{ steps.gcp-auth.outcome }}"
+        BOLD="\033[1m"
+        ON_RED="\033[48;2;55;37;46m"
+        RESET_BOLD="\033[21m"
+        EXIT_CODE=0
+        
+        if [ ${AUTH_ACTION_STATUS} == "failure" ]; then
+          echo "::error::Process failed on authentication to GCP. Here is what you should do:"
+          echo -e "${ON_RED}1. Check if GITHUB_TOKEN has all necessary permissions. Info about it can found in our GSM docs:\n${ON_RED}https://toptal-core.atlassian.net/wiki/spaces/CI/pages/3257139253/Google+Secret+Manager+-+Technical+Documentation#How-to-modify-the-GitHub-workflow-to-fetch-secrets-from-GSM"
+          echo -e "${ON_RED}2. If GITHUB_TOKEN has all necessary permissions and GSM action still fails, please contact ${BOLD}@help-ci${RESET_BOLD} in ${BOLD}#-ci-help${RESET_BOLD}."
+          EXIT_CODE=1
+        else
+          echo "No errors related to GCP authentication."
+        fi
+        
+        if [ ${GET_SECRETS_ACTION_STATUS} == "failure" ]; then
+          echo "::error::Process failed on fetching the secrets. Here is what you should do:"
+          echo -e "${ON_RED}1. Check if all necessary secrets are available to the repository:\n${ON_RED}https://github.com/toptal/inf-terraform/blob/master/toptal/gsm-permissions/ci/STARTING_LETTER_OF_REPO/gsm-secrets.tf"
+          echo -e "${ON_RED}2. If secrets are available to the repository and GSM action still fails, please contact ${BOLD}@help-ci${RESET_BOLD} in ${BOLD}#-ci-help.${RESET_BOLD}"
+          EXIT_CODE=1
+        else
+          echo "No errors related to fetching the secrets from GSM."
+        fi
+        
+        if [ ${EXIT_CODE} -ne 0 ]; then
+          exit ${EXIT_CODE}
+        fi
+
     - name: Remove gha-cred file content
+      if: ${{ always() }}
       shell: bash
       run: |-
-        echo -n "" > "${GOOGLE_GHA_CREDS_PATH}"
+        if [ -n "${GOOGLE_GHA_CREDS_PATH}" ]; then
+          echo -n "" > "${GOOGLE_GHA_CREDS_PATH}"
+        else
+          echo "::warning::GOOGLE_GHA_CREDS_PATH is not set, skipping credential file cleanup"
+        fi
 
     - name: unset GOOGLE_APPLICATION_CREDENTIALS
+      if: ${{ always() }}
       shell: bash
       run: |-
         echo "GOOGLE_APPLICATION_CREDENTIALS=" >> $GITHUB_ENV
