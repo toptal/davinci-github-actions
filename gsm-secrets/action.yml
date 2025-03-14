@@ -1,9 +1,9 @@
 name: 'Access Secrets from GSM'
 description: 'Access secrets from Google Secret Manager using WIF to authenticate to Google Cloud'
 inputs:
-  # The Workload Identity Provider resource name
+  # The name of the project where the secret is stored
   workload_identity_provider:
-    description: 'The Workload Identity Provider resource name (format: projects/123456789/locations/global/workloadIdentityPools/pool-name/providers/provider-name)'
+    description: 'The name of the project where the secret is stored'
     required: true
   # The name of the service account to use to access the secret
   service_account:
@@ -11,7 +11,7 @@ inputs:
     required: true
   # The name of the secret to retrieve
   secrets_name:
-    description: 'Comma-separated list of secret names to retrieve (e.g., "secret1,secret2"). Each secret should be in the format "projects/PROJECT_ID/secrets/SECRET_NAME/versions/VERSION" or just "SECRET_NAME" if using the default project.'
+    description: 'The name of the secrets to retrieve'
     required: true
 outputs:
   secrets:
@@ -24,9 +24,8 @@ runs:
   using: 'composite'
   steps:
     - name: Information message
+      run: echo "In order to use exported credentials from auth action (like GOOGLE_APPLICATION_CREDENTIALS), you must add the actions/checkout step before calling auth. Meaning that this action 'gsm-secrets' should be preceded with 'actions/checkout' step."
       shell: bash
-      run: |
-        echo "::notice::In order to use exported credentials from auth action (like GOOGLE_APPLICATION_CREDENTIALS), you must add the actions/checkout step before calling auth. Meaning that this action 'gsm-secrets' should be preceded with 'actions/checkout' step."
 
     - name: Authenticate to Google Cloud using WIF
       id: gcp-auth
