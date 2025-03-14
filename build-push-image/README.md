@@ -42,7 +42,6 @@ This is a list of ENV Variables that are used in GH Action:
 | name                       | description                                               |
 | -------------------------- | --------------------------------------------------------- |
 | `DOCKER_BUILDX_ENDPOINT`   | Docker buildx endpoint (Optional if using for GH runners) |
-| `GCR_ACCOUNT_KEY`          | Necessary token to push image to Google cloud             |
 | `GITHUB_TOKEN`             | GitHub token. Is used to checkout `davinci` branch        |
 | `TOPTAL_BUILD_BOT_SSH_KEY` | SSH key to access Google cloud                            |
 

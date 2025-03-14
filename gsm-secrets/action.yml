@@ -71,7 +71,7 @@ runs:
         ON_RED="\033[48;2;55;37;46m"
         RESET_BOLD="\033[21m"
         EXIT_CODE=0
-        
+
         if [ ${AUTH_ACTION_STATUS} == "failure" ]; then
           echo "::error::Process failed on authentication to GCP. Here is what you should do:"
           echo -e "${ON_RED}1. Check if GITHUB_TOKEN has all necessary permissions. Info about it can found in our GSM docs:\n${ON_RED}https://toptal-core.atlassian.net/wiki/spaces/CI/pages/3257139253/Google+Secret+Manager+-+Technical+Documentation#How-to-modify-the-GitHub-workflow-to-fetch-secrets-from-GSM"
@@ -80,7 +80,7 @@ runs:
         else
           echo "No errors related to GCP authentication."
         fi
-        
+
         if [ ${GET_SECRETS_ACTION_STATUS} == "failure" ]; then
           echo "::error::Process failed on fetching the secrets. Here is what you should do:"
           echo -e "${ON_RED}1. Check if all necessary secrets are available to the repository:\n${ON_RED}https://github.com/toptal/inf-terraform/blob/master/toptal/gsm-permissions/ci/STARTING_LETTER_OF_REPO/gsm-secrets.tf"
@@ -89,23 +89,7 @@ runs:
         else
           echo "No errors related to fetching the secrets from GSM."
         fi
-        
+
         if [ ${EXIT_CODE} -ne 0 ]; then
           exit ${EXIT_CODE}
         fi
-
-    - name: Remove gha-cred file content
-      if: ${{ always() }}
-      shell: bash
-      run: |-
-        if [ -n "${GOOGLE_GHA_CREDS_PATH}" ]; then
-          echo -n "" > "${GOOGLE_GHA_CREDS_PATH}"
-        else
-          echo "::warning::GOOGLE_GHA_CREDS_PATH is not set, skipping credential file cleanup"
-        fi
-
-    - name: unset GOOGLE_APPLICATION_CREDENTIALS
-      if: ${{ always() }}
-      shell: bash
-      run: |-
-        echo "GOOGLE_APPLICATION_CREDENTIALS=" >> $GITHUB_ENV
