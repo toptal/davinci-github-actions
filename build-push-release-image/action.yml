@@ -52,7 +52,7 @@ runs:
           yarn lerna run build --scope=${{ inputs.scope}}
         fi
 
-    - uses: toptal/davinci-github-actions/build-push-image@v15.5.0
+    - uses: toptal/davinci-github-actions/build-push-image@v17.1.0
       with:
         sha: ${{ inputs.sha }}
         registry-name: ${{ inputs.registry-name }}
