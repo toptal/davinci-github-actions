@@ -161,11 +161,16 @@ runs:
         NPM_TOKEN: ${{ inputs.npm-token || env.NPM_TOKEN }}
         MAX_ATTEMPTS: ${{ inputs.max-attempts }}
       run: |
-        for i in {1..$MAX_ATTEMPTS}; do
-          printf "Trying to install #%s...\n" "$i"
-          yarn install --non-interactive && break
-          sleep 10 # 10s wait time
+        for ((i=1; i<=MAX_ATTEMPTS; i++)); do
+          echo "Trying to install (${i}/${MAX_ATTEMPTS})..."
+          if yarn install --non-interactive; then
+            echo "Yarn install succeeded on attempt ${i}."
+            exit 0
+          fi
+          sleep 10
         done
+        echo "All installation attempts failed. Exiting with error."
+        exit 1
 
       # We are manually checking for the changes in yarn.lock file, because
       # the `--frozen-lockfile` flag is not working correctly in workspaces with yarn v1
