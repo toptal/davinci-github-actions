@@ -1,5 +1,15 @@
 # davinci-github-actions
 
+## 17.1.1
+
+### Patch Changes
+
+- [#393](https://github.com/toptal/davinci-github-actions/pull/393) [`9985aa8`](https://github.com/toptal/davinci-github-actions/commit/9985aa863a80c6fc80cc739e4454be8b57535305) Thanks [@pudek357](https://github.com/pudek357)!
+
+### yarn-install
+
+- ensure the workflow fails correctly if `yarn install` encounters an error
+
 ## 17.1.0
 
 ### Minor Changes
