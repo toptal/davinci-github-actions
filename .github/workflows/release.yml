@@ -56,7 +56,7 @@ jobs:
       - name: Set up node
         uses: actions/setup-node@v4.1.0
         with:
-          node-version: 20
+          node-version-file: .nvmrc
 
       - uses: ./yarn-install
 
