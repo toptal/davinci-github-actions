@@ -99,7 +99,7 @@ jobs:
 
       - name: Send a Slack notification on failure
         if: ${{ failure() }}
-        uses: slackapi/slack-github-action@v1.27.0
+        uses: slackapi/slack-github-action@v2.0.0
         with:
           channel-id: 'frontend-notifications'
           slack-message: ':x: <!here> Current master version of davinci-github-actions is <${{ env.GITHUB_WORKFLOW_URL }}|broken>.'
@@ -108,7 +108,7 @@ jobs:
 
       - name: Send a Slack notification on success release
         if: ${{ success() && steps.changesets.outputs.published == 'true' }}
-        uses: slackapi/slack-github-action@v1.27.0
+        uses: slackapi/slack-github-action@v2.0.0
         with:
           channel-id: 'frontend-notifications'
           slack-message: 'Current master version of davinci-github-actions successfully released :green_heart:'
@@ -117,7 +117,7 @@ jobs:
 
       - name: Send a Slack notification on success PR merge
         if: ${{ success() && steps.changesets.outputs.published != 'true'}}
-        uses: slackapi/slack-github-action@v1.27.0
+        uses: slackapi/slack-github-action@v2.0.0
         with:
           channel-id: 'frontend-notifications'
           slack-message: 'A new PR was merged to davinci-github-actions :parrotspin:'
