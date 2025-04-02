@@ -1,5 +1,15 @@
 # davinci-github-actions
 
+## 17.2.0
+
+### Minor Changes
+
+- [#391](https://github.com/toptal/davinci-github-actions/pull/391) [`a6b8b24`](https://github.com/toptal/davinci-github-actions/commit/a6b8b240dac8561d3cac98c6ab2b69d5b305e23b) Thanks [@vedrani](https://github.com/vedrani)!
+
+### gsm-secrets
+
+- expose wif access_token in `gsm-secret` action
+
 ## 17.1.1
 
 ### Patch Changes
