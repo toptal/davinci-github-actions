@@ -1,5 +1,21 @@
 # davinci-github-actions
 
+## 17.3.0
+
+### Minor Changes
+
+- [#398](https://github.com/toptal/davinci-github-actions/pull/398) [`c140e56`](https://github.com/toptal/davinci-github-actions/commit/c140e568192e2dbfbdf8cb091eb17487bf00e637) Thanks [@pudek357](https://github.com/pudek357)!
+
+### status-check
+
+- fix action
+
+- [#399](https://github.com/toptal/davinci-github-actions/pull/399) [`af87fb7`](https://github.com/toptal/davinci-github-actions/commit/af87fb7e203b0e4984de8206f4157b8ca450f987) Thanks [@pudek357](https://github.com/pudek357)!
+
+### workflows
+
+- fix release workflow
+
 ## 17.2.0
 
 ### Minor Changes
