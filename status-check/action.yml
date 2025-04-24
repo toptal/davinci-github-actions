@@ -13,7 +13,7 @@ runs:
   using: composite
   steps:
     - name: Set status check
-      uses: actions/github-script@v6
+      uses: actions/github-script@v7
       env:
         STATUS_TARGET_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
         STATUS_STATE: ${{ inputs.state }}
@@ -21,7 +21,7 @@ runs:
       with:
         script: |
           const { owner, repo } = context.issue;
-          await github.repos.createCommitStatus({
+          await github.rest.repos.createCommitStatus({
             owner,
             repo,
             sha: context.sha,
