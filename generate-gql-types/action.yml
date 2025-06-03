@@ -5,8 +5,11 @@ inputs:
   generate-types-command:
     description: Command to generate gql types
     default: generate:types
-  gcr-gql-schemas-bucket-token:
-    description: Necessary token to pull gql schema from google cloud
+  workload_identity_provider:
+    description: 'The Google Cloud Workload Identity Provider. E.g. projects/123456789/locations/global/workloadIdentityPools/my-pool/providers/my-provider'
+    required: true
+  service_account:
+    description: 'The Google Cloud Service Account email. E.g. my-service-account@my-project.iam.gserviceaccount.com'
     required: true
 
 runs:
@@ -15,8 +18,9 @@ runs:
     - name: Auth Google cloud toolchain
       uses: google-github-actions/auth@v2
       with:
-        credentials_json: ${{ inputs.gcr-gql-schemas-bucket-token }}
-        create_credentials_file: true
+        token_format: access_token
+        workload_identity_provider: ${{ inputs.workload_identity_provider }}
+        service_account: ${{ inputs.service_account }}
 
     - name: Setup Google cloud toolchain
       uses: google-github-actions/setup-gcloud@v1.1.1
