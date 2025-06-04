@@ -29,7 +29,6 @@ The list of arguments, that are used in GH Action:
 | `checkout-davinci`      | string                                                      |          | false             | Checkout davinci repository                                                                |
 | `registry-name`         | string                                                      | ✅        |                   | Registry to push the builded image                                                         |
 | `gh-runner-driver-opts` | string                                                      |          |                   | Driver options for GH Runners                                                              |
-| `secrets`               | string                                                      |          |                   | Secrets to be passed to the build process                                                  |
 
 ### Outputs
 
@@ -61,6 +60,4 @@ This is a list of ENV Variables that are used in GH Action:
         DIST_FOLDER=./dist
         NGINX_CONFIG=./davinci/packages/davinci/docker/nginx-vhost.conf
         VERSION=7042976bc3db21012fe38602bb643618a95aa2d0
-      secrets: |
-        npm_token=${{ steps.parse_secrets.outputs.NPM_TOKEN }}
 ```
