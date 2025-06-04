@@ -63,6 +63,9 @@ inputs:
   gh-runner-driver-opts:
     required: false
     description: 'Driver options for GH Runners'
+  secrets:
+    required: false
+    description: 'Secrets to be passed to the build process'
 
 runs:
   using: composite
@@ -139,4 +142,5 @@ runs:
         labels: ${{ inputs.labels }}
         file: ${{ inputs.docker-file }}
         build-args: ${{ inputs.build-args }}
+        secrets: ${{ inputs.secrets }}
         ssh: default
