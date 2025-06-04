@@ -1,5 +1,15 @@
 # davinci-github-actions
 
+## 18.0.0
+
+### Major Changes
+
+- [#401](https://github.com/toptal/davinci-github-actions/pull/401) [`77be666`](https://github.com/toptal/davinci-github-actions/commit/77be666befc3c96f854f262f6efaadc8ccd1cc6a) Thanks [@denieler](https://github.com/denieler)!
+
+---
+
+- generate-gql-types GH action changes the input parameters and now accepts workload_identity_provider and service_account instead of gcloud bucket token
+
 ## 17.3.0
 
 ### Minor Changes
