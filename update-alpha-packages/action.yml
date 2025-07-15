@@ -15,9 +15,6 @@ inputs:
   service_account:
     description: Service account for Google Secret Manager
     required: true
-  gsm_secrets:
-    description: Google Secret Manager secrets to retrieve (TOPTAL_DEVBOT_TOKEN and NPM_TOKEN_READ_ONLY)
-    required: false
 
 runs:
   using: composite
