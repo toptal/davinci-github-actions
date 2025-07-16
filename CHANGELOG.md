@@ -1,5 +1,12 @@
 # davinci-github-actions
 
+## 18.1.0
+
+### Minor Changes
+
+- [#403](https://github.com/toptal/davinci-github-actions/pull/403) [`b2e9cd8`](https://github.com/toptal/davinci-github-actions/commit/b2e9cd8cd72673c935f75c7db61c5a9b6a440f7d) Thanks [@sashuk](https://github.com/sashuk)!
+- add `update-alpha-packages` action (extracted from Staff Portal)
+
 ## 18.0.0
 
 ### Major Changes
